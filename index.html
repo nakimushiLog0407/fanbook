@@ -286,6 +286,34 @@ main{position:relative;z-index:1;padding:20px 16px 100px;max-width:640px;margin:
 </head>
 <body>
 
+<!-- PASSWORD LOCK SCREEN -->
+<div id="lockScreen" style="display:none;position:fixed;inset:0;z-index:9999;background:var(--ink);flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;">
+  <div style="width:100%;max-width:320px;">
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-family:var(--ffm);font-size:10px;letter-spacing:0.25em;color:rgba(255,255,255,0.3);margin-bottom:10px;">// MY IDOL ARCHIVE</div>
+      <div style="font-family:var(--ff);font-size:32px;font-weight:700;letter-spacing:0.06em;color:#fff;text-transform:uppercase;">GROUP <span style="color:var(--rose)">FANBOOK</span></div>
+      <div style="height:2px;background:linear-gradient(90deg,var(--rose),var(--lavender),var(--sky));margin-top:14px;"></div>
+    </div>
+    <!-- Input -->
+    <div style="margin-bottom:12px;">
+      <div style="font-family:var(--ffm);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:8px;">Password</div>
+      <input id="pwInput" type="password" placeholder="パスワードを入力"
+        style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);padding:14px 16px;color:#fff;font-family:var(--ffj);font-size:16px;font-weight:300;outline:none;letter-spacing:0.1em;border-radius:0;transition:border-color 0.18s;"
+        onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'"
+        onkeydown="if(event.key==='Enter')checkPW()">
+    </div>
+    <div id="pwError" style="font-family:var(--ffm);font-size:9px;letter-spacing:0.12em;color:var(--rose);min-height:16px;margin-bottom:12px;opacity:0;transition:opacity 0.2s;">// パスワードが違います</div>
+    <button onclick="checkPW()"
+      style="width:100%;background:var(--accent);color:#fff;border:none;padding:15px;font-family:var(--ff);font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;"
+      onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter=''">
+      Enter
+    </button>
+    <!-- hint for first time -->
+    <div id="pwHint" style="font-family:var(--ffm);font-size:9px;letter-spacing:0.1em;color:rgba(255,255,255,0.2);text-align:center;margin-top:20px;line-height:1.8;"></div>
+  </div>
+</div>
+
 <div class="flash" id="fl"></div>
 <div class="pw" id="pw"></div>
 
@@ -412,6 +440,16 @@ main{position:relative;z-index:1;padding:20px 16px 100px;max-width:640px;margin:
       <p style="font-family:var(--ffm);font-size:9px;letter-spacing:.1em;color:var(--ink-dim);line-height:1.8;">iOSの場合：Safari で開き → 共有ボタン → 「ホーム画面に追加」</p>
     </div>
     <button class="bsub" onclick="saveSetting()">Save</button>
+
+    <div style="margin-top:20px;">
+      <div class="slabel" style="margin-top:0">Security</div>
+      <div style="font-family:var(--ffm);font-size:9px;letter-spacing:0.1em;margin-bottom:12px;" id="pwStatus"></div>
+      <div class="fg"><label class="fl">現在のパスワード</label><input class="fi" type="password" id="pwCurrent" placeholder="現在のパスワード"></div>
+      <div class="fg"><label class="fl">新しいパスワード（4文字以上）</label><input class="fi" type="password" id="pwNew" placeholder="新しいパスワード"></div>
+      <div class="fg"><label class="fl">新しいパスワード（確認）</label><input class="fi" type="password" id="pwNew2" placeholder="もう一度入力"></div>
+      <div style="font-family:var(--ffm);font-size:9px;letter-spacing:0.1em;min-height:16px;margin-bottom:10px;" id="pwChangeMsg"></div>
+      <button onclick="changePW()" style="width:100%;padding:12px;background:var(--panel2);border:1px solid var(--border-s);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;color:var(--ink);transition:all .16s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border-s)';this.style.color='var(--ink)'">Change Password</button>
+    </div>
   </div>
 </div>
 
@@ -1228,12 +1266,105 @@ document.getElementById('mCoH').addEventListener('input',function(){if(/^#[0-9A-
 let _tt;
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2000);}
 
+// ═══ PASSWORD LOCK ═══
+const PW_KEY='ifb_pw';
+const DEFAULT_PW='fanbook';
+
+function hashPW(pw){
+  // Simple but effective: SHA-like via btoa + salt
+  let h=0;
+  for(let i=0;i<pw.length;i++){h=((h<<5)-h)+pw.charCodeAt(i);h|=0;}
+  return btoa('ifb:'+Math.abs(h)+':'+pw.length);
+}
+
+function getStoredHash(){return localStorage.getItem(PW_KEY)||hashPW(DEFAULT_PW);}
+
+function checkPW(){
+  const val=document.getElementById('pwInput').value;
+  if(!val){showPWError();return;}
+  if(hashPW(val)===getStoredHash()){
+    unlockApp();
+  }else{
+    showPWError();
+    document.getElementById('pwInput').value='';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+function showPWError(){
+  const e=document.getElementById('pwError');
+  e.style.opacity='1';
+  setTimeout(()=>e.style.opacity='0',2000);
+}
+
+function unlockApp(){
+  const ls=document.getElementById('lockScreen');
+  ls.style.opacity='0';
+  ls.style.transition='opacity 0.3s ease';
+  setTimeout(()=>ls.style.display='none',300);
+}
+
+function showLock(){
+  const ls=document.getElementById('lockScreen');
+  ls.style.display='flex';
+  ls.style.opacity='1';
+  ls.style.transition='';
+  document.getElementById('pwInput').value='';
+  document.getElementById('pwError').style.opacity='0';
+  setTimeout(()=>document.getElementById('pwInput').focus(),100);
+}
+
+function isDefaultPW(){return getStoredHash()===hashPW(DEFAULT_PW);}
+
+function changePW(){
+  const cur=document.getElementById('pwCurrent').value;
+  const nw=document.getElementById('pwNew').value;
+  const nw2=document.getElementById('pwNew2').value;
+  if(hashPW(cur)!==getStoredHash()){
+    document.getElementById('pwChangeMsg').textContent='// 現在のパスワードが違います';
+    document.getElementById('pwChangeMsg').style.color='var(--rose)';return;
+  }
+  if(nw.length<4){
+    document.getElementById('pwChangeMsg').textContent='// 4文字以上で設定してください';
+    document.getElementById('pwChangeMsg').style.color='var(--rose)';return;
+  }
+  if(nw!==nw2){
+    document.getElementById('pwChangeMsg').textContent='// 新しいパスワードが一致しません';
+    document.getElementById('pwChangeMsg').style.color='var(--rose)';return;
+  }
+  localStorage.setItem(PW_KEY,hashPW(nw));
+  document.getElementById('pwChangeMsg').textContent='// パスワードを変更しました';
+  document.getElementById('pwChangeMsg').style.color='var(--mint)';
+  ['pwCurrent','pwNew','pwNew2'].forEach(i=>document.getElementById(i).value='');
+  updatePWStatus();
+  toast('// パスワードを変更しました');
+}
+
+function updatePWStatus(){
+  const el=document.getElementById('pwStatus');
+  if(!el)return;
+  if(isDefaultPW()){
+    el.textContent='⚠ デフォルトパスワード使用中（変更を推奨）';
+    el.style.color='var(--butter)';
+  }else{
+    el.textContent='✓ カスタムパスワード設定済み';
+    el.style.color='var(--mint)';
+  }
+}
+
 // ═══ INIT ═══
 document.getElementById('bTitle').textContent=S.bannerTitle;
 document.getElementById('bSub').textContent=S.bannerSub;
 document.getElementById('sGN').value=S.groupName;
 updateStats();
 updateBackupInfo();
+
+// Show lock screen on load
+showLock();
+if(isDefaultPW()){
+  document.getElementById('pwHint').textContent='初期パスワード: fanbook\nSettings から変更できます';
+}
+updatePWStatus();
 </script>
 </body>
 </html>
