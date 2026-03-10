@@ -1,0 +1,42 @@
+[
+  {
+    "id": "d1",
+    "type": "single",
+    "title": "「READY?」",
+    "date": "2021-11-03",
+    "tag": "デビューシングル",
+    "img": ""
+  },
+  {
+    "id": "d2",
+    "type": "single",
+    "title": "「Rocketeer」",
+    "date": "2022-02-16",
+    "tag": "2ndシングル",
+    "img": ""
+  },
+  {
+    "id": "d3",
+    "type": "album",
+    "title": "「BREAK THE CODE」",
+    "date": "2022-09-14",
+    "tag": "1stアルバム",
+    "img": ""
+  },
+  {
+    "id": "d4",
+    "type": "single",
+    "title": "「M」",
+    "date": "2023-01-25",
+    "tag": "6thシングル",
+    "img": ""
+  },
+  {
+    "id": "d5",
+    "type": "album",
+    "title": "「&」",
+    "date": "2023-07-19",
+    "tag": "2ndアルバム",
+    "img": ""
+  }
+]
