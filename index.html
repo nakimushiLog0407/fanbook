@@ -7,24 +7,17 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="INI CHRONICLE">
-<meta name="theme-color" content="#080C18">
+<meta name="theme-color" content="#0D0B14">
 <title>INI CHRONICLE</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* ── PASTEL ACCENT COLORS (brighter, more vivid) ── */
-  --rose:#FFB3CC;--sky:#7DD4F0;--mint:#72E8C8;--butter:#FFE080;--lavender:#C8AAFF;--peach:#FFCBA0;
-  /* ── BACKGROUND (deep navy, not pure black) ── */
-  --bg:#080C18;--bg2:#0D1220;--panel:#111828;--panel2:#162030;--panel3:#1E2C40;
-  /* ── TEXT ── */
-  --ink:#E8F4FF;--ink-mid:#8AAAC8;--ink-dim:#445566;
-  /* ── BORDERS ── */
-  --border:rgba(125,212,240,0.12);--border-s:rgba(125,212,240,0.28);
-  /* ── ACCENT (rose-pink, brighter) ── */
-  --accent:#FF85A8;--accent-g:rgba(255,133,168,0.28);
-  /* ── GOLD ── */
-  --gold:#FFD060;--gold-g:rgba(255,208,96,0.22);
-  /* ── FONTS ── */
+  --rose:#F2B8C6;--sky:#A8CEDE;--mint:#9ECFBC;--butter:#EDD99A;--lavender:#C0B4E0;--peach:#EEC4A4;
+  --bg:#0D0B14;--bg2:#13101E;--panel:#1A1628;--panel2:#211D30;--panel3:#2A2540;
+  --ink:#F0EDF8;--ink-mid:#A89FB5;--ink-dim:#5A5470;
+  --border:rgba(192,180,224,0.1);--border-s:rgba(192,180,224,0.22);
+  --accent:#C06B8A;--accent-g:rgba(192,107,138,0.25);
+  --gold:#D4A23C;--gold-g:rgba(212,162,60,0.2);
   --ff:'Rajdhani','Noto Sans JP',sans-serif;
   --ffj:'Noto Sans JP',sans-serif;
   --ffm:'Share Tech Mono',monospace;
@@ -34,15 +27,14 @@ html,body{height:100%;}
 body{background:var(--bg);color:var(--ink);font-family:var(--ff);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:
-    radial-gradient(1px 1px at 18% 12%,rgba(125,212,240,.55),transparent),
-    radial-gradient(1px 1px at 72% 28%,rgba(200,170,255,.45),transparent),
-    radial-gradient(1px 1px at 44% 58%,rgba(114,232,200,.4),transparent),
-    radial-gradient(1px 1px at 88% 72%,rgba(125,212,240,.5),transparent),
-    radial-gradient(1px 1px at 8% 82%,rgba(255,179,204,.38),transparent),
-    radial-gradient(1px 1px at 62% 92%,rgba(200,170,255,.45),transparent),
-    radial-gradient(800px 500px at 75% 5%,rgba(255,133,168,.08),transparent),
-    radial-gradient(600px 600px at 5% 95%,rgba(125,212,240,.07),transparent),
-    radial-gradient(400px 400px at 50% 50%,rgba(200,170,255,.04),transparent);}
+    radial-gradient(1px 1px at 18% 12%,rgba(255,255,255,.35),transparent),
+    radial-gradient(1px 1px at 72% 28%,rgba(255,255,255,.25),transparent),
+    radial-gradient(1px 1px at 44% 58%,rgba(255,255,255,.2),transparent),
+    radial-gradient(1px 1px at 88% 72%,rgba(255,255,255,.3),transparent),
+    radial-gradient(1px 1px at 8% 82%,rgba(255,255,255,.18),transparent),
+    radial-gradient(1px 1px at 62% 92%,rgba(255,255,255,.28),transparent),
+    radial-gradient(600px 400px at 80% 8%,rgba(192,107,138,.055),transparent),
+    radial-gradient(500px 500px at 8% 92%,rgba(192,180,224,.045),transparent);}
 
 /* LOCK */
 #lockScreen{display:none;position:fixed;inset:0;z-index:9999;background:var(–bg);
@@ -69,11 +61,8 @@ PAGE SYSTEM
 /* PAGE BG — HUD grid */
 .pg-bg{position:absolute;inset:0;z-index:0;pointer-events:none;
 background:var(–bg);
-background-image:
-repeating-linear-gradient(90deg,rgba(125,212,240,.06) 0,rgba(125,212,240,.06) 1px,transparent 1px,transparent 48px),
-repeating-linear-gradient(0deg,rgba(125,212,240,.06) 0,rgba(125,212,240,.06) 1px,transparent 1px,transparent 48px),
-repeating-linear-gradient(90deg,rgba(125,212,240,.025) 0,rgba(125,212,240,.025) 1px,transparent 1px,transparent 12px),
-repeating-linear-gradient(0deg,rgba(125,212,240,.025) 0,rgba(125,212,240,.025) 1px,transparent 1px,transparent 12px);}
+background-image:repeating-linear-gradient(90deg,rgba(192,180,224,.022) 0,rgba(192,180,224,.022) 1px,transparent 1px,transparent 64px),
+repeating-linear-gradient(0deg,rgba(192,180,224,.022) 0,rgba(192,180,224,.022) 1px,transparent 1px,transparent 64px);}
 
 /* PAGE HEADER */
 .pg-header{
@@ -81,13 +70,12 @@ position:relative;flex-shrink:0;
 height:clamp(36px,5.5vh,46px);
 display:flex;align-items:center;justify-content:space-between;
 padding:0 clamp(14px,2.2vw,24px);
-background:rgba(4,8,18,.88);
-border-bottom:1px solid rgba(125,212,240,.2);
+background:rgba(7,5,14,.8);
+border-bottom:1px solid rgba(192,180,224,.13);
 backdrop-filter:blur(14px);z-index:2;}
 .pg-header::before{
-content:’’;position:absolute;top:0;left:0;right:0;height:2px;
-background:linear-gradient(90deg,var(–pc,var(–lavender)) 0%,var(–pc2,var(–sky)) 50%,transparent 100%);
-box-shadow:0 0 12px var(–pc,var(–lavender));}
+content:’’;position:absolute;top:0;left:0;right:0;height:1.5px;
+background:linear-gradient(90deg,var(–pc,var(–lavender)) 0%,var(–pc2,var(–sky)) 50%,transparent 100%);}
 .pg-back{
 display:flex;align-items:center;gap:clamp(5px,.8vw,8px);
 background:none;border:none;cursor:pointer;
@@ -115,11 +103,11 @@ backdrop-filter:blur(6px);transition:all .16s;}
 .pg-btn:active{transform:scale(.9);}
 
 /* HUD corner brackets */
-.pg-corner{position:absolute;z-index:1;width:18px;height:18px;pointer-events:none;}
-.pg-corner.tl{top:48px;left:8px;border-top:1.5px solid var(–pc,var(–lavender));border-left:1.5px solid var(–pc,var(–lavender));opacity:.7;filter:drop-shadow(0 0 3px var(–pc,var(–lavender)));}
-.pg-corner.tr{top:48px;right:8px;border-top:1.5px solid var(–pc2,var(–sky));border-right:1.5px solid var(–pc2,var(–sky));opacity:.7;filter:drop-shadow(0 0 3px var(–pc2,var(–sky)));}
-.pg-corner.bl{bottom:8px;left:8px;border-bottom:1.5px solid var(–pc,var(–lavender));border-left:1.5px solid var(–pc,var(–lavender));opacity:.5;}
-.pg-corner.br{bottom:8px;right:8px;border-bottom:1.5px solid var(–pc2,var(–sky));border-right:1.5px solid var(–pc2,var(–sky));opacity:.5;}
+.pg-corner{position:absolute;z-index:1;width:14px;height:14px;pointer-events:none;}
+.pg-corner.tl{top:48px;left:8px;border-top:1px solid var(–pc,var(–lavender));border-left:1px solid var(–pc,var(–lavender));opacity:.45;}
+.pg-corner.tr{top:48px;right:8px;border-top:1px solid var(–pc2,var(–sky));border-right:1px solid var(–pc2,var(–sky));opacity:.45;}
+.pg-corner.bl{bottom:8px;left:8px;border-bottom:1px solid var(–pc,var(–lavender));border-left:1px solid var(–pc,var(–lavender));opacity:.3;}
+.pg-corner.br{bottom:8px;right:8px;border-bottom:1px solid var(–pc2,var(–sky));border-right:1px solid var(–pc2,var(–sky));opacity:.3;}
 
 /* PAGE SCROLL BODY */
 .pg-body{
@@ -329,42 +317,30 @@ letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(–ink-dim
 transition:all .16s;white-space:nowrap;}
 .disc-toggle.owned{background:rgba(158,207,188,.12);border-color:rgba(158,207,188,.3);color:var(–mint);}
 .disc-toggle:hover{filter:brightness(1.2);}
-/* ── LIVE LIST ── */
-.live-list{display:flex;flex-direction:column;gap:clamp(5px,.9vh,8px);}
-.live-item{
-background:rgba(13,11,20,.7);
-border:1px solid rgba(168,206,222,.14);
-padding:clamp(9px,1.6vh,13px) clamp(12px,1.8vw,16px);
-display:flex;align-items:flex-start;gap:clamp(10px,1.5vw,14px);
+.goods-list{display:flex;flex-direction:column;gap:clamp(5px,.9vh,8px);}
+.goods-item{background:rgba(13,11,20,.7);border:1px solid rgba(192,107,138,.14);
+padding:clamp(9px,1.6vh,12px) clamp(12px,1.8vw,16px);
+display:flex;align-items:center;gap:clamp(10px,1.5vw,14px);
 position:relative;overflow:hidden;backdrop-filter:blur(6px);}
-.live-item::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:2px;
-background:linear-gradient(to bottom,var(–sky),var(–mint));}
-.live-item.attended::before{background:linear-gradient(to bottom,var(–rose),var(–accent));}
-.live-date-block{
-flex-shrink:0;display:flex;flex-direction:column;align-items:center;
-min-width:clamp(36px,5vw,48px);}
-.live-date-y{font-family:var(–ffm);font-size:clamp(7px,.82vw,8px);letter-spacing:.12em;color:var(–ink-dim);}
-.live-date-d{font-family:var(–ff);font-size:clamp(16px,2.2vw,22px);font-weight:700;color:var(–sky);line-height:1;}
-.live-date-m{font-family:var(–ffm);font-size:clamp(7px,.82vw,8px);letter-spacing:.1em;color:var(–ink-dim);text-transform:uppercase;}
-.live-item.attended .live-date-d{color:var(–rose);}
-.live-info{flex:1;min-width:0;}
-.live-title{font-family:var(–ff);font-size:clamp(11px,1.55vw,14px);font-weight:700;color:var(–ink);line-height:1.2;}
-.live-venue{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);color:var(–ink-dim);letter-spacing:.1em;margin-top:3px;}
-.live-note{font-family:var(–ffj);font-size:clamp(9px,1.1vw,11px);font-weight:300;color:var(–ink-mid);margin-top:5px;line-height:1.5;}
-.live-tag{display:inline-block;margin-top:5px;padding:2px 7px;
-border:1px solid rgba(168,206,222,.25);
-font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);letter-spacing:.12em;
-text-transform:uppercase;color:var(–sky);}
-.live-item.attended .live-tag{border-color:rgba(192,107,138,.28);color:var(–accent);}
-.live-attend-btn{
-flex-shrink:0;align-self:center;
-background:none;border:1px solid var(–border);
+.goods-item::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:2px;background:var(–rose);}
+.goods-img{width:clamp(40px,6vw,52px);height:clamp(40px,6vw,52px);
+object-fit:cover;border:1px solid var(–border);background:var(–panel2);flex-shrink:0;}
+.goods-img-ph{width:clamp(40px,6vw,52px);height:clamp(40px,6vw,52px);
+border:1px solid var(–border);background:var(–panel2);flex-shrink:0;
+display:flex;align-items:center;justify-content:center;}
+.goods-img-ph svg{width:16px;height:16px;opacity:.18;}
+.goods-info{flex:1;min-width:0;}
+.goods-name{font-family:var(–ff);font-size:clamp(11px,1.6vw,14px);font-weight:700;color:var(–ink);}
+.goods-cat{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);color:var(–ink-dim);letter-spacing:.1em;margin-top:3px;}
+.goods-note{font-family:var(–ffj);font-size:clamp(9px,1.2vw,11px);font-weight:300;
+color:var(–ink-mid);margin-top:3px;line-height:1.4;}
+.goods-toggle{flex-shrink:0;background:none;border:1px solid var(–border);
 padding:clamp(4px,.8vh,6px) clamp(7px,1vw,10px);
 font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);font-weight:700;
 letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(–ink-dim);
 transition:all .16s;white-space:nowrap;}
-.live-attend-btn.attended{background:rgba(192,107,138,.12);border-color:rgba(192,107,138,.3);color:var(–accent);}
-.live-attend-btn:hover{filter:brightness(1.2);}
+.goods-toggle.owned{background:rgba(158,207,188,.12);border-color:rgba(158,207,188,.3);color:var(–mint);}
+.goods-toggle:hover{filter:brightness(1.2);}
 
 /* ── ACHIEVEMENTS ── */
 .ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(140px,20vw,200px),1fr));gap:clamp(7px,1.2vw,11px);}
@@ -473,84 +449,6 @@ text-transform:uppercase;cursor:pointer;color:var(–ink-mid);transition:all .16
 .cbtn-del{flex:1;padding:12px;background:#DC323C;border:none;color:#fff;
 font-family:var(–ff);font-size:11px;font-weight:700;letter-spacing:.12em;
 text-transform:uppercase;cursor:pointer;transition:all .16s;}
-/* ── MAIL LIST ── */
-.mail-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:clamp(10px,1.8vh,16px);}
-.mail-filter-btn{
-font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);letter-spacing:.12em;
-text-transform:uppercase;padding:4px 10px;
-background:rgba(4,8,18,.6);border:1px solid rgba(114,232,200,.2);
-color:var(–ink-dim);cursor:pointer;transition:all .16s;}
-.mail-filter-btn.active{background:rgba(114,232,200,.12);border-color:var(–mint);color:var(–mint);}
-.mail-list{display:flex;flex-direction:column;gap:clamp(5px,.9vh,7px);}
-.mail-row{
-display:flex;align-items:center;gap:clamp(10px,1.5vw,14px);
-padding:clamp(9px,1.5vh,13px) clamp(12px,1.8vw,16px);
-background:rgba(4,8,18,.65);
-border:1px solid rgba(114,232,200,.1);
-border-left:2px solid var(–mc,var(–mint));
-cursor:pointer;transition:all .16s;position:relative;overflow:hidden;
-backdrop-filter:blur(6px);}
-.mail-row::before{content:’’;position:absolute;inset:0;
-background:linear-gradient(90deg,rgba(114,232,200,.04),transparent 60%);pointer-events:none;}
-.mail-row:hover{border-color:rgba(114,232,200,.35);background:rgba(4,8,18,.85);transform:translateX(3px);}
-.mail-row-left{flex-shrink:0;display:flex;flex-direction:column;align-items:center;width:clamp(32px,4.5vw,44px);}
-.mail-member-dot{width:8px;height:8px;border-radius:50%;background:var(–mc,var(–mint));
-box-shadow:0 0 6px var(–mc,var(–mint));margin-bottom:4px;}
-.mail-date-d{font-family:var(–ffm);font-size:clamp(13px,1.8vw,18px);font-weight:700;color:var(–ink);line-height:1;}
-.mail-date-m{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);letter-spacing:.1em;color:var(–ink-dim);text-transform:uppercase;}
-.mail-row-info{flex:1;min-width:0;}
-.mail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.14em;
-text-transform:uppercase;color:var(–mc,var(–mint));margin-bottom:2px;}
-.mail-subject{font-family:var(–ff);font-size:clamp(11px,1.5vw,14px);font-weight:700;
-color:var(–ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.mail-preview{font-family:var(–ffj);font-size:clamp(9px,1.1vw,11px);font-weight:300;
-color:var(–ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
-.mail-row-right{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.mail-fav-btn{background:none;border:none;cursor:pointer;padding:4px;
-font-size:clamp(13px,1.6vw,16px);line-height:1;opacity:.4;transition:all .16s;}
-.mail-fav-btn.active{opacity:1;filter:drop-shadow(0 0 4px var(–butter));}
-.mail-photo-icon{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);
-letter-spacing:.08em;color:var(–sky);opacity:.7;}
-
-/* ── MAIL DETAIL ── */
-.mail-detail-wrap{display:flex;gap:clamp(10px,1.5vw,16px);height:100%;}
-.mail-detail-photos{
-flex-shrink:0;width:clamp(100px,18vw,160px);
-display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
-.mail-photo-thumb{
-width:100%;aspect-ratio:3/4;object-fit:cover;
-border:1px solid rgba(125,212,240,.2);cursor:pointer;
-transition:all .16s;display:block;}
-.mail-photo-thumb:hover{border-color:var(–sky);box-shadow:0 0 10px rgba(125,212,240,.3);}
-.mail-photo-none{
-width:100%;aspect-ratio:3/4;
-border:1px dashed rgba(125,212,240,.15);
-display:flex;align-items:center;justify-content:center;
-font-family:var(–ffm);font-size:8px;letter-spacing:.12em;
-color:var(–ink-dim);text-transform:uppercase;}
-.mail-detail-content{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
-.mail-detail-header{
-padding:clamp(10px,1.5vh,14px);
-background:rgba(4,8,18,.65);border:1px solid rgba(114,232,200,.12);
-border-left:2px solid var(–mint);}
-.mail-detail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);
-letter-spacing:.18em;text-transform:uppercase;color:var(–mint);margin-bottom:4px;}
-.mail-detail-subject{font-family:var(–ff);font-size:clamp(13px,1.8vw,17px);
-font-weight:700;color:var(–ink);line-height:1.2;}
-.mail-detail-date{font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);
-letter-spacing:.12em;color:var(–ink-dim);margin-top:4px;}
-.mail-detail-body{
-flex:1;padding:clamp(12px,1.8vh,18px);
-background:rgba(4,8,18,.5);border:1px solid rgba(114,232,200,.08);
-font-family:var(–ffj);font-size:clamp(11px,1.4vw,13px);font-weight:300;
-color:var(–ink-mid);line-height:1.9;white-space:pre-wrap;overflow-y:auto;}
-
-/* fullscreen photo viewer */
-.mail-photo-viewer{
-position:fixed;inset:0;z-index:9500;background:rgba(4,8,18,.96);
-display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.mail-photo-viewer img{max-width:95vw;max-height:95vh;object-fit:contain;}
-
 .flash{position:fixed;inset:0;z-index:998;pointer-events:none;background:#fff;opacity:0;}
 @keyframes flashA{0%{opacity:0;}25%{opacity:.22;}100%{opacity:0;}}
 .flash.on{animation:flashA .5s ease forwards;}
@@ -584,102 +482,97 @@ HOME SCREEN  ·  Pastel HUD
 /* ── BG PHOTO ── */
 #homeBgPhoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;}
 #homeBgPlaceholder{position:absolute;inset:0;z-index:0;
-background:
-radial-gradient(ellipse 60% 70% at 60% 40%, rgba(255,133,168,.18) 0%,rgba(125,212,240,.10) 40%,var(–bg) 100%),
-repeating-linear-gradient(90deg,rgba(125,212,240,.05) 0,rgba(125,212,240,.05) 1px,transparent 1px,transparent 48px),
-repeating-linear-gradient(0deg,rgba(125,212,240,.05) 0,rgba(125,212,240,.05) 1px,transparent 1px,transparent 48px);}
+background:radial-gradient(ellipse 90% 80% at 60% 40%,
+rgba(192,107,138,.14) 0%,rgba(168,206,222,.08) 40%,var(–bg) 100%);}
 
 /* center placeholder crosshair */
 .hud-placeholder-center{
 position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
 display:flex;flex-direction:column;align-items:center;gap:14px;pointer-events:none;}
 .hud-reticle{
-width:64px;height:64px;position:relative;
-border-top:2px solid rgba(255,179,204,.7);
-border-left:2px solid rgba(255,179,204,.7);
-filter:drop-shadow(0 0 6px rgba(255,179,204,.6));}
+width:56px;height:56px;position:relative;
+border-top:1.5px solid rgba(242,184,198,.4);
+border-left:1.5px solid rgba(242,184,198,.4);}
 .hud-reticle::after{
 content:’’;position:absolute;bottom:0;right:0;
-width:64px;height:64px;
-border-bottom:2px solid rgba(125,212,240,.7);
-border-right:2px solid rgba(125,212,240,.7);
-filter:drop-shadow(0 0 6px rgba(125,212,240,.6));}
+width:56px;height:56px;
+border-bottom:1.5px solid rgba(168,206,222,.4);
+border-right:1.5px solid rgba(168,206,222,.4);}
 .hud-reticle-dot{
 position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-width:5px;height:5px;background:var(–rose);border-radius:50%;
-box-shadow:0 0 10px var(–rose),0 0 20px var(–rose);animation:hudPulse 2s ease-in-out infinite;}
+width:4px;height:4px;background:var(–rose);border-radius:50%;
+box-shadow:0 0 8px var(–rose);animation:hudPulse 2s ease-in-out infinite;}
 .hud-placeholder-label{
 font-family:var(–ffm);font-size:8px;letter-spacing:.22em;
-text-transform:uppercase;color:rgba(200,230,255,.45);text-align:center;line-height:2;}
+text-transform:uppercase;color:rgba(240,237,248,.28);text-align:center;line-height:2;}
 
 /* ── VIGNETTE ── */
 #homeScreen::before{
 content:’’;position:absolute;inset:0;z-index:1;pointer-events:none;
 background:
-linear-gradient(to right, rgba(4,8,18,.88) 0%,rgba(4,8,18,.45) 26%,transparent 50%),
-linear-gradient(to left,  rgba(4,8,18,.72) 0%,rgba(4,8,18,.28) 28%,transparent 52%),
-linear-gradient(to bottom,rgba(4,8,18,.75) 0%,transparent 20%),
-linear-gradient(to top,   rgba(4,8,18,.65) 0%,transparent 22%);}
+linear-gradient(to right, rgba(7,5,14,.82) 0%,rgba(7,5,14,.42) 24%,transparent 46%),
+linear-gradient(to left,  rgba(7,5,14,.65) 0%,rgba(7,5,14,.24) 26%,transparent 50%),
+linear-gradient(to bottom,rgba(7,5,14,.7)  0%,transparent 18%),
+linear-gradient(to top,   rgba(7,5,14,.6)  0%,transparent 20%);}
 
 /* ── SCAN LINE OVERLAY ── */
 #homeScreen::after{
 content:’’;position:absolute;inset:0;z-index:2;pointer-events:none;
 background:repeating-linear-gradient(
-0deg,transparent,transparent 3px,rgba(125,212,240,.04) 3px,rgba(125,212,240,.04) 4px);
-animation:scanScroll 6s linear infinite;}
-@keyframes scanScroll{from{background-position:0 0;}to{background-position:0 400px;}}
+0deg,transparent,transparent 2px,rgba(192,180,224,.022) 2px,rgba(192,180,224,.022) 3px);
+animation:scanScroll 8s linear infinite;}
+@keyframes scanScroll{from{background-position:0 0;}to{background-position:0 300px;}}
 
 /* ── CORNER BRACKETS (HUD decoration) ── */
-.hud-corner{position:absolute;z-index:4;width:22px;height:22px;pointer-events:none;}
-.hud-corner.tl{top:10px;left:10px;border-top:2px solid var(–rose);border-left:2px solid var(–rose);}
-.hud-corner.tr{top:10px;right:10px;border-top:2px solid var(–sky);border-right:2px solid var(–sky);}
-.hud-corner.bl{bottom:10px;left:10px;border-bottom:2px solid var(–mint);border-left:2px solid var(–mint);}
-.hud-corner.br{bottom:10px;right:10px;border-bottom:2px solid var(–lavender);border-right:2px solid var(–lavender);}
+.hud-corner{position:absolute;z-index:4;width:18px;height:18px;pointer-events:none;}
+.hud-corner.tl{top:10px;left:10px;border-top:1.5px solid var(–rose);border-left:1.5px solid var(–rose);}
+.hud-corner.tr{top:10px;right:10px;border-top:1.5px solid var(–sky);border-right:1.5px solid var(–sky);}
+.hud-corner.bl{bottom:10px;left:10px;border-bottom:1.5px solid var(–mint);border-left:1.5px solid var(–mint);}
+.hud-corner.br{bottom:10px;right:10px;border-bottom:1.5px solid var(–lavender);border-right:1.5px solid var(–lavender);}
 /* pulsing glow on corners */
 .hud-corner::after{
 content:’’;position:absolute;
-width:5px;height:5px;border-radius:50%;
+width:4px;height:4px;border-radius:50%;
 animation:cornerPulse 2.4s ease-in-out infinite;}
-.hud-corner.tl::after{top:-1px;left:-1px;background:var(–rose);box-shadow:0 0 10px var(–rose),0 0 20px var(–rose);}
-.hud-corner.tr::after{top:-1px;right:-1px;background:var(–sky);box-shadow:0 0 10px var(–sky),0 0 20px var(–sky);}
-.hud-corner.bl::after{bottom:-1px;left:-1px;background:var(–mint);box-shadow:0 0 10px var(–mint),0 0 20px var(–mint);animation-delay:.6s;}
-.hud-corner.br::after{bottom:-1px;right:-1px;background:var(–lavender);box-shadow:0 0 10px var(–lavender),0 0 20px var(–lavender);animation-delay:1.2s;}
-@keyframes cornerPulse{0%,100%{opacity:.5;transform:scale(1);}50%{opacity:1;transform:scale(1.8);}}
+.hud-corner.tl::after{top:-1px;left:-1px;background:var(–rose);box-shadow:0 0 6px var(–rose);}
+.hud-corner.tr::after{top:-1px;right:-1px;background:var(–sky);box-shadow:0 0 6px var(–sky);}
+.hud-corner.bl::after{bottom:-1px;left:-1px;background:var(–mint);box-shadow:0 0 6px var(–mint);animation-delay:.6s;}
+.hud-corner.br::after{bottom:-1px;right:-1px;background:var(–lavender);box-shadow:0 0 6px var(–lavender);animation-delay:1.2s;}
+@keyframes cornerPulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:1;transform:scale(1.5);}}
 
 /* ── TOP BAR ── */
 .hud-topbar{
 position:absolute;top:0;left:0;right:0;height:clamp(28px,4.5vh,38px);z-index:6;
 display:flex;align-items:center;justify-content:space-between;
 padding:0 clamp(22px,3.5vw,36px);
-background:linear-gradient(to bottom,rgba(4,8,18,.82),transparent);
-border-bottom:1px solid rgba(125,212,240,.18);}
+background:linear-gradient(to bottom,rgba(7,5,14,.65),transparent);
+border-bottom:1px solid rgba(192,180,224,.12);}
 .hud-topbar::before{/* rainbow line */
-content:’’;position:absolute;top:0;left:0;right:0;height:2px;
-background:linear-gradient(90deg,var(–rose),var(–accent),var(–lavender),var(–sky),var(–mint));
-box-shadow:0 0 10px rgba(125,212,240,.4);}
+content:’’;position:absolute;top:0;left:0;right:0;height:1.5px;
+background:linear-gradient(90deg,var(–rose),var(–accent),var(–lavender),var(–sky),var(–mint));}
 .hud-title{
 font-family:var(–ff);font-size:clamp(10px,1.5vw,14px);font-weight:700;
-letter-spacing:.14em;text-transform:uppercase;color:rgba(232,244,255,.7);}
-.hud-title em{color:var(–accent);font-style:normal;text-shadow:0 0 12px var(–accent);}
+letter-spacing:.14em;text-transform:uppercase;color:rgba(240,237,248,.55);}
+.hud-title em{color:var(–accent);font-style:normal;}
 /* center timestamp / status */
 .hud-status{
 position:absolute;left:50%;transform:translateX(-50%);
 font-family:var(–ffm);font-size:clamp(7px,.9vw,9px);letter-spacing:.18em;
-color:rgba(125,212,240,.5);white-space:nowrap;}
+color:rgba(240,237,248,.3);white-space:nowrap;}
 /* right side: icon buttons */
 .hud-topbar-right{display:flex;gap:clamp(4px,.6vw,7px);align-items:center;}
 .htb-btn{
 width:clamp(24px,3.2vw,30px);height:clamp(24px,3.2vw,30px);
-background:rgba(4,8,18,.7);
-border:1px solid rgba(125,212,240,.28);
+background:rgba(13,11,20,.6);
+border:1px solid rgba(192,180,224,.2);
 cursor:pointer;color:var(–ink-mid);
 display:flex;align-items:center;justify-content:center;
 backdrop-filter:blur(8px);transition:all .18s;position:relative;overflow:hidden;}
 .htb-btn svg{width:clamp(11px,1.4vw,14px);height:clamp(11px,1.4vw,14px);flex-shrink:0;}
 .htb-btn::before{
 content:’’;position:absolute;inset:0;
-background:linear-gradient(135deg,rgba(255,255,255,.08),transparent);}
-.htb-btn:hover{border-color:var(–bc,var(–lavender));box-shadow:0 0 14px rgba(200,170,255,.35),inset 0 0 8px rgba(200,170,255,.08);}
+background:linear-gradient(135deg,rgba(255,255,255,.07),transparent);}
+.htb-btn:hover{border-color:var(–bc,var(–lavender));box-shadow:0 0 10px rgba(192,180,224,.25);}
 .htb-btn:hover svg{stroke:var(–bc,var(–lavender));}
 .htb-btn:active{transform:scale(.88);}
 .htb-cam{–bc:var(–rose);}
@@ -690,19 +583,19 @@ background:linear-gradient(135deg,rgba(255,255,255,.08),transparent);}
 position:absolute;bottom:0;left:0;right:0;height:clamp(20px,3.2vh,28px);z-index:6;
 display:flex;align-items:center;justify-content:space-between;
 padding:0 clamp(22px,3.5vw,36px);
-background:linear-gradient(to top,rgba(4,8,18,.72),transparent);
-border-top:1px solid rgba(125,212,240,.14);}
+background:linear-gradient(to top,rgba(7,5,14,.6),transparent);
+border-top:1px solid rgba(192,180,224,.1);}
 .hud-bot-label{font-family:var(–ffm);font-size:clamp(6px,.8vw,8px);letter-spacing:.2em;
-text-transform:uppercase;color:rgba(125,212,240,.35);}
+text-transform:uppercase;color:rgba(240,237,248,.2);}
 /* animated signal dots */
-.hud-signal{display:flex;gap:4px;align-items:center;}
+.hud-signal{display:flex;gap:3px;align-items:center;}
 .hud-signal-dot{
-width:4px;height:4px;border-radius:50%;
+width:3px;height:3px;border-radius:50%;
 background:var(–sd,var(–mint));
 animation:signalBlink 1.4s ease-in-out infinite;}
 .hud-signal-dot:nth-child(2){animation-delay:.2s;}
 .hud-signal-dot:nth-child(3){animation-delay:.4s;}
-@keyframes signalBlink{0%,100%{opacity:.3;}50%{opacity:1;box-shadow:0 0 8px var(–sd,var(–mint)),0 0 14px var(–sd,var(–mint));}}
+@keyframes signalBlink{0%,100%{opacity:.25;}50%{opacity:1;box-shadow:0 0 5px var(–sd,var(–mint));}}
 
 /* ── LEFT PANEL ── */
 .home-left{
@@ -713,30 +606,28 @@ padding:clamp(12px,2vh,20px) clamp(10px,1.5vw,16px);}
 
 .home-logo-eyebrow{
 font-family:var(–ffm);font-size:clamp(6px,.82vw,8px);letter-spacing:.28em;
-text-transform:uppercase;color:rgba(125,212,240,.55);margin-bottom:5px;
+text-transform:uppercase;color:rgba(240,237,248,.35);margin-bottom:5px;
 display:flex;align-items:center;gap:5px;}
 .home-logo-eyebrow::before{
-content:’’;width:16px;height:1px;background:rgba(125,212,240,.3);}
+content:’’;width:16px;height:1px;background:rgba(240,237,248,.2);}
 .home-logo{
 font-family:var(–ff);font-size:clamp(16px,2.5vw,24px);font-weight:700;
 letter-spacing:.06em;color:var(–ink);text-transform:uppercase;line-height:1.05;
-text-shadow:0 0 24px rgba(255,133,168,.5),0 2px 12px rgba(0,0,0,.9);}
-.home-logo em{color:var(–accent);font-style:normal;text-shadow:0 0 16px var(–accent);}
+text-shadow:0 0 20px rgba(192,107,138,.3),0 2px 12px rgba(0,0,0,.9);}
+.home-logo em{color:var(–accent);font-style:normal;}
 
-/* divider */
+/* divider with HUD dash pattern */
 .home-divider{
-margin:clamp(10px,1.8vh,16px) 0;height:1.5px;
-background:linear-gradient(90deg,var(–rose),var(–sky),transparent);
-box-shadow:0 0 8px rgba(255,179,204,.4);}
+margin:clamp(10px,1.8vh,16px) 0;height:1px;
+background:linear-gradient(90deg,var(–rose),var(–sky),transparent);}
 
 /* stats with mini progress bars */
 .home-stats-block{display:flex;flex-direction:column;gap:clamp(4px,.8vh,7px);}
 .hstat{
 position:relative;padding:clamp(5px,.9vh,8px) clamp(6px,.9vw,10px);
-background:rgba(4,8,18,.65);
-border-left:2px solid var(–sc,var(–lavender));
-backdrop-filter:blur(8px);overflow:hidden;
-box-shadow:inset 0 0 12px rgba(var(–scr,200,170,255),.06);}
+background:rgba(13,11,20,.55);
+border-left:1.5px solid var(–sc,var(–lavender));
+backdrop-filter:blur(8px);overflow:hidden;}
 /* subtle bg glow */
 .hstat::before{
 content:’’;position:absolute;inset:0;
@@ -763,62 +654,123 @@ letter-spacing:.04em;color:var(–ink);
 text-shadow:0 0 16px rgba(192,107,138,.4),0 2px 10px rgba(0,0,0,.95);line-height:1.2;}
 .hon-sub{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.18em;color:var(–ink-dim);margin-top:4px;}
 
-/* ── RIGHT PANEL — Dashboard Grid ── */
+/* ── RIGHT PANEL ── */
 .home-right{
+position:absolute;right:0;top:clamp(28px,4.5vh,38px);bottom:clamp(20px,3.2vh,28px);
+width:clamp(115px,18vw,162px);z-index:5;
+display:flex;flex-direction:column;justify-content:center;
+padding:clamp(8px,1.4vh,14px) clamp(8px,1.2vw,13px);
+gap:clamp(5px,.9vh,8px);}
+
+/* ── HUD BADGE BUTTONS ── */
+.hbadge{
+cursor:pointer;position:relative;width:100%;
+transition:transform .16s cubic-bezier(.2,0,.2,1),filter .16s;
+-webkit-tap-highlight-color:transparent;}
+.hbadge:hover{transform:translateX(-4px);}
+.hbadge:hover .hb-card{border-color:var(–bc,var(–lavender));box-shadow:inset 0 0 20px rgba(var(–bca),.08),0 0 14px rgba(var(–bca),.15);}
+.hbadge:hover .hb-card::before{opacity:1;}
+.hbadge:hover .hb-lock-indicator{transform:scaleX(1);}
+.hbadge:active{transform:scale(.95) translateX(-2px);}
+
+/* card body */
+.hb-card{
+position:relative;width:100%;
+background:rgba(10,8,20,.78);
+border:1px solid rgba(var(–bca),.28);
+border-left:none; /* replaced by accent strip */
+backdrop-filter:blur(14px);
+padding:clamp(6px,1.1vh,10px) clamp(10px,1.4vw,13px) clamp(6px,1.1vh,10px) clamp(12px,1.6vw,16px);
+transition:border-color .18s,box-shadow .18s;
+overflow:hidden;}
+
+/* left accent strip — multi-layer HUD feel */
+.hb-card::before{
+content:’’;position:absolute;left:0;top:0;bottom:0;width:3px;
+background:linear-gradient(to bottom,
+transparent 0%,
+var(–bc,var(–lavender)) 20%,
+rgba(255,255,255,.6) 50%,
+var(–bc,var(–lavender)) 80%,
+transparent 100%);
+opacity:.7;transition:opacity .18s;}
+
+/* top micro-line */
+.hb-card::after{
+content:’’;position:absolute;top:0;left:3px;right:0;height:1px;
+background:linear-gradient(90deg,var(–bc,var(–lavender)),transparent 60%);
+opacity:.5;}
+
+/* animated bottom lock indicator */
+.hb-lock-indicator{
+position:absolute;bottom:0;left:3px;right:0;height:1px;
+background:var(–bc,var(–lavender));
+transform:scaleX(0);transform-origin:left;
+transition:transform .22s cubic-bezier(.4,0,.2,1);
+box-shadow:0 0 5px var(–bc,var(–lavender));}
+
+/* corner notch top-right */
+.hb-notch{
+position:absolute;top:0;right:0;width:0;height:0;
+border-style:solid;border-width:0 7px 7px 0;
+border-color:transparent var(–bc,var(–lavender)) transparent transparent;
+opacity:.55;}
+
+.hb-inner{display:flex;align-items:center;gap:clamp(7px,1vw,11px);position:relative;z-index:1;}
+
+/* SVG icon container */
+.hb-icon-shape{
+width:clamp(20px,2.8vw,28px);height:clamp(20px,2.8vw,28px);
+flex-shrink:0;display:flex;align-items:center;justify-content:center;
+position:relative;}
+/* glow ring behind icon */
+.hb-icon-shape::before{
+content:’’;position:absolute;inset:-2px;border-radius:50%;
+background:radial-gradient(circle,rgba(var(–bca),.18),transparent 70%);}
+.hb-icon-shape svg{width:100%;height:100%;position:relative;z-index:1;}
+
+.hb-texts{display:flex;flex-direction:column;gap:1px;min-width:0;}
+.hb-sub{
+font-family:var(–ffm);font-size:clamp(6px,.72vw,8px);
+letter-spacing:.18em;text-transform:uppercase;
+color:rgba(var(–bca),.75);line-height:1;}
+.hb-title{
+font-family:var(–ff);font-size:clamp(11px,1.55vw,15px);font-weight:700;
+letter-spacing:.04em;color:var(–ink);line-height:1.15;white-space:nowrap;}
+
+/* ANIMATIONS */
+@keyframes hudPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.4);box-shadow:0 0 10px var(–rose);}}
+
+/* ── DASHBOARD GRID (右パネル) ── */
+.home-right-new{
 position:absolute;right:0;top:clamp(28px,4.5vh,38px);bottom:clamp(20px,3.2vh,28px);
 width:clamp(200px,32vw,300px);z-index:5;
 padding:clamp(8px,1.4vh,14px) clamp(8px,1.2vw,14px);
 display:grid;
-grid-template-columns: 1fr 1fr;
-grid-template-rows: 1.6fr 1fr 1fr;
+grid-template-columns:1fr 1fr;
+grid-template-rows:1.6fr 1fr 1fr;
 gap:clamp(5px,.8vw,8px);}
-
-/* ── DASHBOARD PANEL BASE ── */
 .hdp{
 position:relative;cursor:pointer;
 display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
 padding:clamp(8px,1.2vh,12px) clamp(8px,1.2vw,12px);
 background:rgba(4,8,18,.75);
+border:1px solid rgba(var(–hca,200,170,255),.3);
+border-top:2px solid rgba(var(–hca,200,170,255),.6);
 backdrop-filter:blur(12px);
-transition:transform .18s cubic-bezier(.2,0,.2,1),filter .18s;
+transition:transform .18s cubic-bezier(.2,0,.2,1),filter .18s,border-color .18s;
 overflow:hidden;
 -webkit-tap-highlight-color:transparent;}
-.hdp:hover{transform:scale(1.03);filter:brightness(1.15);}
+.hdp:hover{transform:scale(1.03);filter:brightness(1.15);border-color:rgba(var(–hca,200,170,255),.7);}
 .hdp:active{transform:scale(.97);}
-
-/* sketch border via SVG overlay */
-.hdp-border{
-position:absolute;inset:0;width:100%;height:100%;
-pointer-events:none;z-index:0;overflow:visible;}
-.hdp-border rect{
-fill:none;
-stroke:var(–hc,var(–lavender));
-stroke-width:1.5;
-opacity:.6;
-vector-effect:non-scaling-stroke;}
-/* second slightly offset rect for hand-drawn feel */
-.hdp-border rect:nth-child(2){
-stroke-width:1;
-opacity:.25;
-transform:translate(2px,2px);}
-
-/* glow on hover */
-.hdp::after{
-content:’’;position:absolute;inset:0;
-background:radial-gradient(ellipse at 30% 70%,rgba(var(–hca,200,170,255),.12),transparent 65%);
-pointer-events:none;z-index:0;}
-
-/* top accent line */
-.hdp::before{
-content:’’;position:absolute;top:0;left:8%;right:30%;height:1.5px;
-background:linear-gradient(90deg,var(–hc,var(–lavender)),transparent);
-box-shadow:0 0 8px var(–hc,var(–lavender));
-z-index:1;}
-
-/* large panel spans 2 rows */
 .hdp.large{grid-row:span 2;}
-
-/* content inside panel */
+.hdp::before{
+content:’’;position:absolute;inset:0;
+background:linear-gradient(135deg,rgba(var(–hca,200,170,255),.06),transparent 60%);
+pointer-events:none;}
+.hdp-scan{
+position:absolute;inset:0;pointer-events:none;
+background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(var(–hca,200,170,255),.015) 4px,rgba(var(–hca,200,170,255),.015) 5px);}
 .hdp-content{position:relative;z-index:1;width:100%;}
 .hdp-icon{
 margin-bottom:clamp(4px,.7vh,8px);
@@ -830,20 +782,59 @@ letter-spacing:.18em;text-transform:uppercase;
 color:var(–hc,var(–lavender));line-height:1;margin-bottom:2px;}
 .hdp-title{
 font-family:var(–ff);font-size:clamp(11px,1.6vw,16px);font-weight:700;
-letter-spacing:.06em;color:var(–ink);line-height:1.1;
-text-shadow:0 0 12px rgba(var(–hca,200,170,255),.5);}
+letter-spacing:.06em;color:var(–ink);line-height:1.1;}
 .hdp-badge{
 position:absolute;top:clamp(6px,1vh,10px);right:clamp(6px,1vw,10px);
-font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);
+font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);
 letter-spacing:.1em;color:var(–hc,var(–lavender));
-border:1px solid rgba(var(–hca,200,170,255),.35);
-padding:2px 6px;background:rgba(var(–hca,200,170,255),.08);}
+border:1px solid rgba(var(–hca,200,170,255),.3);
+padding:2px 5px;background:rgba(var(–hca,200,170,255),.07);}
 
-/* scan line inside panel */
-.hdp-scan{
-position:absolute;inset:0;pointer-events:none;z-index:0;
-background:repeating-linear-gradient(
-0deg,transparent,transparent 4px,rgba(var(–hca,200,170,255),.018) 4px,rgba(var(–hca,200,170,255),.018) 5px);}
+/* ── MAIL PAGE ── */
+.mail-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:clamp(10px,1.8vh,16px);}
+.mail-filter-btn{
+font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);letter-spacing:.12em;
+text-transform:uppercase;padding:4px 10px;
+background:rgba(4,8,18,.6);border:1px solid rgba(114,232,200,.2);
+color:var(–ink-dim);cursor:pointer;transition:all .16s;}
+.mail-filter-btn.active{background:rgba(114,232,200,.12);border-color:var(–mint);color:var(–mint);}
+.mail-list{display:flex;flex-direction:column;gap:clamp(5px,.9vh,7px);}
+.mail-row{
+display:flex;align-items:center;gap:clamp(10px,1.5vw,14px);
+padding:clamp(9px,1.5vh,13px) clamp(12px,1.8vw,16px);
+background:rgba(4,8,18,.65);
+border:1px solid rgba(114,232,200,.1);
+border-left:2px solid var(–mc,var(–mint));
+cursor:pointer;transition:all .16s;position:relative;overflow:hidden;}
+.mail-row::before{content:’’;position:absolute;inset:0;
+background:linear-gradient(90deg,rgba(114,232,200,.04),transparent 60%);pointer-events:none;}
+.mail-row:hover{border-color:rgba(114,232,200,.3);transform:translateX(3px);}
+.mail-row-left{flex-shrink:0;display:flex;flex-direction:column;align-items:center;width:clamp(32px,4.5vw,44px);}
+.mail-member-dot{width:8px;height:8px;border-radius:50%;background:var(–mc,var(–mint));
+box-shadow:0 0 6px var(–mc,var(–mint));margin-bottom:4px;}
+.mail-date-d{font-family:var(–ffm);font-size:clamp(13px,1.8vw,18px);font-weight:700;color:var(–ink);line-height:1;}
+.mail-date-m{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);letter-spacing:.1em;color:var(–ink-dim);text-transform:uppercase;}
+.mail-row-info{flex:1;min-width:0;}
+.mail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.14em;text-transform:uppercase;color:var(–mc,var(–mint));margin-bottom:2px;}
+.mail-subject{font-family:var(–ff);font-size:clamp(11px,1.5vw,14px);font-weight:700;color:var(–ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mail-preview{font-family:var(–ffj);font-size:clamp(9px,1.1vw,11px);font-weight:300;color:var(–ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+.mail-row-right{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.mail-fav-btn{background:none;border:none;cursor:pointer;padding:4px;font-size:clamp(13px,1.6vw,16px);line-height:1;opacity:.4;transition:all .16s;}
+.mail-fav-btn.active{opacity:1;filter:drop-shadow(0 0 4px var(–butter));}
+.mail-photo-icon{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);letter-spacing:.08em;color:var(–sky);opacity:.7;}
+.mail-detail-wrap{display:flex;gap:clamp(10px,1.5vw,16px);height:100%;}
+.mail-detail-photos{flex-shrink:0;width:clamp(100px,18vw,160px);display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
+.mail-photo-thumb{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(125,212,240,.2);cursor:pointer;transition:all .16s;display:block;}
+.mail-photo-thumb:hover{border-color:var(–sky);}
+.mail-photo-none{width:100%;aspect-ratio:3/4;border:1px dashed rgba(125,212,240,.15);display:flex;align-items:center;justify-content:center;font-family:var(–ffm);font-size:8px;letter-spacing:.12em;color:var(–ink-dim);text-transform:uppercase;}
+.mail-detail-content{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
+.mail-detail-header{padding:clamp(10px,1.5vh,14px);background:rgba(4,8,18,.65);border:1px solid rgba(114,232,200,.12);border-left:2px solid var(–mint);}
+.mail-detail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.18em;text-transform:uppercase;color:var(–mint);margin-bottom:4px;}
+.mail-detail-subject{font-family:var(–ff);font-size:clamp(13px,1.8vw,17px);font-weight:700;color:var(–ink);line-height:1.2;}
+.mail-detail-date{font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);letter-spacing:.12em;color:var(–ink-dim);margin-top:4px;}
+.mail-detail-body{flex:1;padding:clamp(12px,1.8vh,18px);background:rgba(4,8,18,.5);border:1px solid rgba(114,232,200,.08);font-family:var(–ffj);font-size:clamp(11px,1.4vw,13px);font-weight:300;color:var(–ink-mid);line-height:1.9;white-space:pre-wrap;overflow-y:auto;}
+.mail-photo-viewer{position:fixed;inset:0;z-index:9500;background:rgba(4,8,18,.96);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.mail-photo-viewer img{max-width:95vw;max-height:95vh;object-fit:contain;}
 
 </style>
 </head>
@@ -943,15 +934,14 @@ background:repeating-linear-gradient(
 
   </div>
 
-  <!-- RIGHT PANEL — Dashboard Grid -->
+  <!-- RIGHT PANEL — pastel HUD badges -->
 
-  <div class="home-right">
+  <div class="home-right-new">
 
 ```
 <!-- LARGE: Story -->
 <div class="hdp large" style="--hc:var(--accent);--hca:255,133,168" onclick="goToTab('story')">
   <div class="hdp-scan"></div>
-  <svg class="hdp-border" preserveAspectRatio="none" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="1" y="1" width="98" height="98" rx="2"/><rect x="3" y="3" width="94" height="94" rx="1"/></svg>
   <div class="hdp-badge">CHRONICLE</div>
   <div class="hdp-content">
     <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -966,7 +956,6 @@ background:repeating-linear-gradient(
 <!-- Members -->
 <div class="hdp" style="--hc:var(--rose);--hca:255,179,204" onclick="goToTab('members')">
   <div class="hdp-scan"></div>
-  <svg class="hdp-border" preserveAspectRatio="none" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="1" y="1" width="98" height="98" rx="2"/><rect x="3" y="3" width="94" height="94" rx="1"/></svg>
   <div class="hdp-content">
     <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
@@ -980,7 +969,6 @@ background:repeating-linear-gradient(
 <!-- Mail -->
 <div class="hdp" style="--hc:var(--mint);--hca:114,232,200" onclick="goToTab('mail')">
   <div class="hdp-scan"></div>
-  <svg class="hdp-border" preserveAspectRatio="none" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="1" y="1" width="98" height="98" rx="2"/><rect x="3" y="3" width="94" height="94" rx="1"/></svg>
   <div class="hdp-content">
     <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -994,7 +982,6 @@ background:repeating-linear-gradient(
 <!-- Gacha -->
 <div class="hdp" style="--hc:var(--butter);--hca:255,224,128" onclick="goToTab('gacha')">
   <div class="hdp-scan"></div>
-  <svg class="hdp-border" preserveAspectRatio="none" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="1" y="1" width="98" height="98" rx="2"/><rect x="3" y="3" width="94" height="94" rx="1"/></svg>
   <div class="hdp-content">
     <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--butter)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
@@ -1007,7 +994,6 @@ background:repeating-linear-gradient(
 <!-- Archive -->
 <div class="hdp" style="--hc:var(--sky);--hca:125,212,240" onclick="goToTab('archive')">
   <div class="hdp-scan"></div>
-  <svg class="hdp-border" preserveAspectRatio="none" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="1" y="1" width="98" height="98" rx="2"/><rect x="3" y="3" width="94" height="94" rx="1"/></svg>
   <div class="hdp-content">
     <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/>
@@ -1021,7 +1007,6 @@ background:repeating-linear-gradient(
 <!-- Achievements -->
 <div class="hdp" style="--hc:var(--lavender);--hca:200,170,255" onclick="goToTab('achievements')">
   <div class="hdp-scan"></div>
-  <svg class="hdp-border" preserveAspectRatio="none" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="1" y="1" width="98" height="98" rx="2"/><rect x="3" y="3" width="94" height="94" rx="1"/></svg>
   <div class="hdp-content">
     <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--lavender)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="8" r="6"/>
@@ -1084,7 +1069,14 @@ background:repeating-linear-gradient(
       <div class="pg-eyebrow">Chronicle</div>
       <div class="pg-name">Story</div>
     </div>
-    <div class="pg-actions"></div>
+    <div class="pg-actions">
+      <button class="pg-btn" onclick="openAddChapter()" title="Add Chapter">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+      </button>
+      <button class="pg-btn" onclick="openM('importModal')" title="Import">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M3 11v2h10v-2"/></svg>
+      </button>
+    </div>
   </div>
   <div class="pg-body">
     <div class="story-intro">
@@ -1123,7 +1115,11 @@ background:repeating-linear-gradient(
       <div class="pg-eyebrow">Roster</div>
       <div class="pg-name">Members</div>
     </div>
-    <div class="pg-actions"></div>
+    <div class="pg-actions">
+      <button class="pg-btn" onclick="openAddMember()" title="Add Member">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+      </button>
+    </div>
   </div>
   <div class="pg-body">
     <div class="slabel">Roster — 11 Members</div>
@@ -1147,7 +1143,11 @@ background:repeating-linear-gradient(
       <div class="pg-eyebrow">Card Pull</div>
       <div class="pg-name">Gacha</div>
     </div>
-    <div class="pg-actions"></div>
+    <div class="pg-actions">
+      <button class="pg-btn" onclick="openAddCard()" title="Add Card">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+      </button>
+    </div>
   </div>
   <div class="pg-body">
     <div class="gbanner">
@@ -1162,6 +1162,8 @@ background:repeating-linear-gradient(
     <div class="g-result" id="gRes"></div>
     <div class="slabel">Card Collection</div>
     <div class="coll-grid" id="collGrid"></div>
+    <div class="slabel">Banner</div>
+    <button class="add-banner-btn" onclick="openM('bannerModal')">+ Update Banner</button>
   </div>
 </div>
 
@@ -1177,16 +1179,23 @@ background:repeating-linear-gradient(
       Home
     </button>
     <div class="pg-title-area">
-      <div class="pg-eyebrow">Releases &amp; Lives</div>
+      <div class="pg-eyebrow">Releases &amp; Goods</div>
       <div class="pg-name">Archive</div>
     </div>
-    <div class="pg-actions"></div>
+    <div class="pg-actions">
+      <button class="pg-btn" onclick="openAddDisc()" title="Add Release">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+      </button>
+      <button class="pg-btn" onclick="openAddGoods()" title="Add Goods" style="--pc:var(--rose)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="6" width="12" height="8"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
+      </button>
+    </div>
   </div>
   <div class="pg-body">
     <div class="slabel">Discography</div>
     <div class="disc-list" id="discList"></div>
-    <div class="slabel">Live &amp; Events</div>
-    <div class="live-list" id="liveList"></div>
+    <div class="slabel">Goods &amp; Collection</div>
+    <div class="goods-list" id="goodsList"></div>
   </div>
 </div>
 
@@ -1213,6 +1222,8 @@ background:repeating-linear-gradient(
   </div>
 </div>
 
+<button class="fab" id="fab" onclick="fabClick()"><span style="font-size:16px;line-height:1">+</span><span id="fabL">Add</span></button>
+
 <!-- MAIL PAGE -->
 
 <div class="page" id="page-mail" style="--pc:var(--mint);--pc2:var(--sky);">
@@ -1220,7 +1231,7 @@ background:repeating-linear-gradient(
   <div class="pg-corner tl"></div><div class="pg-corner tr"></div>
   <div class="pg-corner bl"></div><div class="pg-corner br"></div>
   <div class="pg-header">
-    <button class="pg-back" id="mailBackBtn" onclick="mailGoBack()">
+    <button class="pg-back" onclick="mailGoBack()">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
       <span id="mailBackLabel">Home</span>
     </button>
@@ -1230,9 +1241,7 @@ background:repeating-linear-gradient(
     </div>
     <div class="pg-actions"></div>
   </div>
-  <div class="pg-body" id="mailBody">
-    <!-- リスト or 個別ビューをJSで切り替え -->
-  </div>
+  <div class="pg-body" id="mailBody"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1248,6 +1257,11 @@ background:repeating-linear-gradient(
     <div class="stitle">Settings</div>
     <div class="fg"><label class="fl">推し名（ホーム画面に表示）</label><input class="fi" id="sOshiName" placeholder="例：慧人くん"></div>
     <button onclick="saveOshiName()" style="width:100%;padding:11px;background:var(--panel2);border:1px solid var(--border-s);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--ink);transition:all .16s;margin-bottom:16px;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border-s)';this.style.color='var(--ink)'">Save Name</button>
+    <div class="fg" style="margin-top:16px;">
+      <div class="slabel" style="margin-top:0">Admin Mode</div>
+      <p style="font-family:var(--ffj);font-size:12px;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-bottom:12px;">管理者モードをONにすると、データの追加・編集ができます。通常使用時はOFFにしておくことで、ゲームアプリらしい体験になります。</p>
+      <button id="adminToggleBtn" onclick="toggleAdminMode()" style="width:100%;padding:12px;background:transparent;border:1px solid var(--border-s);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--ink-dim);transition:all .22s;">管理者モード: OFF</button>
+    </div>
     <div class="fg" style="margin-top:16px;">
       <div class="slabel" style="margin-top:0">Backup / Restore</div>
       <p style="font-family:var(--ffj);font-size:12px;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-bottom:12px;">データをJSONで書き出してiCloud等に保存できます。</p>
@@ -1277,6 +1291,175 @@ background:repeating-linear-gradient(
   </div>
 </div>
 
+<!-- Chapter modal -->
+
+<div class="overlay" id="chapterModal" onclick="bgC(event,'chapterModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('chapterModal')">✕</button>
+    <div class="stitle" id="chModalTitle">Add Chapter</div>
+    <input type="hidden" id="chId">
+    <div class="fg"><label class="fl">Chapter No.</label><input class="fi" id="chNum" placeholder="例: CH.01"></div>
+    <div class="fg"><label class="fl">Title</label><input class="fi" id="chTitle" placeholder="例: The Beginning"></div>
+    <div class="fg"><label class="fl">Date</label><input class="fi" type="date" id="chDate"></div>
+    <div class="fg"><label class="fl">Story Text</label><textarea class="ft" id="chBody" placeholder="ここにストーリー本文を入力...&#10;&#10;改行はそのまま反映されます。"></textarea></div>
+    <div class="fg"><label class="fl">Unlock Hint (optional)</label><input class="fi" id="chCard" placeholder="例: 🔓 デビューカードが解放されます"></div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveChapter()">Save</button>
+      <button class="bdanger" id="chDelBtn" style="display:none" onclick="delChapter()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Member modal -->
+
+<div class="overlay" id="memberModal" onclick="bgC(event,'memberModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('memberModal')">✕</button>
+    <div class="stitle" id="memModalTitle">Add Member</div>
+    <input type="hidden" id="mId">
+    <div class="fg"><label class="fl">Name</label><input class="fi" id="mN" placeholder="例：木村 慧人"></div>
+    <div class="fg"><label class="fl">Position / Role</label><input class="fi" id="mRo" placeholder="例：CENTER / VOCAL"></div>
+    <div class="fg"><label class="fl">Member Color</label>
+      <div class="crow"><input class="fi" type="color" id="mCo" value="#C0B4E0"><input class="fi" id="mCoH" placeholder="#C0B4E0" style="flex:1"></div>
+    </div>
+    <div class="fg"><label class="fl">Photo (optional)</label>
+      <div class="img-zone" id="memImgZone">
+        <input type="file" accept="image/*" id="memImgFile" onchange="previewImg(this,'memImgPrev','mem')">
+        <div id="memImgPrev"></div>
+        <div class="img-zone-label">写真をタップして選択</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveMember()">Save</button>
+      <button class="bdanger" id="memDelBtn" style="display:none" onclick="delMember()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Card modal -->
+
+<div class="overlay" id="cardModal" onclick="bgC(event,'cardModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('cardModal')">✕</button>
+    <div class="stitle" id="cardModalTitle">Add Card</div>
+    <input type="hidden" id="cId">
+    <div class="fg"><label class="fl">Card Name</label><input class="fi" id="cN" placeholder="例：1st Anniversary"></div>
+    <div class="fg"><label class="fl">Member</label><select class="fs" id="cMember"><option value="">— All Members —</option></select></div>
+    <div class="fg"><label class="fl">Rarity</label>
+      <select class="fs" id="cR"><option value="n">N</option><option value="r">R</option><option value="sr">SR</option><option value="ssr">SSR</option><option value="ur">UR</option></select>
+    </div>
+    <div class="fg"><label class="fl">Type</label><input class="fi" id="cT" placeholder="例：アー写 / LIVE / LIMITED"></div>
+    <div class="fg"><label class="fl">Card Image (optional)</label>
+      <div class="img-zone" id="cardImgZone">
+        <input type="file" accept="image/*" id="cardImgFile" onchange="previewImg(this,'cardImgPrev','card')">
+        <div id="cardImgPrev"></div>
+        <div class="img-zone-label">画像をタップして選択（アー写など）</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveCard()">Save</button>
+      <button class="bdanger" id="cardDelBtn" style="display:none" onclick="delCard()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Banner modal -->
+
+<div class="overlay" id="bannerModal" onclick="bgC(event,'bannerModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('bannerModal')">✕</button>
+    <div class="stitle">Update Banner</div>
+    <div class="fg"><label class="fl">Title</label><input class="fi" id="bTi" placeholder="例：2nd Anniversary ガチャ"></div>
+    <div class="fg"><label class="fl">Subtitle</label><input class="fi" id="bSi" placeholder="例：新衣装カードが登場！"></div>
+    <button class="bsub" onclick="saveBanner()">Update</button>
+  </div>
+</div>
+
+<!-- Disc modal -->
+
+<div class="overlay" id="discModal" onclick="bgC(event,'discModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('discModal')">✕</button>
+    <div class="stitle" id="discModalTitle">Add Release</div>
+    <input type="hidden" id="dId">
+    <div class="fg"><label class="fl">Type</label>
+      <select class="fs" id="dTy"><option value="single">Single</option><option value="album">Album</option><option value="digital">Digital</option></select>
+    </div>
+    <div class="fg"><label class="fl">Title</label><input class="fi" id="dTi" placeholder="例：「READY?」"></div>
+    <div class="fg"><label class="fl">Release Date</label><input class="fi" type="date" id="dDa"></div>
+    <div class="fg"><label class="fl">Tag</label><input class="fi" id="dTg" placeholder="例：デビューシングル"></div>
+    <div class="fg"><label class="fl">Jacket Image (optional)</label>
+      <div class="img-zone" id="discImgZone">
+        <input type="file" accept="image/*" id="discImgFile" onchange="previewImg(this,'discImgPrev','disc')">
+        <div id="discImgPrev"></div>
+        <div class="img-zone-label">画像をタップして選択</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveDisc()">Save</button>
+      <button class="bdanger" id="discDelBtn" style="display:none" onclick="delDisc()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Goods modal -->
+
+<div class="overlay" id="goodsModal" onclick="bgC(event,'goodsModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('goodsModal')">✕</button>
+    <div class="stitle" id="goodsModalTitle">Add Goods</div>
+    <input type="hidden" id="gId">
+    <div class="fg"><label class="fl">Category</label>
+      <select class="fs" id="gCat">
+        <option value="photobook">写真集</option><option value="photocard">フォトカード</option>
+        <option value="penlight">ペンライト</option><option value="cd">CD / アルバム</option>
+        <option value="goods">グッズ全般</option><option value="other">その他</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Item Name</label><input class="fi" id="gName" placeholder="例：写真集「INI FILE 01」"></div>
+    <div class="fg"><label class="fl">Note (optional)</label><input class="fi" id="gNote" placeholder="例：初回限定版 / 木村慧人ver."></div>
+    <div class="fg"><label class="fl">Owned?</label>
+      <select class="fs" id="gOwned"><option value="1">✅ 所持している</option><option value="0">○ まだ持っていない</option></select>
+    </div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveGoods()">Save</button>
+      <button class="bdanger" id="goodsDelBtn" style="display:none" onclick="delGoods()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Import modal -->
+
+<div class="overlay" id="importModal" onclick="bgC(event,'importModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('importModal')">✕</button>
+    <div class="stitle">CSV Import</div>
+    <div class="fg"><label class="fl">Target</label>
+      <select class="fs" id="csvType" onchange="updateCsvHint()">
+        <option value="members">Members</option>
+        <option value="discography">Discography</option>
+        <option value="chapters">Story Chapters</option>
+        <option value="goods">Goods</option>
+      </select>
+    </div>
+    <div id="csvHint" style="font-family:var(--ffm);font-size:9px;letter-spacing:.1em;color:var(--ink-dim);line-height:1.8;margin-bottom:10px;background:var(--panel2);padding:10px;border:1px solid var(--border);"></div>
+    <button onclick="downloadTemplate()" style="background:none;border:none;font-family:var(--ff);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:10px;display:flex;align-items:center;gap:6px;">⬇ テンプレートDL</button>
+    <div class="img-zone">
+      <input type="file" accept=".csv,text/csv" id="csvFile" onchange="readCSV(this)">
+      <div class="img-zone-label">CSVをタップして選択</div>
+    </div>
+    <div id="csvPreview" style="font-family:var(--ffm);font-size:10px;color:var(--ink-mid);margin-top:10px;min-height:18px;"></div>
+    <button class="bsub" id="csvImportBtn" style="display:none" onclick="executeImport()">Import</button>
+  </div>
+</div>
+
 <!-- Confirm -->
 
 <div class="overlay" id="confirmModal" onclick="bgC(event,'confirmModal')">
@@ -1292,23 +1475,33 @@ background:repeating-linear-gradient(
 </div>
 
 <script>
+// ═══ STATE ═══
 const SAVE_KEY='ini_chronicle_v1';
+// ═══ SAVE KEY ═══
+// (SAVE_KEY already defined above)
 
-// USER data: persisted in localStorage | MASTER data: loaded from data/*.json
+// ═══ STATE ═══
+// USER data: persisted in localStorage (owned, read, goods, oshi settings)
+// MASTER data: loaded from data/*.json at startup (chapters, cards, members, discography)
 let S = {
   bannerTitle:'デビュー記念ガチャ', bannerSub:'限定カードが手に入るチャンス！',
-  chapters:[], members:[], cards:[], discography:[], mails:[],
-  owned:{}, readIds:[], lives:[], mailFavs:[], oshiName:'', oshiPhoto:'', currentTab:'story'
+  // master (overwritten by fetch)
+  chapters:[], members:[], cards:[], discography:[],
+  // user data (persisted)
+  owned:{}, readIds:[], goods:[], mails:[], mailFavs:[], oshiName:'', oshiPhoto:'', currentTab:'story',
+  // settings
+  adminMode: false
 };
 
+// Load user data from localStorage (only user fields)
 try {
   const saved = JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');
-  const USER_KEYS = ['owned','readIds','lives','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub'];
+  const USER_KEYS = ['owned','readIds','goods','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub','adminMode'];
   USER_KEYS.forEach(k=>{ if(saved[k]!==undefined) S[k]=saved[k]; });
 } catch(e){}
 
 function save(){
-  const USER_KEYS = ['owned','readIds','lives','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub'];
+  const USER_KEYS = ['owned','readIds','goods','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub','adminMode'];
   const payload = {};
   USER_KEYS.forEach(k=>payload[k]=S[k]);
   try{ localStorage.setItem(SAVE_KEY, JSON.stringify(payload)); }catch(e){}
@@ -1330,75 +1523,9 @@ const FALLBACK = {
     {id:'m11',name:'槇 賢一郎', kana:'MAKI KENICHIRO',   role:'VOCAL / DANCE',  color:'#F2D4B8', bday:'1999-05-23', note:'', img:''},
   ],
   chapters:[
-    {id:'ch1',num:'CH.01',title:'The Beginning',date:'2021-03-26',color:'#C0B4E0',cardHint:'',
-     body:`2021年3月26日——。
-
-「Produce 101 Japan Season 2」最終回。
-日本全国から投票された運命の瞬間、11人の名前が呼ばれた。
-
-木村慧人、松田迅、尾崎匠海、西洸人、藤牧京介——。
-田島将吾、後藤威尊、許豊凡、高塚大夢、佐野雄大、槇賢一郎。
-
-デビューが確定した瞬間、会場の歓声は最高潮に達した。
-泣いていたメンバーもいた。笑っていたメンバーもいた。
-全員の目に、同じ光が宿っていた。
-
-これが、INIの始まりだった。`},
-
-    {id:'ch2',num:'CH.02',title:'READY?',date:'2021-11-03',color:'#F2B8C6',cardHint:'',
-     body:`2021年11月3日——デビューシングル「READY?」リリース。
-
-デビューまでの7ヶ月間、11人はひたすら練習を重ねた。
-振り付け、歌唱、パフォーマンス——すべてがゼロからの出発だった。
-
-「READY?」というタイトルには、「自分たちは準備できている」という意志と、ファンへの問いかけが込められていた。
-
-リリース当日、楽曲は各種チャートを席巻。
-INIは颯爽と、音楽シーンに踊り出た。
-
-───「俺たちはREADYだ」───`},
-
-    {id:'ch3',num:'CH.03',title:'1st Anniversary',date:'2022-03-26',color:'#9ECFBC',cardHint:'',
-     body:`2022年3月26日——デビューからちょうど1年。
-
-あっという間の365日だったと、メンバーは口を揃えた。
-シングルを重ね、ライブを重ね、ファンとともに成長してきた1年間。
-
-1周年を迎えた夜、INIはファンへのメッセージを届けた。
-
-「みなさんがいたから、ここまで来られた。
-これからも一緒に歩いていきたい。」
-
-木村慧人の言葉は、11人全員の気持ちを代弁していた。
-
-MINIへ——ありがとう、そしてこれからもよろしく。`},
-
-    {id:'ch4',num:'CH.04',title:'BREAK THE CODE',date:'2022-09-14',color:'#A8CEDE',cardHint:'',
-     body:`2022年9月14日——1stアルバム「BREAK THE CODE」リリース。
-
-「コードを破れ」——そのタイトルが示す通り、INIは既存の枠を超えることに挑んだ。
-
-収録曲は多彩なジャンルにわたり、11人それぞれの個性が存分に発揮された。
-爽やかなポップス、力強いダンスナンバー、そして繊細なバラード。
-
-「これが今の俺たちのすべてです」——
-アルバムを引っ提げたライブツアーは、各地で感動を呼んだ。
-
-INIは確実に、次のステージへと進んでいた。`},
-
-    {id:'ch5',num:'CH.05',title:'2nd Anniversary',date:'2023-03-26',color:'#EDD99A',cardHint:'',
-     body:`2023年3月26日——デビュー2周年。
-
-2年間で積み重ねたもの——6枚のシングル、1枚のアルバム、数え切れないほどのライブ。
-そして何より、MINIとの絆。
-
-2周年記念日、INIは特別なライブを開催した。
-セットリストはデビュー曲から最新曲まで、INIの歴史そのもの。
-
-アンコールの最後、木村慧人がマイクを持って言った。
-「3年目も、4年目も——ずっと一緒に行こう」
-
-会場の「ありがとう」が、夜空に響き渡った。`},
+    {id:'ch1',num:'CH.01',title:'The Beginning',  date:'2021-03-26',body:'2021年3月26日、「Produce 101 Japan Season 2」最終回。\n\n視聴者の投票によって選ばれた11人の名前が、一人ずつ呼ばれた。\n\nこの瞬間から、INIの物語が始まった。',cardHint:'',color:'#C0B4E0'},
+    {id:'ch2',num:'CH.02',title:'READY?',          date:'2021-11-03',body:'2021年11月3日、デビューシングル「READY?」リリース。\n\nデビューと同時に各種チャートを席巻。INIは走り出した。',cardHint:'',color:'#F2B8C6'},
+    {id:'ch3',num:'CH.03',title:'1st Anniversary', date:'2022-03-26',body:'デビューから1年。\n\n2022年3月26日、INIはデビュー1周年を迎えた。ファンとともに歩んだ365日——',cardHint:'',color:'#9ECFBC'},
   ],
   cards:[
     {id:'card1',name:'デビュー記念カード',member:'m1',rarity:'sr',img:'',note:'2021年11月3日 デビュー記念'},
@@ -1406,19 +1533,11 @@ INIは確実に、次のステージへと進んでいた。`},
     {id:'card3',name:'Rocketeer MV Ver.',member:'m2',rarity:'sr',img:'',note:'2ndシングル'},
   ],
   discography:[
-    {id:'d1', type:'single',title:'「READY?」',          date:'2021-11-03',tag:'デビューシングル',img:''},
-    {id:'d2', type:'single',title:'「Rocketeer」',       date:'2022-02-16',tag:'2ndシングル',    img:''},
-    {id:'d3', type:'single',title:'「CALL」',            date:'2022-05-11',tag:'3rdシングル',    img:''},
-    {id:'d4', type:'single',title:'「FANFARE」',         date:'2022-07-13',tag:'4thシングル',    img:''},
-    {id:'d5', type:'album', title:'「BREAK THE CODE」',  date:'2022-09-14',tag:'1stアルバム',    img:''},
-    {id:'d6', type:'single',title:'「Dramatic」',        date:'2022-11-02',tag:'5thシングル',    img:''},
-    {id:'d7', type:'single',title:'「M」',               date:'2023-01-25',tag:'6thシングル',    img:''},
-    {id:'d8', type:'single',title:'「SOS」',             date:'2023-04-12',tag:'7thシングル',    img:''},
-    {id:'d9', type:'album', title:'「&」',               date:'2023-07-19',tag:'2ndアルバム',    img:''},
-    {id:'d10',type:'single',title:'「ZIPPED UP」',       date:'2023-10-25',tag:'8thシングル',    img:''},
-    {id:'d11',type:'single',title:'「Your Wanna Be?」',  date:'2024-02-14',tag:'9thシングル',    img:''},
-    {id:'d12',type:'single',title:'「Serendipity」',     date:'2024-05-29',tag:'10thシングル',   img:''},
-    {id:'d13',type:'album', title:'「ONENESS」',         date:'2024-09-11',tag:'3rdアルバム',    img:''},
+    {id:'d1',type:'single',title:'「READY?」',       date:'2021-11-03',tag:'デビューシングル',img:''},
+    {id:'d2',type:'single',title:'「Rocketeer」',    date:'2022-02-16',tag:'2ndシングル',    img:''},
+    {id:'d3',type:'album', title:'「BREAK THE CODE」',date:'2022-09-14',tag:'1stアルバム',   img:''},
+    {id:'d4',type:'single',title:'「M」',            date:'2023-01-25',tag:'6thシングル',   img:''},
+    {id:'d5',type:'album', title:'「&」',            date:'2023-07-19',tag:'2ndアルバム',   img:''},
   ]
 };
 
@@ -1426,20 +1545,66 @@ INIは確実に、次のステージへと進んでいた。`},
 async function loadMasterData(){
   const files = ['members','chapters','cards','discography'];
   const results = await Promise.allSettled(
-    files.map(f => fetch('./data/'+f+'.json').then(r=>{ if(!r.ok)throw new Error(r.status); return r.json(); }))
+    files.map(f => fetch(`./data/${f}.json`).then(r=>{ if(!r.ok)throw new Error(r.status); return r.json(); }))
   );
   let anyFailed = false;
   files.forEach((f,i)=>{
     if(results[i].status==='fulfilled'){
       S[f] = results[i].value;
     } else {
-      S[f] = FALLBACK[f]||[];
+      S[f] = FALLBACK[f];
       anyFailed = true;
     }
   });
+  // merge read state into chapters
   S.chapters = S.chapters.map(ch=>({...ch, read: S.readIds.includes(ch.id)}));
   if(anyFailed) console.warn('// data fetch failed — using fallback');
 }
+
+// ═══ ADMIN MODE ═══
+function isAdmin(){ return S.adminMode===true; }
+function toggleAdminMode(){
+  S.adminMode = !S.adminMode;
+  save();
+  applyAdminUI();
+  toast(S.adminMode ? '// 管理者モード ON' : '// 管理者モード OFF');
+}
+function applyAdminUI(){
+  const admin = isAdmin();
+
+  // FAB
+  const fab = document.getElementById('fab');
+  if(fab){
+    if(admin && S.currentTab && S.currentTab!=='achievements') fab.style.display='flex';
+    else fab.style.display='none';
+  }
+
+  // Page header action buttons (+ buttons in each page header)
+  document.querySelectorAll('.pg-actions .pg-btn').forEach(btn=>{
+    btn.style.display = admin ? '' : 'none';
+  });
+
+  // Admin toggle button text/style
+  const btn = document.getElementById('adminToggleBtn');
+  if(btn){
+    btn.textContent = admin ? '管理者モード: ON' : '管理者モード: OFF';
+    btn.style.borderColor = admin ? 'var(--rose)' : '';
+    btn.style.color = admin ? 'var(--rose)' : '';
+  }
+
+  // Re-render currently visible page so inline edit buttons update
+  if(S.currentTab){
+    const rerender = {
+      story: renderStory,
+      members: renderMembers,
+      gacha: renderCollGrid,
+      archive: ()=>{renderDisc();renderGoods();},
+      achievements: renderAch
+    };
+    if(rerender[S.currentTab]) rerender[S.currentTab]();
+  }
+}
+
 
 // ═══ IMAGE ═══
 let _img={card:'',disc:'',mem:''};
@@ -1494,6 +1659,7 @@ function renderStory(){
       <div class="chapter-status">
         <span class="chapter-badge ${ch.read?'read':'unread'}">${ch.read?'READ':'UNREAD'}</span>
         ${ch.cardHint?`<span class="chapter-card-hint">🔓 ${ch.cardHint}</span>`:''}
+        ${isAdmin()?`<button class="chapter-edit-btn" onclick="event.stopPropagation();openEditChapter('${ch.id}')">✎</button>`:''}
       </div>
     </div>`;
     if(ch.body)div.addEventListener('click',()=>openReader(ch.id));
@@ -1521,11 +1687,45 @@ function markRead(){
   }
   closeReader();toast('// READ ✓');
 }
+function openAddChapter(){
+  document.getElementById('chModalTitle').textContent='Add Chapter';
+  document.getElementById('chId').value='';
+  ['chNum','chTitle','chCard','chBody'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('chDate').value='';
+  document.getElementById('chDelBtn').style.display='none';
+  openM('chapterModal');
+}
+function openEditChapter(id){
+  const ch=S.chapters.find(x=>x.id===id);if(!ch)return;
+  document.getElementById('chModalTitle').textContent='Edit Chapter';
+  document.getElementById('chId').value=id;
+  document.getElementById('chNum').value=ch.num;
+  document.getElementById('chTitle').value=ch.title;
+  document.getElementById('chDate').value=ch.date||'';
+  document.getElementById('chBody').value=ch.body||'';
+  document.getElementById('chCard').value=ch.cardHint||'';
+  document.getElementById('chDelBtn').style.display='';
+  openM('chapterModal');
+}
+function saveChapter(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('chId').value;
+  const title=document.getElementById('chTitle').value.trim();if(!title){toast('// TITLE REQUIRED');return;}
+  const obj={id:id||'ch'+Date.now(),num:document.getElementById('chNum').value||'CH.??',title,date:document.getElementById('chDate').value||'',body:document.getElementById('chBody').value,cardHint:document.getElementById('chCard').value,color:'#C0B4E0',read:S.readIds.includes(id)};
+  if(id){const i=S.chapters.findIndex(x=>x.id===id);if(i>=0)S.chapters[i]=obj;}
+  else S.chapters.push(obj);
+  save();renderStory();updateStats();closeM('chapterModal');toast(id?'// SAVED':'// CHAPTER ADDED');
+}
+function delChapter(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('chId').value;confirmDel('chapter',id,'このチャプターを削除しますか？');
+}
 
 // ═══ MEMBERS ═══
 function renderMembers(){
   const g=document.getElementById('memberGrid');g.innerHTML='';
-  if(!S.members.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="empty-i">NO DATA</span><div class="empty-t">メンバーデータを読み込んでいます</div></div>';return;}
+  populateMemberSelect();
+  if(!S.members.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="empty-i">NO DATA</span><div class="empty-t">メンバーをまだ追加していません</div></div>';return;}
   S.members.forEach(m=>{
     const hex=m.color||'#C0B4E0';
     const cardCount=S.cards.filter(c=>c.member===m.id&&(S.owned[c.id]||0)>0).length;
@@ -1534,7 +1734,8 @@ function renderMembers(){
     d.style.setProperty('--mc',hex);
     const pSvg=`<svg viewBox="0 0 24 24" fill="none" stroke="${hex}" stroke-width="1.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`;
     const av=m.img?`<img class="member-photo" src="${m.img}">`:`<div class="member-photo-placeholder">${pSvg}</div>`;
-    d.innerHTML=`${av}<div class="member-info"><div class="member-name">${m.name}</div><div class="member-pos">${m.role||''}</div>${cardCount?`<div class="member-card-count">★ ${cardCount} cards</div>`:''}</div>`;
+    const ia=isAdmin()?`<div class="ia" style="position:absolute;top:4px;right:4px;z-index:2"><button class="act edt" onclick="event.stopPropagation();openEditMember('${m.id}')">✎</button></div>`:'';
+    d.innerHTML=`${ia}${av}<div class="member-info"><div class="member-name">${m.name}</div><div class="member-pos">${m.role||''}</div>${cardCount?`<div class="member-card-count">★ ${cardCount} cards</div>`:''}</div>`;
     d.addEventListener('click',()=>openMemberDetail(m.id));
     g.appendChild(d);
   });
@@ -1576,15 +1777,61 @@ function openMemberDetail(id){
       ${m.note?`<div class="md-note">${m.note}</div>`:''}
       <div class="slabel">Cards</div>
       ${cardsHtml}
+      <div class="md-actions">
+        ${isAdmin()?`<button class="bsub" style="margin-top:0;flex:1" onclick="openEditMember('${m.id}');closeMemberDetail()">Edit Member</button>`:''}
+      </div>
     </div>`;
   detail.classList.add('open');
 }
 function closeMemberDetail(){document.getElementById('memberDetail').classList.remove('open');}
+function populateMemberSelect(){
+  const sel=document.getElementById('cMember');const cur=sel.value;
+  sel.innerHTML='<option value="">— All Members —</option>';
+  S.members.forEach(m=>sel.innerHTML+=`<option value="${m.id}">${m.name}</option>`);
+  sel.value=cur;
+}
+function openAddMember(){
+  document.getElementById('memModalTitle').textContent='Add Member';
+  document.getElementById('mId').value='';
+  ['mN','mRo','mCoH'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('mCo').value='#C0B4E0';
+  document.getElementById('memDelBtn').style.display='none';
+  setImgZone('memImgZone','memImgPrev','mem','');
+  openM('memberModal');
+}
+function openEditMember(id){
+  const m=S.members.find(x=>x.id===id);if(!m)return;
+  document.getElementById('memModalTitle').textContent='Edit Member';
+  document.getElementById('mId').value=id;
+  document.getElementById('mN').value=m.name;
+  document.getElementById('mRo').value=m.role||'';
+  document.getElementById('mCo').value=m.color||'#C0B4E0';
+  document.getElementById('mCoH').value=m.color||'#C0B4E0';
+  document.getElementById('memDelBtn').style.display='';
+  setImgZone('memImgZone','memImgPrev','mem',m.img);
+  openM('memberModal');
+}
+function saveMember(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('mId').value;
+  const name=document.getElementById('mN').value.trim();if(!name){toast('// NAME REQUIRED');return;}
+  const hex=document.getElementById('mCoH').value||document.getElementById('mCo').value;
+  const existImg=id?(S.members.find(x=>x.id===id)||{}).img||'':'';
+  const obj={id:id||'m'+Date.now(),name,kana:'',role:document.getElementById('mRo').value,color:hex,bday:'',note:'',img:_img.mem||existImg};
+  if(id){const i=S.members.findIndex(x=>x.id===id);if(i>=0)S.members[i]=obj;}
+  else S.members.push(obj);
+  save();renderMembers();closeM('memberModal');toast(id?'// SAVED':'// MEMBER ADDED');
+}
+function delMember(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('mId').value;confirmDel('member',id,'このメンバーを削除しますか？');
+}
+
 // ═══ GACHA ═══
 const rPool=[{r:'ur',w:1},{r:'ssr',w:3},{r:'sr',w:8},{r:'r',w:20},{r:'n',w:68}];
 function rollR(){let x=Math.random()*100,c=0;for(const{r,w}of rPool){c+=w;if(x<c)return r;}return 'n';}
 function doGacha(n){
-  if(!S.cards.length){toast('// カードデータを読み込んでいます');return;}
+  if(!S.cards.length){toast('// カードをまず追加してください');return;}
   const res=[];
   for(let i=0;i<n;i++){
     const pool=S.cards.filter(c=>c.rarity===rollR());
@@ -1609,13 +1856,56 @@ function renderGachaResult(res){
 }
 function renderCollGrid(){
   const g=document.getElementById('collGrid');g.innerHTML='';
-  if(!S.cards.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="empty-i">NO CARDS</span><div class="empty-t">カードデータを読み込み中...</div></div>';return;}
+  if(!S.cards.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="empty-i">NO CARDS</span><div class="empty-t">カードをまだ追加していません<br>+ Add Card から追加しよう</div></div>';return;}
   S.cards.forEach(c=>{
     const owned=S.owned[c.id]||0;const m=S.members.find(x=>x.id===c.member);
     const d=document.createElement('div');d.className=`coll-card r-${c.rarity}${owned?' owned':''}`;
-    d.innerHTML=`${owned?`<div class="coll-cnt">×${owned}</div>`:''}`+(c.img?`<img class="coll-img" src="${c.img}">`:`<span class="coll-emoji">✦</span>`)+`<div class="coll-name">${c.name}</div><div class="coll-r">${c.rarity.toUpperCase()}</div><div class="coll-member">${m?m.name:''}</div>`;
+    const editBtns=isAdmin()?`<div class="coll-ia"><button class="act edt" style="flex:1" onclick="openEditCard('${c.id}')">✎</button><button class="act del" style="flex:1" onclick="confirmDel('card','${c.id}','削除しますか？')">✕</button></div>`:'';
+    d.innerHTML=`${owned?`<div class="coll-cnt">×${owned}</div>`:''}`+(c.img?`<img class="coll-img" src="${c.img}">`:`<span class="coll-emoji">✦</span>`)+`<div class="coll-name">${c.name}</div><div class="coll-r">${c.rarity.toUpperCase()}</div><div class="coll-member">${m?m.name:''}</div>${editBtns}`;
     g.appendChild(d);
   });
+}
+function openAddCard(){
+  document.getElementById('cardModalTitle').textContent='Add Card';
+  document.getElementById('cId').value='';
+  ['cN','cT'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('cR').value='r';document.getElementById('cMember').value='';
+  document.getElementById('cardDelBtn').style.display='none';
+  setImgZone('cardImgZone','cardImgPrev','card','');
+  openM('cardModal');
+}
+function openEditCard(id){
+  const c=S.cards.find(x=>x.id===id);if(!c)return;
+  document.getElementById('cardModalTitle').textContent='Edit Card';
+  document.getElementById('cId').value=id;
+  document.getElementById('cN').value=c.name;
+  document.getElementById('cR').value=c.rarity;
+  document.getElementById('cT').value=c.type||'';
+  document.getElementById('cMember').value=c.member||'';
+  document.getElementById('cardDelBtn').style.display='';
+  setImgZone('cardImgZone','cardImgPrev','card',c.img);
+  openM('cardModal');
+}
+function saveCard(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('cId').value;
+  const name=document.getElementById('cN').value.trim();if(!name){toast('// NAME REQUIRED');return;}
+  const existImg=id?(S.cards.find(x=>x.id===id)||{}).img||'':'';
+  const obj={id:id||'c'+Date.now(),name,rarity:document.getElementById('cR').value,type:document.getElementById('cT').value.toUpperCase(),member:document.getElementById('cMember').value,img:_img.card||existImg};
+  if(id){const i=S.cards.findIndex(x=>x.id===id);if(i>=0)S.cards[i]=obj;}
+  else S.cards.push(obj);
+  save();renderCollGrid();closeM('cardModal');toast(id?'// SAVED':'// CARD ADDED');
+}
+function delCard(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('cId').value;confirmDel('card',id,'このカードを削除しますか？');
+}
+function saveBanner(){
+  const t=document.getElementById('bTi').value.trim(),s=document.getElementById('bSi').value.trim();
+  if(t)S.bannerTitle=t;if(s)S.bannerSub=s;
+  document.getElementById('bTitle').textContent=S.bannerTitle;
+  document.getElementById('bSub').textContent=S.bannerSub;
+  save();closeM('bannerModal');toast('// BANNER UPDATED');
 }
 function burst(){
   const f=document.getElementById('fl');f.classList.remove('on');void f.offsetWidth;f.classList.add('on');
@@ -1636,11 +1926,12 @@ function renderDisc(){
   const el=document.getElementById('discList');el.innerHTML='';
   if(!S.discography.length){el.innerHTML='<div class="empty"><span class="empty-i">NO DATA</span><div class="empty-t">作品データがありません</div></div>';return;}
   const sorted=[...S.discography].sort((a,b)=>new Date(a.date)-new Date(b.date));
-  sorted.forEach(d=>{
+  sorted.forEach((d,i)=>{
     const owned=!!(S.owned['disc_'+d.id]);
     const div=document.createElement('div');div.className='disc-item';
     const art=d.img?`<img class="disc-art" src="${d.img}">`:`<div class="disc-art-ph"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(168,206,222,.3)" stroke-width="1" stroke-linecap="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></div>`;
-    div.innerHTML=`${art}<div class="disc-info"><div class="disc-title">${d.title}</div><div class="disc-meta">${d.date}${d.tag?' · '+d.tag:''}</div><div class="disc-type">${d.type.toUpperCase()}</div></div><div style="flex-shrink:0"><button class="disc-toggle${owned?' owned':''}" onclick="toggleDiscOwned('${d.id}')">${owned?'✓ 所持':'未所持'}</button></div>`;
+    const editBtn=isAdmin()?`<button class="act edt" onclick="openEditDisc('${d.id}')">✎</button>`:'';
+    div.innerHTML=`${art}<div class="disc-info"><div class="disc-title">${d.title}</div><div class="disc-meta">${d.date}${d.tag?' · '+d.tag:''}</div><div class="disc-type">${d.type.toUpperCase()}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><button class="disc-toggle${owned?' owned':''}" onclick="toggleDiscOwned('${d.id}')">${owned?'✓ 所持':'未所持'}</button>${editBtn}</div>`;
     el.appendChild(div);
   });
 }
@@ -1649,42 +1940,72 @@ function toggleDiscOwned(id){
   S.owned[key]=S.owned[key]?0:1;
   save();renderDisc();renderAch();
 }
-function renderLives(){
-  const el=document.getElementById('liveList');if(!el)return;el.innerHTML='';
-  if(!S.lives||!S.lives.length){
-    el.innerHTML='<div class="empty"><span class="empty-i">NO DATA</span><div class="empty-t">ライブ・イベントの記録がありません</div></div>';return;
-  }
-  const sorted=[...S.lives].sort((a,b)=>new Date(a.date)-new Date(b.date));
-  sorted.forEach(lv=>{
-    const attended=!!lv.attended;
-    const d=document.createElement('div');
-    d.className='live-item'+(attended?' attended':'');
-    const dt=lv.date?new Date(lv.date):null;
-    const year=dt?dt.getFullYear():'';
-    const day=dt?String(dt.getDate()).padStart(2,'0'):'--';
-    const mon=dt?dt.toLocaleString('en',{month:'short'}).toUpperCase():'';
-    d.innerHTML=`
-      <div class="live-date-block">
-        <div class="live-date-y">${year}</div>
-        <div class="live-date-d">${day}</div>
-        <div class="live-date-m">${mon}</div>
-      </div>
-      <div class="live-info">
-        <div class="live-title">${lv.title}</div>
-        <div class="live-venue">${lv.venue||''}</div>
-        ${lv.note?`<div class="live-note">${lv.note}</div>`:''}
-        ${lv.tag?`<div class="live-tag">${lv.tag}</div>`:''}
-      </div>
-      <button class="live-attend-btn${attended?' attended':''}" onclick="toggleLiveAttend('${lv.id}')">
-        ${attended?'✓ 参戦':'未参戦'}
-      </button>`;
+function openAddDisc(){
+  document.getElementById('discModalTitle').textContent='Add Release';
+  document.getElementById('dId').value='';
+  ['dTi','dDa','dTg'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('dTy').value='single';document.getElementById('discDelBtn').style.display='none';
+  setImgZone('discImgZone','discImgPrev','disc','');openM('discModal');
+}
+function openEditDisc(id){
+  const d=S.discography.find(x=>x.id===id);if(!d)return;
+  document.getElementById('discModalTitle').textContent='Edit Release';
+  document.getElementById('dId').value=id;document.getElementById('dTy').value=d.type;
+  document.getElementById('dTi').value=d.title;document.getElementById('dDa').value=d.date||'';
+  document.getElementById('dTg').value=d.tag||'';document.getElementById('discDelBtn').style.display='';
+  setImgZone('discImgZone','discImgPrev','disc',d.img);openM('discModal');
+}
+function saveDisc(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('dId').value;
+  const title=document.getElementById('dTi').value.trim();if(!title){toast('// TITLE REQUIRED');return;}
+  const existImg=id?(S.discography.find(x=>x.id===id)||{}).img||'':'';
+  const obj={id:id||'d'+Date.now(),type:document.getElementById('dTy').value,title,date:document.getElementById('dDa').value||'—',tag:document.getElementById('dTg').value,img:_img.disc||existImg};
+  if(id){const i=S.discography.findIndex(x=>x.id===id);if(i>=0)S.discography[i]=obj;}
+  else S.discography.push(obj);
+  save();renderDisc();renderAch();updateStats();closeM('discModal');toast(id?'// SAVED':'// RELEASE ADDED');
+}
+function delDisc(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('dId').value;confirmDel('disc',id,'この作品を削除しますか？');
+}
+function renderGoods(){
+  const el=document.getElementById('goodsList');el.innerHTML='';
+  if(!S.goods.length){el.innerHTML='<div class="empty"><span class="empty-i">NO DATA</span><div class="empty-t">グッズをまだ追加していません</div></div>';return;}
+  S.goods.forEach(g=>{
+    const d=document.createElement('div');d.className='goods-item';
+    const ph=`<div class="goods-img-ph"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(192,107,138,.28)" stroke-width="1.2" stroke-linecap="round" width="18" height="18"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M8 6V4a4 4 0 018 0v2"/></svg></div>`;
+    const img=g.img?`<img class="goods-img" src="${g.img}">`  : ph;
+    const editBtn=isAdmin()?`<button class="act edt" onclick="openEditGoods('${g.id}')">✎</button>`:'';
+    d.innerHTML=`${img}<div class="goods-info"><div class="goods-name">${g.name}</div><div class="goods-cat">${g.cat}</div>${g.note?`<div class="goods-note">${g.note}</div>`:''}</div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><button class="goods-toggle${g.owned?' owned':''}" onclick="toggleGoods('${g.id}')">${g.owned?'✓ 所持':'未所持'}</button>${editBtn}</div>`;
     el.appendChild(d);
   });
 }
-function toggleLiveAttend(id){
-  const lv=S.lives.find(x=>x.id===id);if(!lv)return;
-  lv.attended=!lv.attended;save();renderLives();renderAch();
+function toggleGoods(id){const g=S.goods.find(x=>x.id===id);if(!g)return;g.owned=!g.owned;save();renderGoods();renderAch();}
+function openAddGoods(){
+  document.getElementById('goodsModalTitle').textContent='Add Goods';
+  document.getElementById('gId').value='';
+  ['gName','gNote'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('gCat').value='goods';document.getElementById('gOwned').value='0';
+  document.getElementById('goodsDelBtn').style.display='none';openM('goodsModal');
 }
+function openEditGoods(id){
+  const g=S.goods.find(x=>x.id===id);if(!g)return;
+  document.getElementById('goodsModalTitle').textContent='Edit Goods';
+  document.getElementById('gId').value=id;document.getElementById('gCat').value=g.cat;
+  document.getElementById('gName').value=g.name;document.getElementById('gNote').value=g.note||'';
+  document.getElementById('gOwned').value=g.owned?'1':'0';
+  document.getElementById('goodsDelBtn').style.display='';openM('goodsModal');
+}
+function saveGoods(){
+  const id=document.getElementById('gId').value;
+  const name=document.getElementById('gName').value.trim();if(!name){toast('// NAME REQUIRED');return;}
+  const obj={id:id||'g'+Date.now(),cat:document.getElementById('gCat').value,name,note:document.getElementById('gNote').value,owned:document.getElementById('gOwned').value==='1'};
+  if(id){const i=S.goods.findIndex(x=>x.id===id);if(i>=0)S.goods[i]=obj;}
+  else S.goods.push(obj);
+  save();renderGoods();renderAch();closeM('goodsModal');toast(id?'// SAVED':'// GOODS ADDED');
+}
+function delGoods(){const id=document.getElementById('gId').value;confirmDel('goods',id,'このグッズを削除しますか？');}
 
 // ═══ MAIL ═══
 const MEMBER_COLORS={
@@ -1698,8 +2019,6 @@ let _mailFilter='all';
 let _mailView='list';
 let _mailCurrent=null;
 
-function getMailList(){return S.mails||[];}
-
 function renderMailList(filter){
   if(filter!==undefined) _mailFilter=filter;
   _mailView='list';
@@ -1707,35 +2026,38 @@ function renderMailList(filter){
   document.getElementById('mailPageTitle').textContent='Mail';
   document.getElementById('mailBackLabel').textContent='Home';
 
-  const mails=getMailList();
-  const members=[...new Set(mails.map(m=>m.member))].sort();
-  let filtered=_mailFilter==='all'?mails:_mailFilter==='fav'?mails.filter(m=>S.mailFavs.includes(m.id)):mails.filter(m=>m.member===_mailFilter);
-  filtered=[...filtered].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const mails=S.mails||[];
+  const members=[...new Set(mails.map(function(m){return m.member;}))].sort();
+  var filtered;
+  if(_mailFilter==='all') filtered=mails;
+  else if(_mailFilter==='fav') filtered=mails.filter(function(m){return (S.mailFavs||[]).includes(m.id);});
+  else filtered=mails.filter(function(m){return m.member===_mailFilter;});
+  filtered=[...filtered].sort(function(a,b){return new Date(b.date)-new Date(a.date);});
 
-  let html='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">';
+  var html='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">';
   html+='<div class="mail-filter" style="margin-bottom:0;flex:1;">';
   html+='<button class="mail-filter-btn'+(_mailFilter==='all'?' active':'')+'" onclick="renderMailList(\'all\')">ALL</button>';
-  html+='<button class="mail-filter-btn'+(_mailFilter==='fav'?' active':'')+'" onclick="renderMailList(\'fav\')">★ FAV</button>';
-  members.forEach(m=>{
-    const short=m.replace(/　/g,'').slice(0,4);
+  html+='<button class="mail-filter-btn'+(_mailFilter==='fav'?' active':'')+'" onclick="renderMailList(\'fav\')">FAV</button>';
+  members.forEach(function(m){
+    var short=m.replace(/　/g,'').slice(0,4);
     html+='<button class="mail-filter-btn'+(_mailFilter===m?' active':'')+'" onclick="renderMailList(\''+m+'\')">'+short+'</button>';
   });
   html+='</div>';
-  html+='<button onclick="openMailForm()" style="flex-shrink:0;margin-left:10px;padding:6px 14px;background:rgba(114,232,200,.12);border:1px solid rgba(114,232,200,.35);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--mint);transition:all .16s;white-space:nowrap;">+ 追加</button>';
+  html+='<button onclick="openMailForm(null)" style="flex-shrink:0;margin-left:10px;padding:6px 14px;background:rgba(114,232,200,.12);border:1px solid rgba(114,232,200,.35);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--mint);">+ ADD</button>';
   html+='</div>';
 
   if(!filtered.length){
     html+='<div class="empty"><span class="empty-i">NO MAIL</span><div class="empty-t">メールはまだありません</div></div>';
   } else {
     html+='<div class="mail-list">';
-    filtered.forEach(mail=>{
-      const dt=mail.date?new Date(mail.date):null;
-      const day=dt?String(dt.getDate()).padStart(2,'0'):'--';
-      const mon=dt?dt.toLocaleString('en',{month:'short'}).toUpperCase():'';
-      const col=MEMBER_COLORS[mail.member]||'var(--mint)';
-      const isFav=S.mailFavs.includes(mail.id);
-      const hasPhoto=mail.photos&&mail.photos.length>0;
-      const preview=(mail.body||'').replace(/\n/g,' ').slice(0,40);
+    filtered.forEach(function(mail){
+      var dt=mail.date?new Date(mail.date):null;
+      var day=dt?String(dt.getDate()).padStart(2,'0'):'--';
+      var mon=dt?dt.toLocaleString('en',{month:'short'}).toUpperCase():'';
+      var col=MEMBER_COLORS[mail.member]||'var(--mint)';
+      var isFav=(S.mailFavs||[]).includes(mail.id);
+      var hasPhoto=mail.photos&&mail.photos.length>0;
+      var preview=(mail.body||'').replace(/\n/g,' ').slice(0,40);
       html+='<div class="mail-row" style="--mc:'+col+'" onclick="openMailDetail(\''+mail.id+'\')">'+
         '<div class="mail-row-left">'+
           '<div class="mail-member-dot"></div>'+
@@ -1748,8 +2070,8 @@ function renderMailList(filter){
           '<div class="mail-preview">'+preview+'</div>'+
         '</div>'+
         '<div class="mail-row-right">'+
-          '<button class="mail-fav-btn'+(isFav?' active':'')+'" onclick="event.stopPropagation();toggleMailFav(\''+mail.id+'\')">★</button>'+
-          (hasPhoto?'<div class="mail-photo-icon">📷</div>':'')+
+          '<button class="mail-fav-btn'+(isFav?' active':'')+'" onclick="event.stopPropagation();toggleMailFav(\''+mail.id+'\')">&#9733;</button>'+
+          (hasPhoto?'<div class="mail-photo-icon">IMG</div>':'')+
         '</div>'+
       '</div>';
     });
@@ -1759,7 +2081,7 @@ function renderMailList(filter){
 }
 
 function openMailDetail(id){
-  const mail=getMailList().find(m=>m.id===id);
+  var mail=(S.mails||[]).find(function(m){return m.id===id;});
   if(!mail)return;
   _mailView='detail';
   _mailCurrent=id;
@@ -1767,20 +2089,20 @@ function openMailDetail(id){
   document.getElementById('mailPageTitle').textContent=mail.subject||'(件名なし)';
   document.getElementById('mailBackLabel').textContent='一覧';
 
-  const isFav=S.mailFavs.includes(mail.id);
-  const dt=mail.date?new Date(mail.date):null;
-  const dateStr=dt?dt.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+  var isFav=(S.mailFavs||[]).includes(mail.id);
+  var dt=mail.date?new Date(mail.date):null;
+  var dateStr=dt?dt.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
 
-  let photosHtml='';
+  var photosHtml='';
   if(mail.photos&&mail.photos.length>0){
-    mail.photos.forEach(url=>{
+    mail.photos.forEach(function(url){
       photosHtml+='<img class="mail-photo-thumb" src="'+url+'" loading="lazy" onclick="openPhotoViewer(\''+url+'\')">';
     });
   } else {
-    photosHtml='<div class="mail-photo-none">NO<br>PHOTO</div>';
+    photosHtml='<div class="mail-photo-none">NO PHOTO</div>';
   }
 
-  const html='<div class="mail-detail-wrap">'+
+  var html='<div class="mail-detail-wrap">'+
     '<div class="mail-detail-photos">'+photosHtml+'</div>'+
     '<div class="mail-detail-content">'+
       '<div class="mail-detail-header">'+
@@ -1788,9 +2110,9 @@ function openMailDetail(id){
         '<div class="mail-detail-subject">'+(mail.subject||'(件名なし)')+'</div>'+
         '<div class="mail-detail-date">'+dateStr+'</div>'+
         '<div style="display:flex;gap:8px;margin-top:8px;">'+
-          '<button class="mail-fav-btn'+(isFav?' active':'')+'" style="font-size:13px;padding:4px 10px;border:1px solid rgba(255,224,128,.3);background:rgba(255,224,128,.08);" onclick="toggleMailFav(\''+mail.id+'\')">★ '+(isFav?'解除':'お気に入り')+'</button>'+
-          '<button onclick="openMailForm(\''+mail.id+'\')" style="padding:4px 10px;background:rgba(125,212,240,.08);border:1px solid rgba(125,212,240,.25);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--sky);">✎ 編集</button>'+
-          '<button onclick="deleteMailConfirm(\''+mail.id+'\')" style="padding:4px 10px;background:rgba(220,50,60,.08);border:1px solid rgba(220,50,60,.25);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:#DC323C;">✕ 削除</button>'+
+          '<button class="mail-fav-btn'+(isFav?' active':'')+'" style="font-size:13px;padding:4px 10px;border:1px solid rgba(255,224,128,.3);background:rgba(255,224,128,.08);" onclick="toggleMailFav(\''+mail.id+'\')">&#9733; '+(isFav?'解除':'FAV')+'</button>'+
+          '<button onclick="openMailForm(\''+mail.id+'\')" style="padding:4px 10px;background:rgba(125,212,240,.08);border:1px solid rgba(125,212,240,.25);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.1em;cursor:pointer;color:var(--sky);">EDIT</button>'+
+          '<button onclick="deleteMailConfirm(\''+mail.id+'\')" style="padding:4px 10px;background:rgba(220,50,60,.08);border:1px solid rgba(220,50,60,.25);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.1em;cursor:pointer;color:#DC323C;">DEL</button>'+
         '</div>'+
       '</div>'+
       '<div class="mail-detail-body">'+(mail.body||'').replace(/</g,'&lt;')+'</div>'+
@@ -1805,7 +2127,8 @@ function mailGoBack(){
 }
 
 function toggleMailFav(id){
-  const idx=S.mailFavs.indexOf(id);
+  if(!S.mailFavs)S.mailFavs=[];
+  var idx=S.mailFavs.indexOf(id);
   if(idx===-1)S.mailFavs.push(id);
   else S.mailFavs.splice(idx,1);
   save();
@@ -1814,80 +2137,77 @@ function toggleMailFav(id){
 }
 
 function openPhotoViewer(url){
-  const d=document.createElement('div');
+  var d=document.createElement('div');
   d.className='mail-photo-viewer';
   d.innerHTML='<img src="'+url+'">';
-  d.onclick=()=>d.remove();
+  d.onclick=function(){d.remove();};
   document.body.appendChild(d);
 }
 
-// メール追加・編集フォーム
 function openMailForm(editId){
-  const mail=editId?getMailList().find(m=>m.id===editId):null;
-  const now=new Date();
-  const defaultDate=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+'T'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
-
-  let memberOpts=MEMBER_NAMES.map(n=>'<option value="'+n+'"'+(mail&&mail.member===n?' selected':'')+'>'+n+'</option>').join('');
-
-  const overlay=document.createElement('div');
+  var mail=editId?(S.mails||[]).find(function(m){return m.id===editId;}):null;
+  var now=new Date();
+  var pad=function(n){return String(n).padStart(2,'0');};
+  var defaultDate=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'T'+pad(now.getHours())+':'+pad(now.getMinutes());
+  var memberOpts=MEMBER_NAMES.map(function(n){return '<option value="'+n+'"'+(mail&&mail.member===n?' selected':'')+'>'+n+'</option>';}).join('');
+  var overlay=document.createElement('div');
   overlay.className='overlay';
   overlay.style.cssText='display:flex;z-index:9600;';
-  overlay.innerHTML='<div class="msheet" style="max-height:92vh;overflow-y:auto;">'+
+  overlay.innerHTML=
+    '<div class="msheet" style="max-height:92vh;overflow-y:auto;">'+
     '<div class="sh"></div>'+
-    '<button class="sclose" onclick="this.closest(\'.overlay\').remove()">✕</button>'+
+    '<button class="sclose" onclick="this.closest(\'.overlay\').remove()">&#x2715;</button>'+
     '<div class="stitle">'+(editId?'メールを編集':'メールを追加')+'</div>'+
     '<div class="fg"><label class="fl">送信メンバー</label>'+
-      '<select class="fi" id="mfMember" style="background:var(--panel2);border:1px solid var(--border-s);color:var(--ink);padding:10px;font-family:var(--ffj);font-size:13px;width:100%;outline:none;">'+memberOpts+'</select>'+
+      '<select class="fi" id="mfMember" style="background:var(--panel2);border:1px solid var(--border-s);color:var(--ink);padding:10px;width:100%;font-size:13px;outline:none;">'+memberOpts+'</select>'+
     '</div>'+
     '<div class="fg"><label class="fl">日時</label><input class="fi" type="datetime-local" id="mfDate" value="'+(mail?mail.date.slice(0,16):defaultDate)+'"></div>'+
-    '<div class="fg"><label class="fl">件名</label><input class="fi" type="text" id="mfSubject" placeholder="件名" value="'+(mail?mail.subject.replace(/"/g,'&quot;'):'')+'"></div>'+
-    '<div class="fg"><label class="fl">本文</label><textarea class="fi" id="mfBody" rows="6" style="resize:vertical;line-height:1.7;font-family:var(--ffj);font-size:13px;">'+(mail?mail.body:'')+'</textarea></div>'+
+    '<div class="fg"><label class="fl">件名</label><input class="fi" type="text" id="mfSubject" placeholder="件名" value="'+(mail?(mail.subject||'').replace(/"/g,'&quot;'):'')+'"></div>'+
+    '<div class="fg"><label class="fl">本文</label><textarea class="fi" id="mfBody" rows="6" style="resize:vertical;line-height:1.7;">'+(mail?mail.body||'':'')+'</textarea></div>'+
 
 ```
-'<div class="fg"><label class="fl">写真URL（1行1枚、GitHubの相対パスまたはURL）</label><textarea class="fi" id="mfPhotos" rows="3" placeholder="./images/mails/ファイル名.jpg" style="resize:vertical;font-family:var(--ffm);font-size:11px;line-height:1.6;">'+(mail&&mail.photos?mail.photos.join('\n'):'')+'</textarea></div>'+
+'<div class="fg"><label class="fl">写真パス（1行1枚）</label><textarea class="fi" id="mfPhotos" rows="3" placeholder="./images/mails/filename.jpg" style="resize:vertical;font-size:11px;">'+(mail&&mail.photos?mail.photos.join('\n'):'')+'</textarea></div>'+
 '<button onclick="saveMailForm(\''+( editId||'')+'\',this.closest(\'.overlay\'))" style="width:100%;padding:12px;background:rgba(114,232,200,.12);border:1px solid rgba(114,232,200,.35);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--mint);margin-top:4px;">保存する</button>'+
+'</div>';
 ```
 
-‘</div>’;
 document.body.appendChild(overlay);
 }
 
-function saveMailForm(editId, overlay){
-const member=document.getElementById(‘mfMember’).value;
-const date=document.getElementById(‘mfDate’).value.replace(‘T’,’ ‘)+’:00’;
-const subject=document.getElementById(‘mfSubject’).value.trim();
-const body=document.getElementById(‘mfBody’).value;
-const photosRaw=document.getElementById(‘mfPhotos’).value.trim();
-const photos=photosRaw?photosRaw.split(’\n’).map(s=>s.trim()).filter(Boolean):[];
-
-if(!member||!date){toast(’// メンバーと日時は必須です’);return;}
-
-if(!S.mails) S.mails=[];
-
+function saveMailForm(editId,overlay){
+var member=document.getElementById(‘mfMember’).value;
+var dateVal=document.getElementById(‘mfDate’).value;
+var date=dateVal.replace(‘T’,’ ‘)+’:00’;
+var subject=document.getElementById(‘mfSubject’).value.trim();
+var body=document.getElementById(‘mfBody’).value;
+var photosRaw=document.getElementById(‘mfPhotos’).value.trim();
+var photos=photosRaw?photosRaw.split(’\n’).map(function(s){return s.trim();}).filter(Boolean):[];
+if(!member||!dateVal){toast(’// メンバーと日時は必須です’);return;}
+if(!S.mails)S.mails=[];
 if(editId){
-const idx=S.mails.findIndex(m=>m.id===editId);
-if(idx!==-1) S.mails[idx]={…S.mails[idx],member,date,subject,body,photos};
+var idx=S.mails.findIndex(function(m){return m.id===editId;});
+if(idx!==-1)S.mails[idx]={id:editId,member:member,date:date,subject:subject,body:body,photos:photos};
 } else {
-const id=‘mail_’+Date.now();
-S.mails.push({id,member,date,subject,body,photos});
+S.mails.push({id:‘mail_’+Date.now(),member:member,date:date,subject:subject,body:body,photos:photos});
 }
 save();
 overlay.remove();
-toast(editId?’// 更新しました’:’// メールを追加しました’);
-if(editId&&_mailCurrent===editId) openMailDetail(editId);
+toast(editId?’// 更新しました’:’// 追加しました’);
+if(editId&&_mailCurrent===editId)openMailDetail(editId);
 else renderMailList();
 }
 
 function deleteMailConfirm(id){
-const mail=getMailList().find(m=>m.id===id);
+var mail=(S.mails||[]).find(function(m){return m.id===id;});
 if(!mail)return;
-const overlay=document.createElement(‘div’);
+var overlay=document.createElement(‘div’);
 overlay.className=‘overlay’;
 overlay.style.cssText=‘display:flex;z-index:9600;’;
-overlay.innerHTML=’<div class="msheet" style="padding-bottom:24px;">’+
+overlay.innerHTML=
+‘<div class="msheet" style="padding-bottom:24px;">’+
 ‘<div class="sh"></div>’+
 ‘<div class="stitle">削除の確認</div>’+
-‘<p style="font-family:var(--ffj);font-size:13px;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-bottom:20px;">’+mail.member+’「’+(mail.subject||‘件名なし’)+’」を削除しますか？この操作は取り消せません。</p>’+
+‘<p style="font-family:var(--ffj);font-size:13px;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-bottom:20px;">’+mail.member+’「’+(mail.subject||‘件名なし’)+’」を削除しますか？</p>’+
 ‘<div class="confirm-btns">’+
 ‘<button class="cbtn-cancel" onclick="this.closest(\'.overlay\').remove()">キャンセル</button>’+
 ‘<button class="cbtn-del" onclick="deleteMail(\''+id+'\',this.closest(\'.overlay\'))">削除する</button>’+
@@ -1896,11 +2216,10 @@ overlay.innerHTML=’<div class="msheet" style="padding-bottom:24px;">’+
 document.body.appendChild(overlay);
 }
 
-function deleteMail(id, overlay){
-S.mails=(S.mails||[]).filter(m=>m.id!==id);
-S.mailFavs=S.mailFavs.filter(f=>f!==id);
-save();
-overlay.remove();
+function deleteMail(id,overlay){
+S.mails=(S.mails||[]).filter(function(m){return m.id!==id;});
+S.mailFavs=(S.mailFavs||[]).filter(function(f){return f!==id;});
+save();overlay.remove();
 toast(’// 削除しました’);
 renderMailList();
 }
@@ -1908,14 +2227,14 @@ renderMailList();
 // ═══ ACHIEVEMENTS ═══
 const ACH_COLORS=[‘var(–accent)’,‘var(–rose)’,‘var(–lavender)’,‘var(–sky)’,‘var(–mint)’,‘var(–butter)’,‘var(–peach)’,‘var(–gold)’];
 const ACHS=[
-{icon:‘📖’,name:‘First Read’,    desc:‘最初のチャプターを読んだ’,      check:()=>S.chapters.some(c=>c.read)},
-{icon:‘⭐’,name:‘Collector’,     desc:‘カードを5枚以上所持した’,        check:()=>Object.values(S.owned).filter((*,i)=>!Object.keys(S.owned)[i].startsWith(’disc*’)).reduce((a,b)=>a+b,0)>=5},
-{icon:‘✨’,name:‘SSR Hunter’,    desc:‘SSRカードを入手した’,            check:()=>S.cards.some(c=>(c.rarity===‘ssr’||c.rarity===‘ur’)&&(S.owned[c.id]||0)>0)},
-{icon:‘👥’,name:‘Full Roster’,   desc:‘INI 11人全員がいる’,             check:()=>S.members.length>=11},
-{icon:‘💿’,name:‘Discophile’,    desc:‘3作品以上を記録した’,             check:()=>S.discography.length>=3},
-{icon:‘🎤’,name:‘First Live’,    desc:‘初めて参戦記録をつけた’,          check:()=>S.lives&&S.lives.some(l=>l.attended)},
-{icon:‘🔥’,name:‘Live Addict’,   desc:‘3回以上のライブ参戦を記録した’,   check:()=>S.lives&&S.lives.filter(l=>l.attended).length>=3},
-{icon:‘👑’,name:‘Chronicle’,     desc:‘5チャプター以上を読んだ’,         check:()=>S.chapters.filter(c=>c.read).length>=5},
+{icon:‘📖’,name:‘First Read’,desc:‘最初のチャプターを読んだ’,check:()=>S.chapters.some(c=>c.read)},
+{icon:‘⭐’,name:‘Collector’,desc:‘カードを5枚以上所持した’,check:()=>Object.values(S.owned).reduce((a,b)=>a+b,0)>=5},
+{icon:‘✨’,name:‘SSR Hunter’,desc:‘SSRカードを入手した’,check:()=>S.cards.some(c=>(c.rarity===‘ssr’||c.rarity===‘ur’)&&(S.owned[c.id]||0)>0)},
+{icon:‘👥’,name:‘Full Roster’,desc:‘11人全員を登録した’,check:()=>S.members.length>=11},
+{icon:‘💿’,name:‘Discophile’,desc:‘3作品以上を記録した’,check:()=>S.discography.length>=3},
+{icon:‘🎁’,name:‘Goods Hunter’,desc:‘グッズを5件以上記録した’,check:()=>S.goods.length>=5},
+{icon:‘📚’,name:‘Archivist’,desc:‘全タブにデータを入力した’,check:()=>S.chapters.length>0&&S.members.length>0&&S.cards.length>0&&S.discography.length>0&&S.goods.length>0},
+{icon:‘👑’,name:‘Chronicle’,desc:‘5チャプター以上を読んだ’,check:()=>S.chapters.filter(c=>c.read).length>=5},
 ];
 function renderAch(){
 const g=document.getElementById(‘achGrid’);g.innerHTML=’’;
@@ -1939,6 +2258,11 @@ function showTab(tab){
 // legacy shim — redirect to new page system
 goToTab(tab);
 }
+function fabClick(){
+const map={story:openAddChapter,members:openAddMember,gacha:openAddCard,archive:openAddGoods};
+if(map[S.currentTab])map[S.currentTab]();
+}
+
 // ═══ MODALS ═══
 function openM(id){document.getElementById(id).classList.add(‘open’);}
 function closeM(id){
@@ -1960,10 +2284,62 @@ if(type===‘card’){S.cards=S.cards.filter(x=>x.id!==id);delete S.owned[id];}
 if(type===‘disc’)S.discography=S.discography.filter(x=>x.id!==id);
 if(type===‘goods’)S.goods=S.goods.filter(x=>x.id!==id);
 save();updateStats();renderAch();
-const renders={chapter:renderStory,member:renderMembers,card:renderCollGrid,disc:renderDisc,live:renderLives};
+const renders={chapter:renderStory,member:renderMembers,card:renderCollGrid,disc:renderDisc,goods:renderGoods};
 if(renders[type])renders[type]();
 document.querySelectorAll(’.overlay.open’).forEach(o=>o.classList.remove(‘open’));
 toast(’// DELETED’);_del=null;
+}
+
+// ═══ CSV IMPORT ═══
+const CSV_SCHEMAS={
+members:{fields:[‘name’,‘role’,‘color’],hint:‘name, role, color\n例: 木村 慧人, CENTER / VOCAL, #F2B8C6’},
+discography:{fields:[‘type’,‘title’,‘date’,‘tag’],hint:‘type(single/album/digital), title, date(YYYY-MM-DD), tag\n例: single, 「READY?」, 2021-11-03, デビューシングル’},
+chapters:{fields:[‘num’,‘title’,‘date’,‘body’],hint:‘num, title, date, body\n例: CH.04, 武道館, 2023-11-03, 本文テキスト’},
+goods:{fields:[‘cat’,‘name’,‘note’],hint:‘cat(photobook/photocard/penlight/cd/goods/other), name, note\n例: photobook, 写真集, 初回限定版’},
+};
+let _csvRows=null;
+function updateCsvHint(){
+const t=document.getElementById(‘csvType’).value;
+document.getElementById(‘csvHint’).innerHTML=CSV_SCHEMAS[t].hint.replace(/\n/g,’<br>’);
+_csvRows=null;document.getElementById(‘csvPreview’).innerHTML=’’;
+document.getElementById(‘csvImportBtn’).style.display=‘none’;
+document.getElementById(‘csvFile’).value=’’;
+}
+updateCsvHint();
+function readCSV(inp){
+if(!inp.files||!inp.files[0])return;
+const r=new FileReader();
+r.onload=e=>{
+const lines=e.target.result.trim().split(’\n’).filter(l=>l.trim());
+const schema=CSV_SCHEMAS[document.getElementById(‘csvType’).value];
+let start=0;
+if(schema.fields.includes(lines[0].split(’,’)[0].trim().toLowerCase()))start=1;
+_csvRows=lines.slice(start).map(l=>{const cells=l.split(’,’).map(c=>c.trim());const obj={};schema.fields.forEach((f,i)=>obj[f]=cells[i]||’’);return obj;}).filter(r=>Object.values(r).some(v=>v));
+document.getElementById(‘csvPreview’).innerHTML=`<span style="color:var(--accent)">${_csvRows.length}件検出</span> — 先頭3件:<br>`+_csvRows.slice(0,3).map(r=>Object.values(r).join(’ / ‘)).join(’<br>’);
+document.getElementById(‘csvImportBtn’).style.display=’’;
+};
+r.readAsText(inp.files[0],‘UTF-8’);
+}
+function executeImport(){
+if(!_csvRows||!_csvRows.length){toast(’// NO DATA’);return;}
+const t=document.getElementById(‘csvType’).value;let added=0;
+_csvRows.forEach(r=>{
+if(t===‘members’&&r.name){S.members.push({id:‘m’+Date.now()+Math.random(),name:r.name,role:r.role||’’,color:r.color||’#C0B4E0’,img:’’});added++;}
+else if(t===‘discography’&&r.title){S.discography.push({id:‘d’+Date.now()+Math.random(),type:r.type||‘single’,title:r.title,date:r.date||’—’,tag:r.tag||’’,img:’’,owned:false});added++;}
+else if(t===‘chapters’&&r.title){S.chapters.push({id:‘ch’+Date.now()+Math.random(),num:r.num||‘CH.??’,title:r.title,date:r.date||’’,body:r.body||’’,cardHint:’’,read:false});added++;}
+else if(t===‘goods’&&r.name){S.goods.push({id:‘g’+Date.now()+Math.random(),cat:r.cat||‘goods’,name:r.name,note:r.note||’’,owned:false});added++;}
+});
+save();updateStats();renderAch();
+if(t===‘members’)renderMembers();if(t===‘discography’)renderDisc();
+if(t===‘chapters’)renderStory();if(t===‘goods’)renderGoods();
+closeM(‘importModal’);toast(`// ${added}件インポート完了`);_csvRows=null;
+}
+function downloadTemplate(){
+const t=document.getElementById(‘csvType’).value;
+const ex={members:‘木村 慧人,CENTER / VOCAL,#F2B8C6\n松田 迅,MAIN DANCE,#A8CEDE’,discography:‘single,「READY?」,2021-11-03,デビューシングル’,chapters:‘CH.04,武道館公演,2023-11-03,本文テキストをここに入力’,goods:‘photobook,写真集「INI FILE 01」,初回限定版’};
+const blob=new Blob([ex[t]],{type:‘text/csv;charset=utf-8’});
+const url=URL.createObjectURL(blob);const a=document.createElement(‘a’);
+a.href=url;a.download=`template_${t}.csv`;a.click();URL.revokeObjectURL(url);
 }
 
 // ═══ BACKUP / RESTORE ═══
@@ -1983,7 +2359,7 @@ const payload=JSON.parse(e.target.result);const imported=payload.data||payload;
 if(!imported.chapters&&!imported.members){toast(’// ファイルが無効です’);return;}
 if(!confirm(`バックアップを読み込みます。現在のデータは上書きされます。\nバックアップ日時: ${payload.exportedAt||'不明'}\n\nよろしいですか？`))return;
 S={…S,…imported};save();
-renderStory();renderMembers();renderCollGrid();renderDisc();renderLives();renderAch();updateStats();updateBackupInfo();
+renderStory();renderMembers();renderCollGrid();renderDisc();renderGoods();renderAch();updateStats();updateBackupInfo();
 document.getElementById(‘bTitle’).textContent=S.bannerTitle||’’;
 document.getElementById(‘bSub’).textContent=S.bannerSub||’’;
 toast(’// リストア完了’);
@@ -1993,8 +2369,7 @@ r.readAsText(input.files[0],‘UTF-8’);input.value=’’;
 }
 function updateBackupInfo(){
 const el=document.getElementById(‘backupInfo’);if(!el)return;
-const attended=(S.lives||[]).filter(l=>l.attended).length;
-el.textContent=`現在: チャプター ${S.chapters.length}件 / カード ${S.cards.length}枚 / ライブ参戦 ${attended}件`;
+el.textContent=`現在: チャプター ${S.chapters.length}件 / カード ${S.cards.length}枚 / メンバー ${S.members.length}人`;
 }
 
 // ═══ PWA ═══
@@ -2022,7 +2397,9 @@ setTimeout(()=>{ls.style.display=‘none’;showHome();},300);
 function showHome(){
 checkOrientation();
 document.getElementById(‘homeScreen’).style.display=‘block’;
+// hide all pages
 document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
+document.getElementById(‘fab’).style.display=‘none’;
 updateHomeStats();
 const sb=document.getElementById(‘homeSettingsBtn’);
 if(sb)sb.onclick=()=>{
@@ -2039,6 +2416,7 @@ document.getElementById(‘settingsModal’).removeEventListener(‘click’,res
 function goHome(){
 document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
 document.getElementById(‘homeScreen’).style.display=‘block’;
+document.getElementById(‘fab’).style.display=‘none’;
 updateHomeStats();
 S.currentTab=null;
 }
@@ -2051,15 +2429,22 @@ document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active�
 const page=document.getElementById(‘page-’+tab);
 if(page)page.classList.add(‘active’);
 S.currentTab=tab;
+// render content
 const renders={
 story:renderStory,
 members:renderMembers,
-gacha:renderCollGrid,
-archive:()=>{renderDisc();renderLives();},
+gacha:()=>{renderCollGrid();populateMemberSelect();},
+archive:()=>{renderDisc();renderGoods();},
 achievements:renderAch,
-mail:()=>renderMailList(),
+mail:()=>renderMailList()
 };
 if(renders[tab])renders[tab]();
+// FAB
+const fab=document.getElementById(‘fab’);
+if(fab){
+if(tab===‘achievements’||tab===‘mail’){fab.style.display=‘none’;}
+else{fab.style.display=‘flex’;const labels={story:‘Chapter’,members:‘Member’,gacha:‘Card’,archive:‘Item’};document.getElementById(‘fabL’).textContent=labels[tab]||‘Add’;}
+}
 }
 function updateHomeStats(){
 const total=Object.values(S.owned).reduce((a,b)=>a+b,0);
@@ -2156,6 +2541,10 @@ if(isDefaultPW()){el.textContent=‘⚠ デフォルトパスワード使用中�
 else{el.textContent=‘✓ カスタムパスワード設定済み’;el.style.color=‘var(–mint)’;}
 }
 
+// ═══ COLOR SYNC ═══
+document.getElementById(‘mCo’).addEventListener(‘input’,function(){document.getElementById(‘mCoH’).value=this.value;});
+document.getElementById(‘mCoH’).addEventListener(‘input’,function(){if(/^#[0-9A-Fa-f]{6}$/.test(this.value))document.getElementById(‘mCo’).value=this.value;});
+
 // ═══ TOAST ═══
 let _tt;
 function toast(msg){const t=document.getElementById(‘toast’);t.textContent=msg;t.classList.add(‘show’);clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove(‘show’),2200);}
@@ -2165,7 +2554,8 @@ async function initApp(){
 await loadMasterData();
 document.getElementById(‘bTitle’).textContent=S.bannerTitle;
 document.getElementById(‘bSub’).textContent=S.bannerSub;
-renderStory();updateStats();updateBackupInfo();updatePWStatus();
+applyAdminUI();
+renderStory();updateStats();updateBackupInfo();updatePWStatus();populateMemberSelect();
 showLock();
 if(isDefaultPW())document.getElementById(‘pwHint’).textContent=‘初期パスワード: fanbook\nSettings から変更できます’;
 }
