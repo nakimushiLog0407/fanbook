@@ -1,0 +1,15 @@
+[
+  {"id":"d1","type":"single","title":"「READY?」",          "date":"2021-11-03","tag":"デビューシングル","img":""},
+  {"id":"d2","type":"single","title":"「Rocketeer」",       "date":"2022-02-16","tag":"2ndシングル",    "img":""},
+  {"id":"d3","type":"single","title":"「CALL」",            "date":"2022-05-11","tag":"3rdシングル",    "img":""},
+  {"id":"d4","type":"single","title":"「FANFARE」",         "date":"2022-07-13","tag":"4thシングル",    "img":""},
+  {"id":"d5","type":"album", "title":"「BREAK THE CODE」",  "date":"2022-09-14","tag":"1stアルバム",    "img":""},
+  {"id":"d6","type":"single","title":"「Dramatic」",        "date":"2022-11-02","tag":"5thシングル",    "img":""},
+  {"id":"d7","type":"single","title":"「M」",               "date":"2023-01-25","tag":"6thシングル",    "img":""},
+  {"id":"d8","type":"single","title":"「SOS」",             "date":"2023-04-12","tag":"7thシングル",    "img":""},
+  {"id":"d9","type":"album", "title":"「&」",               "date":"2023-07-19","tag":"2ndアルバム",    "img":""},
+  {"id":"d10","type":"single","title":"「ZIPPED UP」",      "date":"2023-10-25","tag":"8thシングル",    "img":""},
+  {"id":"d11","type":"single","title":"「Your Wanna Be?」", "date":"2024-02-14","tag":"9thシングル",    "img":""},
+  {"id":"d12","type":"single","title":"「Serendipity」",    "date":"2024-05-29","tag":"10thシングル",   "img":""},
+  {"id":"d13","type":"album", "title":"「ONENESS」",        "date":"2024-09-11","tag":"3rdアルバム",    "img":""}
+]
