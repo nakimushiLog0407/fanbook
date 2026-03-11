@@ -741,101 +741,6 @@ letter-spacing:.04em;color:var(–ink);line-height:1.15;white-space:nowrap;}
 /* ANIMATIONS */
 @keyframes hudPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.4);box-shadow:0 0 10px var(–rose);}}
 
-/* ── DASHBOARD GRID (右パネル) ── */
-.home-right-new{
-position:absolute;right:0;top:clamp(28px,4.5vh,38px);bottom:clamp(20px,3.2vh,28px);
-width:clamp(200px,32vw,300px);z-index:5;
-padding:clamp(8px,1.4vh,14px) clamp(8px,1.2vw,14px);
-display:grid;
-grid-template-columns:1fr 1fr;
-grid-template-rows:1.6fr 1fr 1fr;
-gap:clamp(5px,.8vw,8px);}
-.hdp{
-position:relative;cursor:pointer;
-display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
-padding:clamp(8px,1.2vh,12px) clamp(8px,1.2vw,12px);
-background:rgba(4,8,18,.75);
-border:1px solid rgba(var(–hca,200,170,255),.3);
-border-top:2px solid rgba(var(–hca,200,170,255),.6);
-backdrop-filter:blur(12px);
-transition:transform .18s cubic-bezier(.2,0,.2,1),filter .18s,border-color .18s;
-overflow:hidden;
--webkit-tap-highlight-color:transparent;}
-.hdp:hover{transform:scale(1.03);filter:brightness(1.15);border-color:rgba(var(–hca,200,170,255),.7);}
-.hdp:active{transform:scale(.97);}
-.hdp.large{grid-row:span 2;}
-.hdp::before{
-content:’’;position:absolute;inset:0;
-background:linear-gradient(135deg,rgba(var(–hca,200,170,255),.06),transparent 60%);
-pointer-events:none;}
-.hdp-scan{
-position:absolute;inset:0;pointer-events:none;
-background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(var(–hca,200,170,255),.015) 4px,rgba(var(–hca,200,170,255),.015) 5px);}
-.hdp-content{position:relative;z-index:1;width:100%;}
-.hdp-icon{
-margin-bottom:clamp(4px,.7vh,8px);
-width:clamp(18px,2.4vw,26px);height:clamp(18px,2.4vw,26px);
-filter:drop-shadow(0 0 5px var(–hc,var(–lavender)));}
-.hdp-sub{
-font-family:var(–ffm);font-size:clamp(6px,.72vw,8px);
-letter-spacing:.18em;text-transform:uppercase;
-color:var(–hc,var(–lavender));line-height:1;margin-bottom:2px;}
-.hdp-title{
-font-family:var(–ff);font-size:clamp(11px,1.6vw,16px);font-weight:700;
-letter-spacing:.06em;color:var(–ink);line-height:1.1;}
-.hdp-badge{
-position:absolute;top:clamp(6px,1vh,10px);right:clamp(6px,1vw,10px);
-font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);
-letter-spacing:.1em;color:var(–hc,var(–lavender));
-border:1px solid rgba(var(–hca,200,170,255),.3);
-padding:2px 5px;background:rgba(var(–hca,200,170,255),.07);}
-
-/* ── MAIL PAGE ── */
-.mail-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:clamp(10px,1.8vh,16px);}
-.mail-filter-btn{
-font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);letter-spacing:.12em;
-text-transform:uppercase;padding:4px 10px;
-background:rgba(4,8,18,.6);border:1px solid rgba(114,232,200,.2);
-color:var(–ink-dim);cursor:pointer;transition:all .16s;}
-.mail-filter-btn.active{background:rgba(114,232,200,.12);border-color:var(–mint);color:var(–mint);}
-.mail-list{display:flex;flex-direction:column;gap:clamp(5px,.9vh,7px);}
-.mail-row{
-display:flex;align-items:center;gap:clamp(10px,1.5vw,14px);
-padding:clamp(9px,1.5vh,13px) clamp(12px,1.8vw,16px);
-background:rgba(4,8,18,.65);
-border:1px solid rgba(114,232,200,.1);
-border-left:2px solid var(–mc,var(–mint));
-cursor:pointer;transition:all .16s;position:relative;overflow:hidden;}
-.mail-row::before{content:’’;position:absolute;inset:0;
-background:linear-gradient(90deg,rgba(114,232,200,.04),transparent 60%);pointer-events:none;}
-.mail-row:hover{border-color:rgba(114,232,200,.3);transform:translateX(3px);}
-.mail-row-left{flex-shrink:0;display:flex;flex-direction:column;align-items:center;width:clamp(32px,4.5vw,44px);}
-.mail-member-dot{width:8px;height:8px;border-radius:50%;background:var(–mc,var(–mint));
-box-shadow:0 0 6px var(–mc,var(–mint));margin-bottom:4px;}
-.mail-date-d{font-family:var(–ffm);font-size:clamp(13px,1.8vw,18px);font-weight:700;color:var(–ink);line-height:1;}
-.mail-date-m{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);letter-spacing:.1em;color:var(–ink-dim);text-transform:uppercase;}
-.mail-row-info{flex:1;min-width:0;}
-.mail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.14em;text-transform:uppercase;color:var(–mc,var(–mint));margin-bottom:2px;}
-.mail-subject{font-family:var(–ff);font-size:clamp(11px,1.5vw,14px);font-weight:700;color:var(–ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.mail-preview{font-family:var(–ffj);font-size:clamp(9px,1.1vw,11px);font-weight:300;color:var(–ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
-.mail-row-right{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.mail-fav-btn{background:none;border:none;cursor:pointer;padding:4px;font-size:clamp(13px,1.6vw,16px);line-height:1;opacity:.4;transition:all .16s;}
-.mail-fav-btn.active{opacity:1;filter:drop-shadow(0 0 4px var(–butter));}
-.mail-photo-icon{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);letter-spacing:.08em;color:var(–sky);opacity:.7;}
-.mail-detail-wrap{display:flex;gap:clamp(10px,1.5vw,16px);height:100%;}
-.mail-detail-photos{flex-shrink:0;width:clamp(100px,18vw,160px);display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
-.mail-photo-thumb{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(125,212,240,.2);cursor:pointer;transition:all .16s;display:block;}
-.mail-photo-thumb:hover{border-color:var(–sky);}
-.mail-photo-none{width:100%;aspect-ratio:3/4;border:1px dashed rgba(125,212,240,.15);display:flex;align-items:center;justify-content:center;font-family:var(–ffm);font-size:8px;letter-spacing:.12em;color:var(–ink-dim);text-transform:uppercase;}
-.mail-detail-content{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
-.mail-detail-header{padding:clamp(10px,1.5vh,14px);background:rgba(4,8,18,.65);border:1px solid rgba(114,232,200,.12);border-left:2px solid var(–mint);}
-.mail-detail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.18em;text-transform:uppercase;color:var(–mint);margin-bottom:4px;}
-.mail-detail-subject{font-family:var(–ff);font-size:clamp(13px,1.8vw,17px);font-weight:700;color:var(–ink);line-height:1.2;}
-.mail-detail-date{font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);letter-spacing:.12em;color:var(–ink-dim);margin-top:4px;}
-.mail-detail-body{flex:1;padding:clamp(12px,1.8vh,18px);background:rgba(4,8,18,.5);border:1px solid rgba(114,232,200,.08);font-family:var(–ffj);font-size:clamp(11px,1.4vw,13px);font-weight:300;color:var(–ink-mid);line-height:1.9;white-space:pre-wrap;overflow-y:auto;}
-.mail-photo-viewer{position:fixed;inset:0;z-index:9500;background:rgba(4,8,18,.96);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.mail-photo-viewer img{max-width:95vw;max-height:95vh;object-fit:contain;}
-
 </style>
 </head>
 <body>
@@ -936,84 +841,105 @@ box-shadow:0 0 6px var(–mc,var(–mint));margin-bottom:4px;}
 
   <!-- RIGHT PANEL — pastel HUD badges -->
 
-  <div class="home-right-new">
+  <div class="home-right">
 
 ```
-<!-- LARGE: Story -->
-<div class="hdp large" style="--hc:var(--accent);--hca:255,133,168" onclick="goToTab('story')">
-  <div class="hdp-scan"></div>
-  <div class="hdp-badge">CHRONICLE</div>
-  <div class="hdp-content">
-    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-      <line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/>
-    </svg>
-    <div class="hdp-sub">Chronicle</div>
-    <div class="hdp-title">Story</div>
+<!-- Story -->
+<div class="hbadge" onclick="goToTab('story')">
+  <div class="hb-card" style="--bc:var(--accent);--bca:192,107,138">
+    <div class="hb-lock-indicator"></div>
+    <div class="hb-notch"></div>
+    <div class="hb-inner">
+      <div class="hb-icon-shape">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          <line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/>
+        </svg>
+      </div>
+      <div class="hb-texts">
+        <div class="hb-sub">Chronicle</div>
+        <div class="hb-title">Story</div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- Members -->
-<div class="hdp" style="--hc:var(--rose);--hca:255,179,204" onclick="goToTab('members')">
-  <div class="hdp-scan"></div>
-  <div class="hdp-content">
-    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
-      <circle cx="17" cy="7" r="2.5"/><path d="M21 21v-1.5a3.5 3.5 0 00-2.5-3.35"/>
-    </svg>
-    <div class="hdp-sub">Roster</div>
-    <div class="hdp-title">Members</div>
-  </div>
-</div>
-
-<!-- Mail -->
-<div class="hdp" style="--hc:var(--mint);--hca:114,232,200" onclick="goToTab('mail')">
-  <div class="hdp-scan"></div>
-  <div class="hdp-content">
-    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-      <polyline points="22,6 12,13 2,6"/>
-    </svg>
-    <div class="hdp-sub">Letters</div>
-    <div class="hdp-title">Mail</div>
+<div class="hbadge" onclick="goToTab('members')">
+  <div class="hb-card" style="--bc:var(--rose);--bca:242,184,198">
+    <div class="hb-lock-indicator"></div>
+    <div class="hb-notch"></div>
+    <div class="hb-inner">
+      <div class="hb-icon-shape">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
+          <circle cx="17" cy="7" r="2.5"/><path d="M21 21v-1.5a3.5 3.5 0 00-2.5-3.35"/>
+        </svg>
+      </div>
+      <div class="hb-texts">
+        <div class="hb-sub">Roster</div>
+        <div class="hb-title">Members</div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- Gacha -->
-<div class="hdp" style="--hc:var(--butter);--hca:255,224,128" onclick="goToTab('gacha')">
-  <div class="hdp-scan"></div>
-  <div class="hdp-content">
-    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--butter)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-    </svg>
-    <div class="hdp-sub" id="homeCardCount">-- cards</div>
-    <div class="hdp-title">Gacha</div>
+<div class="hbadge" onclick="goToTab('gacha')">
+  <div class="hb-card" style="--bc:var(--butter);--bca:237,217,154">
+    <div class="hb-lock-indicator"></div>
+    <div class="hb-notch"></div>
+    <div class="hb-inner">
+      <div class="hb-icon-shape">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--butter)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+        </svg>
+      </div>
+      <div class="hb-texts">
+        <div class="hb-sub" id="homeCardCount">-- cards</div>
+        <div class="hb-title">Gacha</div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- Archive -->
-<div class="hdp" style="--hc:var(--sky);--hca:125,212,240" onclick="goToTab('archive')">
-  <div class="hdp-scan"></div>
-  <div class="hdp-content">
-    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/>
-      <line x1="10" y1="12" x2="14" y2="12"/>
-    </svg>
-    <div class="hdp-sub">Releases</div>
-    <div class="hdp-title">Archive</div>
+<div class="hbadge" onclick="goToTab('archive')">
+  <div class="hb-card" style="--bc:var(--sky);--bca:168,206,222">
+    <div class="hb-lock-indicator"></div>
+    <div class="hb-notch"></div>
+    <div class="hb-inner">
+      <div class="hb-icon-shape">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/>
+          <line x1="10" y1="12" x2="14" y2="12"/>
+        </svg>
+      </div>
+      <div class="hb-texts">
+        <div class="hb-sub">Releases</div>
+        <div class="hb-title">Archive</div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- Achievements -->
-<div class="hdp" style="--hc:var(--lavender);--hca:200,170,255" onclick="goToTab('achievements')">
-  <div class="hdp-scan"></div>
-  <div class="hdp-content">
-    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--lavender)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="8" r="6"/>
-      <path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/>
-    </svg>
-    <div class="hdp-sub">Unlocks</div>
-    <div class="hdp-title">Achieve</div>
+<div class="hbadge" onclick="goToTab('achievements')">
+  <div class="hb-card" style="--bc:var(--lavender);--bca:192,180,224">
+    <div class="hb-lock-indicator"></div>
+    <div class="hb-notch"></div>
+    <div class="hb-inner">
+      <div class="hb-icon-shape">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--lavender)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="6"/>
+          <path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/>
+        </svg>
+      </div>
+      <div class="hb-texts">
+        <div class="hb-sub">Unlocks</div>
+        <div class="hb-title">Achieve</div>
+      </div>
+    </div>
   </div>
 </div>
 ```
@@ -1223,26 +1149,6 @@ box-shadow:0 0 6px var(–mc,var(–mint));margin-bottom:4px;}
 </div>
 
 <button class="fab" id="fab" onclick="fabClick()"><span style="font-size:16px;line-height:1">+</span><span id="fabL">Add</span></button>
-
-<!-- MAIL PAGE -->
-
-<div class="page" id="page-mail" style="--pc:var(--mint);--pc2:var(--sky);">
-  <div class="pg-bg"></div>
-  <div class="pg-corner tl"></div><div class="pg-corner tr"></div>
-  <div class="pg-corner bl"></div><div class="pg-corner br"></div>
-  <div class="pg-header">
-    <button class="pg-back" onclick="mailGoBack()">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
-      <span id="mailBackLabel">Home</span>
-    </button>
-    <div class="pg-title-area">
-      <div class="pg-eyebrow" id="mailPageEyebrow">Letters</div>
-      <div class="pg-name" id="mailPageTitle">Mail</div>
-    </div>
-    <div class="pg-actions"></div>
-  </div>
-  <div class="pg-body" id="mailBody"></div>
-</div>
 
 <div class="toast" id="toast"></div>
 
@@ -1488,7 +1394,7 @@ let S = {
   // master (overwritten by fetch)
   chapters:[], members:[], cards:[], discography:[],
   // user data (persisted)
-  owned:{}, readIds:[], goods:[], mails:[], mailFavs:[], oshiName:'', oshiPhoto:'', currentTab:'story',
+  owned:{}, readIds:[], goods:[], oshiName:'', oshiPhoto:'', currentTab:'story',
   // settings
   adminMode: false
 };
@@ -1496,12 +1402,12 @@ let S = {
 // Load user data from localStorage (only user fields)
 try {
   const saved = JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');
-  const USER_KEYS = ['owned','readIds','goods','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub','adminMode'];
+  const USER_KEYS = ['owned','readIds','goods','oshiName','oshiPhoto','bannerTitle','bannerSub','adminMode'];
   USER_KEYS.forEach(k=>{ if(saved[k]!==undefined) S[k]=saved[k]; });
 } catch(e){}
 
 function save(){
-  const USER_KEYS = ['owned','readIds','goods','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub','adminMode'];
+  const USER_KEYS = ['owned','readIds','goods','oshiName','oshiPhoto','bannerTitle','bannerSub','adminMode'];
   const payload = {};
   USER_KEYS.forEach(k=>payload[k]=S[k]);
   try{ localStorage.setItem(SAVE_KEY, JSON.stringify(payload)); }catch(e){}
@@ -2007,560 +1913,341 @@ function saveGoods(){
 }
 function delGoods(){const id=document.getElementById('gId').value;confirmDel('goods',id,'このグッズを削除しますか？');}
 
-// ═══ MAIL ═══
-const MEMBER_COLORS={
-  '木村　柾哉':'var(--rose)','西　洸人':'var(--sky)','許　豊凡':'var(--mint)',
-  '田島　将吾':'var(--butter)','髙塚　大夢':'var(--lavender)','後藤　威尊':'var(--peach)',
-  '尾崎　匠海':'var(--accent)','藤牧　京介':'var(--sky)','佐野　雄大':'var(--mint)',
-  '池﨑　理人':'var(--rose)','松田　迅':'var(--lavender)',
-};
-const MEMBER_NAMES=['木村　柾哉','西　洸人','許　豊凡','田島　将吾','髙塚　大夢','後藤　威尊','尾崎　匠海','藤牧　京介','佐野　雄大','池﨑　理人','松田　迅'];
-let _mailFilter='all';
-let _mailView='list';
-let _mailCurrent=null;
-
-function renderMailList(filter){
-  if(filter!==undefined) _mailFilter=filter;
-  _mailView='list';
-  document.getElementById('mailPageEyebrow').textContent='Letters';
-  document.getElementById('mailPageTitle').textContent='Mail';
-  document.getElementById('mailBackLabel').textContent='Home';
-
-  const mails=S.mails||[];
-  const members=[...new Set(mails.map(function(m){return m.member;}))].sort();
-  var filtered;
-  if(_mailFilter==='all') filtered=mails;
-  else if(_mailFilter==='fav') filtered=mails.filter(function(m){return (S.mailFavs||[]).includes(m.id);});
-  else filtered=mails.filter(function(m){return m.member===_mailFilter;});
-  filtered=[...filtered].sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-
-  var html='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">';
-  html+='<div class="mail-filter" style="margin-bottom:0;flex:1;">';
-  html+='<button class="mail-filter-btn'+(_mailFilter==='all'?' active':'')+'" onclick="renderMailList(\'all\')">ALL</button>';
-  html+='<button class="mail-filter-btn'+(_mailFilter==='fav'?' active':'')+'" onclick="renderMailList(\'fav\')">FAV</button>';
-  members.forEach(function(m){
-    var short=m.replace(/　/g,'').slice(0,4);
-    html+='<button class="mail-filter-btn'+(_mailFilter===m?' active':'')+'" onclick="renderMailList(\''+m+'\')">'+short+'</button>';
-  });
-  html+='</div>';
-  html+='<button onclick="openMailForm(null)" style="flex-shrink:0;margin-left:10px;padding:6px 14px;background:rgba(114,232,200,.12);border:1px solid rgba(114,232,200,.35);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--mint);">+ ADD</button>';
-  html+='</div>';
-
-  if(!filtered.length){
-    html+='<div class="empty"><span class="empty-i">NO MAIL</span><div class="empty-t">メールはまだありません</div></div>';
-  } else {
-    html+='<div class="mail-list">';
-    filtered.forEach(function(mail){
-      var dt=mail.date?new Date(mail.date):null;
-      var day=dt?String(dt.getDate()).padStart(2,'0'):'--';
-      var mon=dt?dt.toLocaleString('en',{month:'short'}).toUpperCase():'';
-      var col=MEMBER_COLORS[mail.member]||'var(--mint)';
-      var isFav=(S.mailFavs||[]).includes(mail.id);
-      var hasPhoto=mail.photos&&mail.photos.length>0;
-      var preview=(mail.body||'').replace(/\n/g,' ').slice(0,40);
-      html+='<div class="mail-row" style="--mc:'+col+'" onclick="openMailDetail(\''+mail.id+'\')">'+
-        '<div class="mail-row-left">'+
-          '<div class="mail-member-dot"></div>'+
-          '<div class="mail-date-d">'+day+'</div>'+
-          '<div class="mail-date-m">'+mon+'</div>'+
-        '</div>'+
-        '<div class="mail-row-info">'+
-          '<div class="mail-member">'+mail.member+'</div>'+
-          '<div class="mail-subject">'+(mail.subject||'(件名なし)')+'</div>'+
-          '<div class="mail-preview">'+preview+'</div>'+
-        '</div>'+
-        '<div class="mail-row-right">'+
-          '<button class="mail-fav-btn'+(isFav?' active':'')+'" onclick="event.stopPropagation();toggleMailFav(\''+mail.id+'\')">&#9733;</button>'+
-          (hasPhoto?'<div class="mail-photo-icon">IMG</div>':'')+
-        '</div>'+
-      '</div>';
-    });
-    html+='</div>';
-  }
-  document.getElementById('mailBody').innerHTML=html;
-}
-
-function openMailDetail(id){
-  var mail=(S.mails||[]).find(function(m){return m.id===id;});
-  if(!mail)return;
-  _mailView='detail';
-  _mailCurrent=id;
-  document.getElementById('mailPageEyebrow').textContent=mail.member;
-  document.getElementById('mailPageTitle').textContent=mail.subject||'(件名なし)';
-  document.getElementById('mailBackLabel').textContent='一覧';
-
-  var isFav=(S.mailFavs||[]).includes(mail.id);
-  var dt=mail.date?new Date(mail.date):null;
-  var dateStr=dt?dt.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
-
-  var photosHtml='';
-  if(mail.photos&&mail.photos.length>0){
-    mail.photos.forEach(function(url){
-      photosHtml+='<img class="mail-photo-thumb" src="'+url+'" loading="lazy" onclick="openPhotoViewer(\''+url+'\')">';
-    });
-  } else {
-    photosHtml='<div class="mail-photo-none">NO PHOTO</div>';
-  }
-
-  var html='<div class="mail-detail-wrap">'+
-    '<div class="mail-detail-photos">'+photosHtml+'</div>'+
-    '<div class="mail-detail-content">'+
-      '<div class="mail-detail-header">'+
-        '<div class="mail-detail-member">'+mail.member+'</div>'+
-        '<div class="mail-detail-subject">'+(mail.subject||'(件名なし)')+'</div>'+
-        '<div class="mail-detail-date">'+dateStr+'</div>'+
-        '<div style="display:flex;gap:8px;margin-top:8px;">'+
-          '<button class="mail-fav-btn'+(isFav?' active':'')+'" style="font-size:13px;padding:4px 10px;border:1px solid rgba(255,224,128,.3);background:rgba(255,224,128,.08);" onclick="toggleMailFav(\''+mail.id+'\')">&#9733; '+(isFav?'解除':'FAV')+'</button>'+
-          '<button onclick="openMailForm(\''+mail.id+'\')" style="padding:4px 10px;background:rgba(125,212,240,.08);border:1px solid rgba(125,212,240,.25);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.1em;cursor:pointer;color:var(--sky);">EDIT</button>'+
-          '<button onclick="deleteMailConfirm(\''+mail.id+'\')" style="padding:4px 10px;background:rgba(220,50,60,.08);border:1px solid rgba(220,50,60,.25);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.1em;cursor:pointer;color:#DC323C;">DEL</button>'+
-        '</div>'+
-      '</div>'+
-      '<div class="mail-detail-body">'+(mail.body||'').replace(/</g,'&lt;')+'</div>'+
-    '</div>'+
-  '</div>';
-  document.getElementById('mailBody').innerHTML=html;
-}
-
-function mailGoBack(){
-  if(_mailView==='detail'){renderMailList();}
-  else{goHome();}
-}
-
-function toggleMailFav(id){
-  if(!S.mailFavs)S.mailFavs=[];
-  var idx=S.mailFavs.indexOf(id);
-  if(idx===-1)S.mailFavs.push(id);
-  else S.mailFavs.splice(idx,1);
-  save();
-  if(_mailView==='detail')openMailDetail(id);
-  else renderMailList();
-}
-
-function openPhotoViewer(url){
-  var d=document.createElement('div');
-  d.className='mail-photo-viewer';
-  d.innerHTML='<img src="'+url+'">';
-  d.onclick=function(){d.remove();};
-  document.body.appendChild(d);
-}
-
-function openMailForm(editId){
-  var mail=editId?(S.mails||[]).find(function(m){return m.id===editId;}):null;
-  var now=new Date();
-  var pad=function(n){return String(n).padStart(2,'0');};
-  var defaultDate=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'T'+pad(now.getHours())+':'+pad(now.getMinutes());
-  var memberOpts=MEMBER_NAMES.map(function(n){return '<option value="'+n+'"'+(mail&&mail.member===n?' selected':'')+'>'+n+'</option>';}).join('');
-  var overlay=document.createElement('div');
-  overlay.className='overlay';
-  overlay.style.cssText='display:flex;z-index:9600;';
-  overlay.innerHTML=
-    '<div class="msheet" style="max-height:92vh;overflow-y:auto;">'+
-    '<div class="sh"></div>'+
-    '<button class="sclose" onclick="this.closest(\'.overlay\').remove()">&#x2715;</button>'+
-    '<div class="stitle">'+(editId?'メールを編集':'メールを追加')+'</div>'+
-    '<div class="fg"><label class="fl">送信メンバー</label>'+
-      '<select class="fi" id="mfMember" style="background:var(--panel2);border:1px solid var(--border-s);color:var(--ink);padding:10px;width:100%;font-size:13px;outline:none;">'+memberOpts+'</select>'+
-    '</div>'+
-    '<div class="fg"><label class="fl">日時</label><input class="fi" type="datetime-local" id="mfDate" value="'+(mail?mail.date.slice(0,16):defaultDate)+'"></div>'+
-    '<div class="fg"><label class="fl">件名</label><input class="fi" type="text" id="mfSubject" placeholder="件名" value="'+(mail?(mail.subject||'').replace(/"/g,'&quot;'):'')+'"></div>'+
-    '<div class="fg"><label class="fl">本文</label><textarea class="fi" id="mfBody" rows="6" style="resize:vertical;line-height:1.7;">'+(mail?mail.body||'':'')+'</textarea></div>'+
-
-```
-'<div class="fg"><label class="fl">写真パス（1行1枚）</label><textarea class="fi" id="mfPhotos" rows="3" placeholder="./images/mails/filename.jpg" style="resize:vertical;font-size:11px;">'+(mail&&mail.photos?mail.photos.join('\n'):'')+'</textarea></div>'+
-'<button onclick="saveMailForm(\''+( editId||'')+'\',this.closest(\'.overlay\'))" style="width:100%;padding:12px;background:rgba(114,232,200,.12);border:1px solid rgba(114,232,200,.35);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--mint);margin-top:4px;">保存する</button>'+
-'</div>';
-```
-
-document.body.appendChild(overlay);
-}
-
-function saveMailForm(editId,overlay){
-var member=document.getElementById(‘mfMember’).value;
-var dateVal=document.getElementById(‘mfDate’).value;
-var date=dateVal.replace(‘T’,’ ‘)+’:00’;
-var subject=document.getElementById(‘mfSubject’).value.trim();
-var body=document.getElementById(‘mfBody’).value;
-var photosRaw=document.getElementById(‘mfPhotos’).value.trim();
-var photos=photosRaw?photosRaw.split(’\n’).map(function(s){return s.trim();}).filter(Boolean):[];
-if(!member||!dateVal){toast(’// メンバーと日時は必須です’);return;}
-if(!S.mails)S.mails=[];
-if(editId){
-var idx=S.mails.findIndex(function(m){return m.id===editId;});
-if(idx!==-1)S.mails[idx]={id:editId,member:member,date:date,subject:subject,body:body,photos:photos};
-} else {
-S.mails.push({id:‘mail_’+Date.now(),member:member,date:date,subject:subject,body:body,photos:photos});
-}
-save();
-overlay.remove();
-toast(editId?’// 更新しました’:’// 追加しました’);
-if(editId&&_mailCurrent===editId)openMailDetail(editId);
-else renderMailList();
-}
-
-function deleteMailConfirm(id){
-var mail=(S.mails||[]).find(function(m){return m.id===id;});
-if(!mail)return;
-var overlay=document.createElement(‘div’);
-overlay.className=‘overlay’;
-overlay.style.cssText=‘display:flex;z-index:9600;’;
-overlay.innerHTML=
-‘<div class="msheet" style="padding-bottom:24px;">’+
-‘<div class="sh"></div>’+
-‘<div class="stitle">削除の確認</div>’+
-‘<p style="font-family:var(--ffj);font-size:13px;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-bottom:20px;">’+mail.member+’「’+(mail.subject||‘件名なし’)+’」を削除しますか？</p>’+
-‘<div class="confirm-btns">’+
-‘<button class="cbtn-cancel" onclick="this.closest(\'.overlay\').remove()">キャンセル</button>’+
-‘<button class="cbtn-del" onclick="deleteMail(\''+id+'\',this.closest(\'.overlay\'))">削除する</button>’+
-‘</div>’+
-‘</div>’;
-document.body.appendChild(overlay);
-}
-
-function deleteMail(id,overlay){
-S.mails=(S.mails||[]).filter(function(m){return m.id!==id;});
-S.mailFavs=(S.mailFavs||[]).filter(function(f){return f!==id;});
-save();overlay.remove();
-toast(’// 削除しました’);
-renderMailList();
-}
-
 // ═══ ACHIEVEMENTS ═══
-const ACH_COLORS=[‘var(–accent)’,‘var(–rose)’,‘var(–lavender)’,‘var(–sky)’,‘var(–mint)’,‘var(–butter)’,‘var(–peach)’,‘var(–gold)’];
+const ACH_COLORS=['var(--accent)','var(--rose)','var(--lavender)','var(--sky)','var(--mint)','var(--butter)','var(--peach)','var(--gold)'];
 const ACHS=[
-{icon:‘📖’,name:‘First Read’,desc:‘最初のチャプターを読んだ’,check:()=>S.chapters.some(c=>c.read)},
-{icon:‘⭐’,name:‘Collector’,desc:‘カードを5枚以上所持した’,check:()=>Object.values(S.owned).reduce((a,b)=>a+b,0)>=5},
-{icon:‘✨’,name:‘SSR Hunter’,desc:‘SSRカードを入手した’,check:()=>S.cards.some(c=>(c.rarity===‘ssr’||c.rarity===‘ur’)&&(S.owned[c.id]||0)>0)},
-{icon:‘👥’,name:‘Full Roster’,desc:‘11人全員を登録した’,check:()=>S.members.length>=11},
-{icon:‘💿’,name:‘Discophile’,desc:‘3作品以上を記録した’,check:()=>S.discography.length>=3},
-{icon:‘🎁’,name:‘Goods Hunter’,desc:‘グッズを5件以上記録した’,check:()=>S.goods.length>=5},
-{icon:‘📚’,name:‘Archivist’,desc:‘全タブにデータを入力した’,check:()=>S.chapters.length>0&&S.members.length>0&&S.cards.length>0&&S.discography.length>0&&S.goods.length>0},
-{icon:‘👑’,name:‘Chronicle’,desc:‘5チャプター以上を読んだ’,check:()=>S.chapters.filter(c=>c.read).length>=5},
+  {icon:'📖',name:'First Read',desc:'最初のチャプターを読んだ',check:()=>S.chapters.some(c=>c.read)},
+  {icon:'⭐',name:'Collector',desc:'カードを5枚以上所持した',check:()=>Object.values(S.owned).reduce((a,b)=>a+b,0)>=5},
+  {icon:'✨',name:'SSR Hunter',desc:'SSRカードを入手した',check:()=>S.cards.some(c=>(c.rarity==='ssr'||c.rarity==='ur')&&(S.owned[c.id]||0)>0)},
+  {icon:'👥',name:'Full Roster',desc:'11人全員を登録した',check:()=>S.members.length>=11},
+  {icon:'💿',name:'Discophile',desc:'3作品以上を記録した',check:()=>S.discography.length>=3},
+  {icon:'🎁',name:'Goods Hunter',desc:'グッズを5件以上記録した',check:()=>S.goods.length>=5},
+  {icon:'📚',name:'Archivist',desc:'全タブにデータを入力した',check:()=>S.chapters.length>0&&S.members.length>0&&S.cards.length>0&&S.discography.length>0&&S.goods.length>0},
+  {icon:'👑',name:'Chronicle',desc:'5チャプター以上を読んだ',check:()=>S.chapters.filter(c=>c.read).length>=5},
 ];
 function renderAch(){
-const g=document.getElementById(‘achGrid’);g.innerHTML=’’;
-ACHS.forEach((a,i)=>{
-const ok=a.check();const col=ACH_COLORS[i];
-const d=document.createElement(‘div’);d.className=`ac-card${ok?' ok':''}`;
-if(ok)d.style.setProperty(’–acl’,col);
-d.innerHTML=`<div class="ac-check">${ok?'UNLOCKED':''}</div><div class="ac-icon-wrap">${a.svgIcon||`<svg viewBox="0 0 24 24" fill="none" stroke="var(--acl,var(--lavender))" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/></svg>`}</div><div class="ac-name">${a.name}</div><div class="ac-desc">${a.desc}</div>`;
-g.appendChild(d);
-});
+  const g=document.getElementById('achGrid');g.innerHTML='';
+  ACHS.forEach((a,i)=>{
+    const ok=a.check();const col=ACH_COLORS[i];
+    const d=document.createElement('div');d.className=`ac-card${ok?' ok':''}`;
+    if(ok)d.style.setProperty('--acl',col);
+    d.innerHTML=`<div class="ac-check">${ok?'UNLOCKED':''}</div><div class="ac-icon-wrap">${a.svgIcon||`<svg viewBox="0 0 24 24" fill="none" stroke="var(--acl,var(--lavender))" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/></svg>`}</div><div class="ac-name">${a.name}</div><div class="ac-desc">${a.desc}</div>`;
+    g.appendChild(d);
+  });
 }
 
 // ═══ STATS ═══
 function updateStats(){
-// delegate to home stats updater (header DOM removed)
-updateHomeStats();
+  // delegate to home stats updater (header DOM removed)
+  updateHomeStats();
 }
 
 // ═══ TABS ═══
 function showTab(tab){
-// legacy shim — redirect to new page system
-goToTab(tab);
+  // legacy shim — redirect to new page system
+  goToTab(tab);
 }
 function fabClick(){
-const map={story:openAddChapter,members:openAddMember,gacha:openAddCard,archive:openAddGoods};
-if(map[S.currentTab])map[S.currentTab]();
+  const map={story:openAddChapter,members:openAddMember,gacha:openAddCard,archive:openAddGoods};
+  if(map[S.currentTab])map[S.currentTab]();
 }
 
 // ═══ MODALS ═══
-function openM(id){document.getElementById(id).classList.add(‘open’);}
+function openM(id){document.getElementById(id).classList.add('open');}
 function closeM(id){
-document.getElementById(id).classList.remove(‘open’);
+  document.getElementById(id).classList.remove('open');
 }
 function bgC(e,id){if(e.target.id===id)closeM(id);}
 
 // ═══ CONFIRM DELETE ═══
 let _del=null;
 function confirmDel(type,id,msg){
-_del={type,id};document.getElementById(‘confMsg’).textContent=msg;
-document.getElementById(‘confOk’).onclick=execDel;openM(‘confirmModal’);
+  _del={type,id};document.getElementById('confMsg').textContent=msg;
+  document.getElementById('confOk').onclick=execDel;openM('confirmModal');
 }
 function execDel(){
-if(!_del)return;const{type,id}=_del;
-if(type===‘chapter’)S.chapters=S.chapters.filter(x=>x.id!==id);
-if(type===‘member’)S.members=S.members.filter(x=>x.id!==id);
-if(type===‘card’){S.cards=S.cards.filter(x=>x.id!==id);delete S.owned[id];}
-if(type===‘disc’)S.discography=S.discography.filter(x=>x.id!==id);
-if(type===‘goods’)S.goods=S.goods.filter(x=>x.id!==id);
-save();updateStats();renderAch();
-const renders={chapter:renderStory,member:renderMembers,card:renderCollGrid,disc:renderDisc,goods:renderGoods};
-if(renders[type])renders[type]();
-document.querySelectorAll(’.overlay.open’).forEach(o=>o.classList.remove(‘open’));
-toast(’// DELETED’);_del=null;
+  if(!_del)return;const{type,id}=_del;
+  if(type==='chapter')S.chapters=S.chapters.filter(x=>x.id!==id);
+  if(type==='member')S.members=S.members.filter(x=>x.id!==id);
+  if(type==='card'){S.cards=S.cards.filter(x=>x.id!==id);delete S.owned[id];}
+  if(type==='disc')S.discography=S.discography.filter(x=>x.id!==id);
+  if(type==='goods')S.goods=S.goods.filter(x=>x.id!==id);
+  save();updateStats();renderAch();
+  const renders={chapter:renderStory,member:renderMembers,card:renderCollGrid,disc:renderDisc,goods:renderGoods};
+  if(renders[type])renders[type]();
+  document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));
+  toast('// DELETED');_del=null;
 }
 
 // ═══ CSV IMPORT ═══
 const CSV_SCHEMAS={
-members:{fields:[‘name’,‘role’,‘color’],hint:‘name, role, color\n例: 木村 慧人, CENTER / VOCAL, #F2B8C6’},
-discography:{fields:[‘type’,‘title’,‘date’,‘tag’],hint:‘type(single/album/digital), title, date(YYYY-MM-DD), tag\n例: single, 「READY?」, 2021-11-03, デビューシングル’},
-chapters:{fields:[‘num’,‘title’,‘date’,‘body’],hint:‘num, title, date, body\n例: CH.04, 武道館, 2023-11-03, 本文テキスト’},
-goods:{fields:[‘cat’,‘name’,‘note’],hint:‘cat(photobook/photocard/penlight/cd/goods/other), name, note\n例: photobook, 写真集, 初回限定版’},
+  members:{fields:['name','role','color'],hint:'name, role, color\n例: 木村 慧人, CENTER / VOCAL, #F2B8C6'},
+  discography:{fields:['type','title','date','tag'],hint:'type(single/album/digital), title, date(YYYY-MM-DD), tag\n例: single, 「READY?」, 2021-11-03, デビューシングル'},
+  chapters:{fields:['num','title','date','body'],hint:'num, title, date, body\n例: CH.04, 武道館, 2023-11-03, 本文テキスト'},
+  goods:{fields:['cat','name','note'],hint:'cat(photobook/photocard/penlight/cd/goods/other), name, note\n例: photobook, 写真集, 初回限定版'},
 };
 let _csvRows=null;
 function updateCsvHint(){
-const t=document.getElementById(‘csvType’).value;
-document.getElementById(‘csvHint’).innerHTML=CSV_SCHEMAS[t].hint.replace(/\n/g,’<br>’);
-_csvRows=null;document.getElementById(‘csvPreview’).innerHTML=’’;
-document.getElementById(‘csvImportBtn’).style.display=‘none’;
-document.getElementById(‘csvFile’).value=’’;
+  const t=document.getElementById('csvType').value;
+  document.getElementById('csvHint').innerHTML=CSV_SCHEMAS[t].hint.replace(/\n/g,'<br>');
+  _csvRows=null;document.getElementById('csvPreview').innerHTML='';
+  document.getElementById('csvImportBtn').style.display='none';
+  document.getElementById('csvFile').value='';
 }
 updateCsvHint();
 function readCSV(inp){
-if(!inp.files||!inp.files[0])return;
-const r=new FileReader();
-r.onload=e=>{
-const lines=e.target.result.trim().split(’\n’).filter(l=>l.trim());
-const schema=CSV_SCHEMAS[document.getElementById(‘csvType’).value];
-let start=0;
-if(schema.fields.includes(lines[0].split(’,’)[0].trim().toLowerCase()))start=1;
-_csvRows=lines.slice(start).map(l=>{const cells=l.split(’,’).map(c=>c.trim());const obj={};schema.fields.forEach((f,i)=>obj[f]=cells[i]||’’);return obj;}).filter(r=>Object.values(r).some(v=>v));
-document.getElementById(‘csvPreview’).innerHTML=`<span style="color:var(--accent)">${_csvRows.length}件検出</span> — 先頭3件:<br>`+_csvRows.slice(0,3).map(r=>Object.values(r).join(’ / ‘)).join(’<br>’);
-document.getElementById(‘csvImportBtn’).style.display=’’;
-};
-r.readAsText(inp.files[0],‘UTF-8’);
+  if(!inp.files||!inp.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const lines=e.target.result.trim().split('\n').filter(l=>l.trim());
+    const schema=CSV_SCHEMAS[document.getElementById('csvType').value];
+    let start=0;
+    if(schema.fields.includes(lines[0].split(',')[0].trim().toLowerCase()))start=1;
+    _csvRows=lines.slice(start).map(l=>{const cells=l.split(',').map(c=>c.trim());const obj={};schema.fields.forEach((f,i)=>obj[f]=cells[i]||'');return obj;}).filter(r=>Object.values(r).some(v=>v));
+    document.getElementById('csvPreview').innerHTML=`<span style="color:var(--accent)">${_csvRows.length}件検出</span> — 先頭3件:<br>`+_csvRows.slice(0,3).map(r=>Object.values(r).join(' / ')).join('<br>');
+    document.getElementById('csvImportBtn').style.display='';
+  };
+  r.readAsText(inp.files[0],'UTF-8');
 }
 function executeImport(){
-if(!_csvRows||!_csvRows.length){toast(’// NO DATA’);return;}
-const t=document.getElementById(‘csvType’).value;let added=0;
-_csvRows.forEach(r=>{
-if(t===‘members’&&r.name){S.members.push({id:‘m’+Date.now()+Math.random(),name:r.name,role:r.role||’’,color:r.color||’#C0B4E0’,img:’’});added++;}
-else if(t===‘discography’&&r.title){S.discography.push({id:‘d’+Date.now()+Math.random(),type:r.type||‘single’,title:r.title,date:r.date||’—’,tag:r.tag||’’,img:’’,owned:false});added++;}
-else if(t===‘chapters’&&r.title){S.chapters.push({id:‘ch’+Date.now()+Math.random(),num:r.num||‘CH.??’,title:r.title,date:r.date||’’,body:r.body||’’,cardHint:’’,read:false});added++;}
-else if(t===‘goods’&&r.name){S.goods.push({id:‘g’+Date.now()+Math.random(),cat:r.cat||‘goods’,name:r.name,note:r.note||’’,owned:false});added++;}
-});
-save();updateStats();renderAch();
-if(t===‘members’)renderMembers();if(t===‘discography’)renderDisc();
-if(t===‘chapters’)renderStory();if(t===‘goods’)renderGoods();
-closeM(‘importModal’);toast(`// ${added}件インポート完了`);_csvRows=null;
+  if(!_csvRows||!_csvRows.length){toast('// NO DATA');return;}
+  const t=document.getElementById('csvType').value;let added=0;
+  _csvRows.forEach(r=>{
+    if(t==='members'&&r.name){S.members.push({id:'m'+Date.now()+Math.random(),name:r.name,role:r.role||'',color:r.color||'#C0B4E0',img:''});added++;}
+    else if(t==='discography'&&r.title){S.discography.push({id:'d'+Date.now()+Math.random(),type:r.type||'single',title:r.title,date:r.date||'—',tag:r.tag||'',img:'',owned:false});added++;}
+    else if(t==='chapters'&&r.title){S.chapters.push({id:'ch'+Date.now()+Math.random(),num:r.num||'CH.??',title:r.title,date:r.date||'',body:r.body||'',cardHint:'',read:false});added++;}
+    else if(t==='goods'&&r.name){S.goods.push({id:'g'+Date.now()+Math.random(),cat:r.cat||'goods',name:r.name,note:r.note||'',owned:false});added++;}
+  });
+  save();updateStats();renderAch();
+  if(t==='members')renderMembers();if(t==='discography')renderDisc();
+  if(t==='chapters')renderStory();if(t==='goods')renderGoods();
+  closeM('importModal');toast(`// ${added}件インポート完了`);_csvRows=null;
 }
 function downloadTemplate(){
-const t=document.getElementById(‘csvType’).value;
-const ex={members:‘木村 慧人,CENTER / VOCAL,#F2B8C6\n松田 迅,MAIN DANCE,#A8CEDE’,discography:‘single,「READY?」,2021-11-03,デビューシングル’,chapters:‘CH.04,武道館公演,2023-11-03,本文テキストをここに入力’,goods:‘photobook,写真集「INI FILE 01」,初回限定版’};
-const blob=new Blob([ex[t]],{type:‘text/csv;charset=utf-8’});
-const url=URL.createObjectURL(blob);const a=document.createElement(‘a’);
-a.href=url;a.download=`template_${t}.csv`;a.click();URL.revokeObjectURL(url);
+  const t=document.getElementById('csvType').value;
+  const ex={members:'木村 慧人,CENTER / VOCAL,#F2B8C6\n松田 迅,MAIN DANCE,#A8CEDE',discography:'single,「READY?」,2021-11-03,デビューシングル',chapters:'CH.04,武道館公演,2023-11-03,本文テキストをここに入力',goods:'photobook,写真集「INI FILE 01」,初回限定版'};
+  const blob=new Blob([ex[t]],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download=`template_${t}.csv`;a.click();URL.revokeObjectURL(url);
 }
 
 // ═══ BACKUP / RESTORE ═══
 function exportData(){
-const payload={version:2,exportedAt:new Date().toISOString(),data:S};
-const blob=new Blob([JSON.stringify(payload,null,2)],{type:‘application/json;charset=utf-8’});
-const url=URL.createObjectURL(blob);const a=document.createElement(‘a’);
-a.href=url;a.download=`ini_chronicle_backup_${new Date().toISOString().slice(0,10)}.json`;
-a.click();URL.revokeObjectURL(url);toast(’// バックアップを保存しました’);updateBackupInfo();
+  const payload={version:2,exportedAt:new Date().toISOString(),data:S};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download=`ini_chronicle_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();URL.revokeObjectURL(url);toast('// バックアップを保存しました');updateBackupInfo();
 }
 function importData(input){
-if(!input.files||!input.files[0])return;
-const r=new FileReader();
-r.onload=e=>{
-try{
-const payload=JSON.parse(e.target.result);const imported=payload.data||payload;
-if(!imported.chapters&&!imported.members){toast(’// ファイルが無効です’);return;}
-if(!confirm(`バックアップを読み込みます。現在のデータは上書きされます。\nバックアップ日時: ${payload.exportedAt||'不明'}\n\nよろしいですか？`))return;
-S={…S,…imported};save();
-renderStory();renderMembers();renderCollGrid();renderDisc();renderGoods();renderAch();updateStats();updateBackupInfo();
-document.getElementById(‘bTitle’).textContent=S.bannerTitle||’’;
-document.getElementById(‘bSub’).textContent=S.bannerSub||’’;
-toast(’// リストア完了’);
-}catch(err){toast(’// 読み込みに失敗しました’);}
-};
-r.readAsText(input.files[0],‘UTF-8’);input.value=’’;
+  if(!input.files||!input.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const payload=JSON.parse(e.target.result);const imported=payload.data||payload;
+      if(!imported.chapters&&!imported.members){toast('// ファイルが無効です');return;}
+      if(!confirm(`バックアップを読み込みます。現在のデータは上書きされます。\nバックアップ日時: ${payload.exportedAt||'不明'}\n\nよろしいですか？`))return;
+      S={...S,...imported};save();
+      renderStory();renderMembers();renderCollGrid();renderDisc();renderGoods();renderAch();updateStats();updateBackupInfo();
+      document.getElementById('bTitle').textContent=S.bannerTitle||'';
+      document.getElementById('bSub').textContent=S.bannerSub||'';
+      toast('// リストア完了');
+    }catch(err){toast('// 読み込みに失敗しました');}
+  };
+  r.readAsText(input.files[0],'UTF-8');input.value='';
 }
 function updateBackupInfo(){
-const el=document.getElementById(‘backupInfo’);if(!el)return;
-el.textContent=`現在: チャプター ${S.chapters.length}件 / カード ${S.cards.length}枚 / メンバー ${S.members.length}人`;
+  const el=document.getElementById('backupInfo');if(!el)return;
+  el.textContent=`現在: チャプター ${S.chapters.length}件 / カード ${S.cards.length}枚 / メンバー ${S.members.length}人`;
 }
 
 // ═══ PWA ═══
 let _dp=null;
-window.addEventListener(‘beforeinstallprompt’,e=>{e.preventDefault();_dp=e;});
-function triggerInstall(){if(_dp){_dp.prompt();_dp.userChoice.then(()=>{_dp=null;});}else{toast(’// Safari → 共有 → ホーム画面に追加’);}}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_dp=e;});
+function triggerInstall(){if(_dp){_dp.prompt();_dp.userChoice.then(()=>{_dp=null;});}else{toast('// Safari → 共有 → ホーム画面に追加');}}
 
 // ═══ PASSWORD ═══
-const PW_KEY=‘ifb_pw’;
-const DEFAULT_PW=‘fanbook’;
-function hashPW(pw){let h=0;for(let i=0;i<pw.length;i++){h=((h<<5)-h)+pw.charCodeAt(i);h|=0;}return btoa(‘ifb:’+Math.abs(h)+’:’+pw.length);}
+const PW_KEY='ifb_pw';
+const DEFAULT_PW='fanbook';
+function hashPW(pw){let h=0;for(let i=0;i<pw.length;i++){h=((h<<5)-h)+pw.charCodeAt(i);h|=0;}return btoa('ifb:'+Math.abs(h)+':'+pw.length);}
 function getStoredHash(){return localStorage.getItem(PW_KEY)||hashPW(DEFAULT_PW);}
 function checkPW(){
-const val=document.getElementById(‘pwInput’).value;
-if(!val){showPWErr();return;}
-if(hashPW(val)===getStoredHash()){unlockApp();}
-else{showPWErr();document.getElementById(‘pwInput’).value=’’;document.getElementById(‘pwInput’).focus();}
+  const val=document.getElementById('pwInput').value;
+  if(!val){showPWErr();return;}
+  if(hashPW(val)===getStoredHash()){unlockApp();}
+  else{showPWErr();document.getElementById('pwInput').value='';document.getElementById('pwInput').focus();}
 }
-function showPWErr(){const e=document.getElementById(‘pwError’);e.style.opacity=‘1’;setTimeout(()=>e.style.opacity=‘0’,2000);}
+function showPWErr(){const e=document.getElementById('pwError');e.style.opacity='1';setTimeout(()=>e.style.opacity='0',2000);}
 function unlockApp(){
-const ls=document.getElementById(‘lockScreen’);
-ls.style.opacity=‘0’;ls.style.transition=‘opacity 0.3s ease’;
-setTimeout(()=>{ls.style.display=‘none’;showHome();},300);
+  const ls=document.getElementById('lockScreen');
+  ls.style.opacity='0';ls.style.transition='opacity 0.3s ease';
+  setTimeout(()=>{ls.style.display='none';showHome();},300);
 }
 function showHome(){
-checkOrientation();
-document.getElementById(‘homeScreen’).style.display=‘block’;
-// hide all pages
-document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
-document.getElementById(‘fab’).style.display=‘none’;
-updateHomeStats();
-const sb=document.getElementById(‘homeSettingsBtn’);
-if(sb)sb.onclick=()=>{
-document.querySelectorAll(’.overlay’).forEach(o=>o.style.zIndex=‘8500’);
-openM(‘settingsModal’);
-document.getElementById(‘settingsModal’).addEventListener(‘click’,function restore(){
-if(!document.getElementById(‘settingsModal’).classList.contains(‘open’)){
-document.querySelectorAll(’.overlay’).forEach(o=>o.style.zIndex=’’);
-document.getElementById(‘settingsModal’).removeEventListener(‘click’,restore);
-}
-});
-};
+  checkOrientation();
+  document.getElementById('homeScreen').style.display='block';
+  // hide all pages
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('fab').style.display='none';
+  updateHomeStats();
+  const sb=document.getElementById('homeSettingsBtn');
+  if(sb)sb.onclick=()=>{
+    document.querySelectorAll('.overlay').forEach(o=>o.style.zIndex='8500');
+    openM('settingsModal');
+    document.getElementById('settingsModal').addEventListener('click',function restore(){
+      if(!document.getElementById('settingsModal').classList.contains('open')){
+        document.querySelectorAll('.overlay').forEach(o=>o.style.zIndex='');
+        document.getElementById('settingsModal').removeEventListener('click',restore);
+      }
+    });
+  };
 }
 function goHome(){
-document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
-document.getElementById(‘homeScreen’).style.display=‘block’;
-document.getElementById(‘fab’).style.display=‘none’;
-updateHomeStats();
-S.currentTab=null;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('homeScreen').style.display='block';
+  document.getElementById('fab').style.display='none';
+  updateHomeStats();
+  S.currentTab=null;
 }
 function hideHome(){
-document.getElementById(‘homeScreen’).style.display=‘none’;
+  document.getElementById('homeScreen').style.display='none';
 }
 function goToTab(tab){
-hideHome();
-document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
-const page=document.getElementById(‘page-’+tab);
-if(page)page.classList.add(‘active’);
-S.currentTab=tab;
-// render content
-const renders={
-story:renderStory,
-members:renderMembers,
-gacha:()=>{renderCollGrid();populateMemberSelect();},
-archive:()=>{renderDisc();renderGoods();},
-achievements:renderAch,
-mail:()=>renderMailList()
-};
-if(renders[tab])renders[tab]();
-// FAB
-const fab=document.getElementById(‘fab’);
-if(fab){
-if(tab===‘achievements’||tab===‘mail’){fab.style.display=‘none’;}
-else{fab.style.display=‘flex’;const labels={story:‘Chapter’,members:‘Member’,gacha:‘Card’,archive:‘Item’};document.getElementById(‘fabL’).textContent=labels[tab]||‘Add’;}
-}
+  hideHome();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const page=document.getElementById('page-'+tab);
+  if(page)page.classList.add('active');
+  S.currentTab=tab;
+  // render content
+  const renders={
+    story:renderStory,
+    members:renderMembers,
+    gacha:()=>{renderCollGrid();populateMemberSelect();},
+    archive:()=>{renderDisc();renderGoods();},
+    achievements:renderAch
+  };
+  if(renders[tab])renders[tab]();
+  // FAB
+  const fab=document.getElementById('fab');
+  if(tab==='achievements'){fab.style.display='none';}
+  else{fab.style.display='flex';const labels={story:'Chapter',members:'Member',gacha:'Card',archive:'Item'};document.getElementById('fabL').textContent=labels[tab]||'Add';}
 }
 function updateHomeStats(){
-const total=Object.values(S.owned).reduce((a,b)=>a+b,0);
-const readCount=S.chapters.filter(c=>c.read).length;
-const totalChap=Math.max(S.chapters.length,1);
-const achCount=ACHS.filter(a=>a.check()).length;
+  const total=Object.values(S.owned).reduce((a,b)=>a+b,0);
+  const readCount=S.chapters.filter(c=>c.read).length;
+  const totalChap=Math.max(S.chapters.length,1);
+  const achCount=ACHS.filter(a=>a.check()).length;
 
-// card count badge
-const el=document.getElementById(‘homeCardCount’);
-if(el)el.textContent=total+’ cards’;
+  // card count badge
+  const el=document.getElementById('homeCardCount');
+  if(el)el.textContent=total+' cards';
 
-// stats numbers
-const ss=document.getElementById(‘homeStatStory’);if(ss)ss.textContent=readCount+’/’+S.chapters.length;
-const sc=document.getElementById(‘homeStatCards’);if(sc)sc.textContent=total;
-const sa=document.getElementById(‘homeStatAch’);if(sa)sa.textContent=achCount+’/’+ACHS.length;
+  // stats numbers
+  const ss=document.getElementById('homeStatStory');if(ss)ss.textContent=readCount+'/'+S.chapters.length;
+  const sc=document.getElementById('homeStatCards');if(sc)sc.textContent=total;
+  const sa=document.getElementById('homeStatAch');if(sa)sa.textContent=achCount+'/'+ACHS.length;
 
-// progress bars
-const bs=document.getElementById(‘homeBarStory’);if(bs)bs.style.width=Math.round(readCount/totalChap*100)+’%’;
-const bc=document.getElementById(‘homeBarCards’);if(bc)bc.style.width=Math.min(total,50)/50*100+’%’;
-const ba=document.getElementById(‘homeBarAch’);if(ba)ba.style.width=Math.round(achCount/ACHS.length*100)+’%’;
+  // progress bars
+  const bs=document.getElementById('homeBarStory');if(bs)bs.style.width=Math.round(readCount/totalChap*100)+'%';
+  const bc=document.getElementById('homeBarCards');if(bc)bc.style.width=Math.min(total,50)/50*100+'%';
+  const ba=document.getElementById('homeBarAch');if(ba)ba.style.width=Math.round(achCount/ACHS.length*100)+'%';
 
-// oshi name
-const nameEl=document.getElementById(‘homeOshiName’);
-if(nameEl&&S.oshiName)nameEl.textContent=S.oshiName;
+  // oshi name
+  const nameEl=document.getElementById('homeOshiName');
+  if(nameEl&&S.oshiName)nameEl.textContent=S.oshiName;
 
-// HUD bottom date
-const dateEl=document.getElementById(‘hudDate’);
-if(dateEl){const d=new Date();dateEl.textContent=d.getFullYear()+’.’+(String(d.getMonth()+1).padStart(2,‘0’))+’.’+String(d.getDate()).padStart(2,‘0’);}
+  // HUD bottom date
+  const dateEl=document.getElementById('hudDate');
+  if(dateEl){const d=new Date();dateEl.textContent=d.getFullYear()+'.'+(String(d.getMonth()+1).padStart(2,'0'))+'.'+String(d.getDate()).padStart(2,'0');}
 
-// restore photo
-if(S.oshiPhoto){
-const bg=document.getElementById(‘homeBgPhoto’);
-const ph=document.getElementById(‘homeBgPlaceholder’);
-if(bg){bg.src=S.oshiPhoto;bg.style.display=‘block’;}
-if(ph)ph.style.display=‘none’;
-}
+  // restore photo
+  if(S.oshiPhoto){
+    const bg=document.getElementById('homeBgPhoto');
+    const ph=document.getElementById('homeBgPlaceholder');
+    if(bg){bg.src=S.oshiPhoto;bg.style.display='block';}
+    if(ph)ph.style.display='none';
+  }
 }
 function openOshiPhotoUpload(){
-document.getElementById(‘oshiPhotoInput’).click();
+  document.getElementById('oshiPhotoInput').click();
 }
 function setOshiPhoto(input){
-if(!input.files||!input.files[0])return;
-const r=new FileReader();
-r.onload=e=>{
-S.oshiPhoto=e.target.result;save();
-const bg=document.getElementById(‘homeBgPhoto’);
-const ph=document.getElementById(‘homeBgPlaceholder’);
-if(bg){bg.src=e.target.result;bg.style.display=‘block’;}
-if(ph)ph.style.display=‘none’;
-toast(’// 推し写真を設定しました ✓’);
-};
-r.readAsDataURL(input.files[0]);
+  if(!input.files||!input.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    S.oshiPhoto=e.target.result;save();
+    const bg=document.getElementById('homeBgPhoto');
+    const ph=document.getElementById('homeBgPlaceholder');
+    if(bg){bg.src=e.target.result;bg.style.display='block';}
+    if(ph)ph.style.display='none';
+    toast('// 推し写真を設定しました ✓');
+  };
+  r.readAsDataURL(input.files[0]);
 }
 
 function saveOshiName(){
-const v=document.getElementById(‘sOshiName’).value.trim();
-if(v){S.oshiName=v;save();updateHomeStats();}
-toast(’// SAVED’);
+  const v=document.getElementById('sOshiName').value.trim();
+  if(v){S.oshiName=v;save();updateHomeStats();}
+  toast('// SAVED');
 }
 // Orientation detection
 function checkOrientation(){
-const isPortrait=window.innerHeight>window.innerWidth;
-const rp=document.getElementById(‘rotatePrompt’);
-const hs=document.getElementById(‘homeScreen’);
-if(isPortrait){
-rp.style.display=‘flex’;
-if(hs.style.display!==‘none’)hs.style.visibility=‘hidden’;
-}else{
-rp.style.display=‘none’;
-if(hs.style.display!==‘none’)hs.style.visibility=‘visible’;
+  const isPortrait=window.innerHeight>window.innerWidth;
+  const rp=document.getElementById('rotatePrompt');
+  const hs=document.getElementById('homeScreen');
+  if(isPortrait){
+    rp.style.display='flex';
+    if(hs.style.display!=='none')hs.style.visibility='hidden';
+  }else{
+    rp.style.display='none';
+    if(hs.style.display!=='none')hs.style.visibility='visible';
+  }
 }
-}
-window.addEventListener(‘resize’,()=>{
-if(document.getElementById(‘homeScreen’).style.display!==‘none’)checkOrientation();
+window.addEventListener('resize',()=>{
+  if(document.getElementById('homeScreen').style.display!=='none')checkOrientation();
 });
-window.addEventListener(‘orientationchange’,()=>{
-setTimeout(()=>{if(document.getElementById(‘homeScreen’).style.display!==‘none’)checkOrientation();},200);
+window.addEventListener('orientationchange',()=>{
+  setTimeout(()=>{if(document.getElementById('homeScreen').style.display!=='none')checkOrientation();},200);
 });
-function showLock(){const ls=document.getElementById(‘lockScreen’);ls.style.display=‘flex’;ls.style.opacity=‘1’;ls.style.transition=’’;document.getElementById(‘pwInput’).value=’’;document.getElementById(‘pwError’).style.opacity=‘0’;setTimeout(()=>document.getElementById(‘pwInput’).focus(),100);}
+function showLock(){const ls=document.getElementById('lockScreen');ls.style.display='flex';ls.style.opacity='1';ls.style.transition='';document.getElementById('pwInput').value='';document.getElementById('pwError').style.opacity='0';setTimeout(()=>document.getElementById('pwInput').focus(),100);}
 function isDefaultPW(){return getStoredHash()===hashPW(DEFAULT_PW);}
 function changePW(){
-const cur=document.getElementById(‘pwCurrent’).value,nw=document.getElementById(‘pwNew’).value,nw2=document.getElementById(‘pwNew2’).value;
-const msg=document.getElementById(‘pwChangeMsg’);
-if(hashPW(cur)!==getStoredHash()){msg.textContent=’// 現在のパスワードが違います’;msg.style.color=‘var(–accent)’;return;}
-if(nw.length<4){msg.textContent=’// 4文字以上で設定してください’;msg.style.color=‘var(–accent)’;return;}
-if(nw!==nw2){msg.textContent=’// 新しいパスワードが一致しません’;msg.style.color=‘var(–accent)’;return;}
-localStorage.setItem(PW_KEY,hashPW(nw));msg.textContent=’// パスワードを変更しました’;msg.style.color=‘var(–mint)’;
-[‘pwCurrent’,‘pwNew’,‘pwNew2’].forEach(i=>document.getElementById(i).value=’’);
-updatePWStatus();toast(’// パスワードを変更しました’);
+  const cur=document.getElementById('pwCurrent').value,nw=document.getElementById('pwNew').value,nw2=document.getElementById('pwNew2').value;
+  const msg=document.getElementById('pwChangeMsg');
+  if(hashPW(cur)!==getStoredHash()){msg.textContent='// 現在のパスワードが違います';msg.style.color='var(--accent)';return;}
+  if(nw.length<4){msg.textContent='// 4文字以上で設定してください';msg.style.color='var(--accent)';return;}
+  if(nw!==nw2){msg.textContent='// 新しいパスワードが一致しません';msg.style.color='var(--accent)';return;}
+  localStorage.setItem(PW_KEY,hashPW(nw));msg.textContent='// パスワードを変更しました';msg.style.color='var(--mint)';
+  ['pwCurrent','pwNew','pwNew2'].forEach(i=>document.getElementById(i).value='');
+  updatePWStatus();toast('// パスワードを変更しました');
 }
 function updatePWStatus(){
-const el=document.getElementById(‘pwStatus’);if(!el)return;
-if(isDefaultPW()){el.textContent=‘⚠ デフォルトパスワード使用中（変更を推奨）’;el.style.color=‘var(–butter)’;}
-else{el.textContent=‘✓ カスタムパスワード設定済み’;el.style.color=‘var(–mint)’;}
+  const el=document.getElementById('pwStatus');if(!el)return;
+  if(isDefaultPW()){el.textContent='⚠ デフォルトパスワード使用中（変更を推奨）';el.style.color='var(--butter)';}
+  else{el.textContent='✓ カスタムパスワード設定済み';el.style.color='var(--mint)';}
 }
 
 // ═══ COLOR SYNC ═══
-document.getElementById(‘mCo’).addEventListener(‘input’,function(){document.getElementById(‘mCoH’).value=this.value;});
-document.getElementById(‘mCoH’).addEventListener(‘input’,function(){if(/^#[0-9A-Fa-f]{6}$/.test(this.value))document.getElementById(‘mCo’).value=this.value;});
+document.getElementById('mCo').addEventListener('input',function(){document.getElementById('mCoH').value=this.value;});
+document.getElementById('mCoH').addEventListener('input',function(){if(/^#[0-9A-Fa-f]{6}$/.test(this.value))document.getElementById('mCo').value=this.value;});
 
 // ═══ TOAST ═══
 let _tt;
-function toast(msg){const t=document.getElementById(‘toast’);t.textContent=msg;t.classList.add(‘show’);clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove(‘show’),2200);}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2200);}
 
 // ═══ INIT ═══
 async function initApp(){
-await loadMasterData();
-document.getElementById(‘bTitle’).textContent=S.bannerTitle;
-document.getElementById(‘bSub’).textContent=S.bannerSub;
-applyAdminUI();
-renderStory();updateStats();updateBackupInfo();updatePWStatus();populateMemberSelect();
-showLock();
-if(isDefaultPW())document.getElementById(‘pwHint’).textContent=‘初期パスワード: fanbook\nSettings から変更できます’;
+  await loadMasterData();
+  document.getElementById('bTitle').textContent=S.bannerTitle;
+  document.getElementById('bSub').textContent=S.bannerSub;
+  applyAdminUI();
+  renderStory();updateStats();updateBackupInfo();updatePWStatus();populateMemberSelect();
+  showLock();
+  if(isDefaultPW())document.getElementById('pwHint').textContent='初期パスワード: fanbook\nSettings から変更できます';
 }
 initApp();
 
 </script>
+
 </body>
 </html>
