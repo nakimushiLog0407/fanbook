@@ -1,0 +1,2663 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="INI CHRONICLE">
+<meta name="theme-color" content="#0D0B14">
+<title>INI CHRONICLE</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rose:#F2B8C6;--sky:#A8CEDE;--mint:#9ECFBC;--butter:#EDD99A;--lavender:#C0B4E0;--peach:#EEC4A4;
+  --bg:#0D0B14;--bg2:#13101E;--panel:#1A1628;--panel2:#211D30;--panel3:#2A2540;
+  --ink:#F0EDF8;--ink-mid:#A89FB5;--ink-dim:#5A5470;
+  --border:rgba(192,180,224,0.1);--border-s:rgba(192,180,224,0.22);
+  --accent:#C06B8A;--accent-g:rgba(192,107,138,0.25);
+  --gold:#D4A23C;--gold-g:rgba(212,162,60,0.2);
+  --ff:'Rajdhani','Noto Sans JP',sans-serif;
+  --ffj:'Noto Sans JP',sans-serif;
+  --ffm:'Share Tech Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--ink);font-family:var(--ff);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    radial-gradient(1px 1px at 18% 12%,rgba(255,255,255,.35),transparent),
+    radial-gradient(1px 1px at 72% 28%,rgba(255,255,255,.25),transparent),
+    radial-gradient(1px 1px at 44% 58%,rgba(255,255,255,.2),transparent),
+    radial-gradient(1px 1px at 88% 72%,rgba(255,255,255,.3),transparent),
+    radial-gradient(1px 1px at 8% 82%,rgba(255,255,255,.18),transparent),
+    radial-gradient(1px 1px at 62% 92%,rgba(255,255,255,.28),transparent),
+    radial-gradient(600px 400px at 80% 8%,rgba(192,107,138,.055),transparent),
+    radial-gradient(500px 500px at 8% 92%,rgba(192,180,224,.045),transparent);}
+
+/* LOCK */
+#lockScreen{display:none;position:fixed;inset:0;z-index:9999;background:var(–bg);
+flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;}
+.lock-eyebrow{font-family:var(–ffm);font-size:9px;letter-spacing:.28em;color:var(–ink-dim);text-align:center;margin-bottom:12px;}
+.lock-logo{font-family:var(–ff);font-size:clamp(26px,7vw,40px);font-weight:700;letter-spacing:.08em;color:var(–ink);text-align:center;text-transform:uppercase;}
+.lock-logo span{color:var(–accent);}
+.lock-bar{height:2px;background:linear-gradient(90deg,transparent,var(–accent),var(–lavender),var(–sky),transparent);margin:14px auto;width:220px;}
+.lock-field-label{font-family:var(–ffm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(–ink-dim);margin-bottom:8px;margin-top:32px;text-align:left;width:100%;max-width:320px;}
+.lock-input{width:100%;max-width:320px;background:rgba(255,255,255,.05);border:1px solid var(–border-s);padding:14px 18px;color:var(–ink);font-family:var(–ffj);font-size:16px;font-weight:300;outline:none;letter-spacing:.1em;transition:border-color .18s;border-radius:0;}
+.lock-input:focus{border-color:var(–accent);}
+.lock-err{font-family:var(–ffm);font-size:9px;letter-spacing:.12em;color:var(–accent);min-height:16px;margin:10px 0;opacity:0;transition:opacity .2s;text-align:center;width:100%;max-width:320px;}
+.lock-btn{width:100%;max-width:320px;background:var(–accent);color:#fff;border:none;padding:15px;font-family:var(–ff);font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .18s;}
+.lock-btn:hover{filter:brightness(1.12);box-shadow:0 0 24px var(–accent-g);}
+.lock-hint{font-family:var(–ffm);font-size:9px;letter-spacing:.1em;color:var(–ink-dim);text-align:center;margin-top:24px;line-height:1.9;width:100%;max-width:320px;}
+
+/* ══════════════════════════════════════════
+PAGE SYSTEM
+══════════════════════════════════════════ */
+.page{display:none;position:fixed;inset:0;z-index:7000;overflow:hidden;flex-direction:column;}
+.page.active{display:flex;animation:pageIn .22s cubic-bezier(.4,0,.2,1);}
+@keyframes pageIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:none;}}
+
+/* PAGE BG — HUD grid */
+.pg-bg{position:absolute;inset:0;z-index:0;pointer-events:none;
+background:var(–bg);
+background-image:repeating-linear-gradient(90deg,rgba(192,180,224,.022) 0,rgba(192,180,224,.022) 1px,transparent 1px,transparent 64px),
+repeating-linear-gradient(0deg,rgba(192,180,224,.022) 0,rgba(192,180,224,.022) 1px,transparent 1px,transparent 64px);}
+
+/* PAGE HEADER */
+.pg-header{
+position:relative;flex-shrink:0;
+height:clamp(36px,5.5vh,46px);
+display:flex;align-items:center;justify-content:space-between;
+padding:0 clamp(14px,2.2vw,24px);
+background:rgba(7,5,14,.8);
+border-bottom:1px solid rgba(192,180,224,.13);
+backdrop-filter:blur(14px);z-index:2;}
+.pg-header::before{
+content:’’;position:absolute;top:0;left:0;right:0;height:1.5px;
+background:linear-gradient(90deg,var(–pc,var(–lavender)) 0%,var(–pc2,var(–sky)) 50%,transparent 100%);}
+.pg-back{
+display:flex;align-items:center;gap:clamp(5px,.8vw,8px);
+background:none;border:none;cursor:pointer;
+font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);
+letter-spacing:.18em;text-transform:uppercase;
+color:var(–ink-dim);transition:color .16s;padding:0;
+-webkit-tap-highlight-color:transparent;}
+.pg-back:hover{color:var(–pc,var(–lavender));}
+.pg-back svg{width:clamp(12px,1.6vw,16px);height:clamp(12px,1.6vw,16px);flex-shrink:0;}
+.pg-title-area{position:absolute;left:50%;transform:translateX(-50%);
+display:flex;flex-direction:column;align-items:center;gap:1px;pointer-events:none;}
+.pg-eyebrow{font-family:var(–ffm);font-size:clamp(6px,.75vw,7px);letter-spacing:.24em;
+text-transform:uppercase;color:var(–pc,var(–lavender));opacity:.75;line-height:1;}
+.pg-name{font-family:var(–ff);font-size:clamp(11px,1.6vw,15px);font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;color:var(–ink);line-height:1;}
+.pg-actions{display:flex;gap:clamp(4px,.6vw,6px);align-items:center;}
+.pg-btn{
+width:clamp(26px,3.4vw,32px);height:clamp(26px,3.4vw,32px);
+background:rgba(13,11,20,.6);border:1px solid rgba(192,180,224,.2);
+cursor:pointer;color:var(–ink-dim);
+display:flex;align-items:center;justify-content:center;
+backdrop-filter:blur(6px);transition:all .16s;}
+.pg-btn svg{width:clamp(11px,1.4vw,14px);height:clamp(11px,1.4vw,14px);}
+.pg-btn:hover{border-color:var(–pc,var(–lavender));color:var(–pc,var(–lavender));}
+.pg-btn:active{transform:scale(.9);}
+
+/* HUD corner brackets */
+.pg-corner{position:absolute;z-index:1;width:14px;height:14px;pointer-events:none;}
+.pg-corner.tl{top:48px;left:8px;border-top:1px solid var(–pc,var(–lavender));border-left:1px solid var(–pc,var(–lavender));opacity:.45;}
+.pg-corner.tr{top:48px;right:8px;border-top:1px solid var(–pc2,var(–sky));border-right:1px solid var(–pc2,var(–sky));opacity:.45;}
+.pg-corner.bl{bottom:8px;left:8px;border-bottom:1px solid var(–pc,var(–lavender));border-left:1px solid var(–pc,var(–lavender));opacity:.3;}
+.pg-corner.br{bottom:8px;right:8px;border-bottom:1px solid var(–pc2,var(–sky));border-right:1px solid var(–pc2,var(–sky));opacity:.3;}
+
+/* PAGE SCROLL BODY */
+.pg-body{
+flex:1;overflow-y:auto;overflow-x:hidden;position:relative;z-index:1;
+padding:clamp(12px,2vh,20px) clamp(14px,2.2vw,24px) clamp(60px,10vh,90px);
+scrollbar-width:thin;scrollbar-color:rgba(192,180,224,.18) transparent;}
+.pg-body::-webkit-scrollbar{width:3px;}
+.pg-body::-webkit-scrollbar-thumb{background:rgba(192,180,224,.18);}
+
+/* SECTION LABEL */
+.slabel{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);letter-spacing:.22em;text-transform:uppercase;
+color:var(–ink-dim);margin:clamp(14px,2.5vh,22px) 0 clamp(8px,1.4vh,12px);
+display:flex;align-items:center;gap:8px;}
+.slabel::before{content:’//’;color:var(–pc,var(–accent));}
+.slabel::after{content:’’;flex:1;height:1px;background:var(–border);}
+
+/* ── STORY ── */
+.story-intro{background:rgba(13,11,20,.65);border:1px solid rgba(192,107,138,.22);
+border-left:2px solid var(–accent);padding:clamp(14px,2.5vh,20px);
+margin-bottom:clamp(10px,1.8vh,16px);position:relative;overflow:hidden;backdrop-filter:blur(8px);}
+.story-intro::before{content:’’;position:absolute;inset:0;pointer-events:none;
+background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(192,107,138,.015) 3px,rgba(192,107,138,.015) 4px);}
+.story-intro-tag{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);letter-spacing:.2em;
+text-transform:uppercase;color:var(–accent);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.story-intro-tag::before{content:’’;width:4px;height:4px;background:var(–accent);border-radius:50%;box-shadow:0 0 6px var(–accent);}
+.story-intro-title{font-family:var(–ff);font-size:clamp(16px,2.8vw,24px);font-weight:700;
+color:var(–ink);line-height:1.15;margin-bottom:6px;}
+.story-intro-sub{font-family:var(–ffj);font-size:clamp(10px,1.4vw,13px);font-weight:300;
+color:var(–ink-mid);line-height:1.7;}
+.chapter-list{display:flex;flex-direction:column;gap:clamp(5px,.9vh,8px);}
+.chapter-item{background:rgba(13,11,20,.7);border:1px solid rgba(192,180,224,.13);
+position:relative;transition:all .2s;cursor:pointer;overflow:hidden;backdrop-filter:blur(6px);}
+.chapter-item:hover{border-color:rgba(192,180,224,.32);transform:translateX(3px);}
+.chapter-item::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:2px;background:var(–ch-color,var(–lavender));}
+.chapter-inner{padding:clamp(10px,1.8vh,14px) clamp(12px,1.8vw,16px) clamp(10px,1.8vh,14px) clamp(14px,2vw,18px);
+display:flex;align-items:center;gap:clamp(10px,1.5vw,14px);}
+.chapter-num{font-family:var(–ffm);font-size:clamp(8px,1vw,10px);font-weight:700;
+color:var(–ch-color,var(–lavender));letter-spacing:.1em;flex-shrink:0;width:clamp(40px,6vw,52px);}
+.chapter-info{flex:1;min-width:0;}
+.chapter-title{font-family:var(–ff);font-size:clamp(12px,1.8vw,15px);font-weight:700;
+color:var(–ink);letter-spacing:.02em;margin-bottom:3px;}
+.chapter-date{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);color:var(–ink-dim);letter-spacing:.1em;}
+.chapter-desc{font-family:var(–ffj);font-size:clamp(9px,1.2vw,11px);font-weight:300;
+color:var(–ink-mid);margin-top:3px;line-height:1.5;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.chapter-status{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+.chapter-badge{font-family:var(–ffm);font-size:clamp(6px,.78vw,8px);font-weight:700;letter-spacing:.1em;padding:2px 7px;}
+.chapter-badge.read{background:rgba(158,207,188,.12);color:var(–mint);border:1px solid rgba(158,207,188,.28);}
+.chapter-badge.unread{background:rgba(192,107,138,.1);color:var(–accent);border:1px solid rgba(192,107,138,.22);}
+.chapter-card-hint{font-family:var(–ffm);font-size:clamp(6px,.78vw,8px);color:var(–gold);letter-spacing:.06em;}
+.chapter-edit-btn{font-family:var(–ffm);font-size:clamp(6px,.78vw,8px);color:var(–ink-dim);
+background:none;border:1px solid var(–border);padding:2px 6px;cursor:pointer;transition:all .14s;flex-shrink:0;}
+.chapter-edit-btn:hover{border-color:var(–accent);color:var(–accent);}
+.story-reader{display:none;background:rgba(13,11,20,.92);border:1px solid rgba(192,107,138,.25);
+margin-top:10px;backdrop-filter:blur(12px);}
+.story-reader.open{display:block;animation:pageIn .2s ease;}
+.reader-header{padding:clamp(12px,2vh,16px) clamp(14px,2vw,18px);border-bottom:1px solid var(–border);
+display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.reader-ch{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);letter-spacing:.16em;color:var(–ink-dim);}
+.reader-title{font-family:var(–ff);font-size:clamp(13px,2vw,17px);font-weight:700;color:var(–ink);}
+.reader-close{background:none;border:1px solid var(–border);
+width:clamp(24px,3vw,28px);height:clamp(24px,3vw,28px);font-size:11px;
+color:var(–ink-dim);cursor:pointer;transition:all .16s;
+display:flex;align-items:center;justify-content:center;}
+.reader-close:hover{background:var(–accent);border-color:var(–accent);color:#fff;}
+.reader-body{padding:clamp(14px,2.5vh,20px) clamp(14px,2vw,20px);
+font-family:var(–ffj);font-size:clamp(12px,1.6vw,15px);font-weight:300;
+color:var(–ink-mid);line-height:1.85;white-space:pre-wrap;min-height:120px;}
+.reader-footer{padding:clamp(10px,1.8vh,14px) clamp(14px,2vw,18px);border-top:1px solid var(–border);
+display:flex;align-items:center;justify-content:space-between;}
+.reader-unlock{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);color:var(–gold);letter-spacing:.1em;}
+.reader-done{background:var(–accent);color:#fff;border:none;
+padding:clamp(7px,1.2vh,10px) clamp(16px,2.5vw,22px);
+font-family:var(–ff);font-size:clamp(9px,1.2vw,11px);font-weight:700;
+letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:all .18s;}
+.reader-done:hover{filter:brightness(1.12);}
+
+/* ── MEMBERS ── */
+.members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(100px,14vw,140px),1fr));gap:clamp(6px,1vw,10px);}
+.member-card{background:rgba(13,11,20,.7);border:1px solid rgba(192,180,224,.13);
+cursor:pointer;transition:all .2s;position:relative;overflow:hidden;backdrop-filter:blur(6px);}
+.member-card:hover{border-color:rgba(242,184,198,.35);transform:translateY(-3px);}
+.member-card::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:var(–mc,var(–rose));}
+.member-photo{width:100%;aspect-ratio:3/4;object-fit:cover;background:var(–panel2);display:block;}
+.member-photo-placeholder{width:100%;aspect-ratio:3/4;background:var(–panel2);display:flex;align-items:center;justify-content:center;}
+.member-photo-placeholder svg{width:32px;height:32px;opacity:.18;}
+.member-info{padding:clamp(6px,1vh,9px) clamp(7px,1vw,10px);}
+.member-name{font-family:var(–ff);font-size:clamp(10px,1.4vw,13px);font-weight:700;color:var(–ink);letter-spacing:.02em;}
+.member-pos{font-family:var(–ffm);font-size:clamp(6px,.78vw,8px);letter-spacing:.12em;text-transform:uppercase;color:var(–ink-dim);margin-top:2px;}
+.member-card-count{font-family:var(–ffm);font-size:clamp(6px,.72vw,7px);color:var(–gold);margin-top:3px;letter-spacing:.06em;}
+.member-detail{display:none;position:fixed;inset:0;z-index:7500;
+background:rgba(7,5,14,.9);backdrop-filter:blur(16px);overflow-y:auto;}
+.member-detail.open{display:block;animation:pageIn .2s ease;}
+.md-header{padding:clamp(12px,2vh,18px) clamp(14px,2vw,20px);border-bottom:1px solid var(–border);
+display:flex;align-items:center;justify-content:space-between;}
+.md-close{background:none;border:1px solid var(–border);width:28px;height:28px;cursor:pointer;
+color:var(–ink-dim);transition:all .16s;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.md-close:hover{background:var(–rose);border-color:var(–rose);color:#fff;}
+.md-body{padding:clamp(14px,2.5vh,20px) clamp(14px,2vw,20px);}
+.md-photo-wrap{width:clamp(80px,12vw,110px);height:clamp(80px,12vw,110px);
+border-radius:50%;overflow:hidden;border:2px solid var(–rose);flex-shrink:0;}
+.md-photo{width:100%;height:100%;object-fit:cover;display:block;background:var(–panel2);}
+.md-photo-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(–panel2);}
+.md-top{display:flex;gap:clamp(12px,2vw,20px);align-items:flex-start;margin-bottom:clamp(14px,2.5vh,20px);}
+.md-names{flex:1;min-width:0;}
+.md-name{font-family:var(–ff);font-size:clamp(18px,3vw,28px);font-weight:700;color:var(–ink);letter-spacing:.03em;}
+.md-kana{font-family:var(–ffm);font-size:clamp(8px,1vw,11px);letter-spacing:.2em;color:var(–ink-dim);margin:4px 0;}
+.md-group{font-family:var(–ffm);font-size:clamp(8px,1vw,10px);letter-spacing:.14em;text-transform:uppercase;color:var(–accent);}
+.md-profile{background:rgba(13,11,20,.6);border:1px solid var(–border);
+padding:clamp(10px,1.8vh,16px);margin-bottom:clamp(12px,2vh,18px);backdrop-filter:blur(6px);}
+.md-prow{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(–border);}
+.md-prow:last-child{border-bottom:none;}
+.md-pk{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);letter-spacing:.14em;
+text-transform:uppercase;color:var(–ink-dim);width:clamp(60px,9vw,90px);flex-shrink:0;}
+.md-pv{font-family:var(–ffj);font-size:clamp(11px,1.5vw,13px);font-weight:300;color:var(–ink);}
+.md-note{font-family:var(–ffj);font-size:clamp(11px,1.5vw,13px);font-weight:300;
+color:var(–ink-mid);line-height:1.7;margin-bottom:clamp(12px,2vh,18px);}
+.md-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(70px,9vw,88px),1fr));gap:clamp(5px,.8vw,8px);}
+.md-card-thumb{background:var(–panel2);border:1px solid var(–border);
+position:relative;overflow:hidden;aspect-ratio:2/3;}
+.md-card-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.md-card-rarity{position:absolute;bottom:0;left:0;right:0;font-family:var(–ffm);font-size:7px;
+font-weight:700;letter-spacing:.1em;text-align:center;padding:3px;background:rgba(7,5,14,.8);}
+.md-actions{display:flex;gap:6px;margin-top:clamp(12px,2vh,18px);}
+
+/* ── GACHA ── */
+.gbanner{background:rgba(13,11,20,.72);border:1px solid rgba(237,217,154,.22);
+border-left:2px solid var(–butter);padding:clamp(14px,2.5vh,20px);
+margin-bottom:clamp(10px,1.8vh,16px);position:relative;overflow:hidden;backdrop-filter:blur(8px);}
+.gbanner::before{content:’’;position:absolute;inset:0;pointer-events:none;
+background:radial-gradient(ellipse 80% 60% at 80% 50%,rgba(237,217,154,.05),transparent);}
+.gtag{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);letter-spacing:.2em;
+text-transform:uppercase;color:var(–butter);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.gtag::before{content:’’;width:4px;height:4px;background:var(–butter);border-radius:50%;box-shadow:0 0 6px var(–butter);}
+.gtitle{font-family:var(–ff);font-size:clamp(16px,2.8vw,24px);font-weight:700;
+color:var(–ink);line-height:1.1;margin-bottom:5px;}
+.gsub{font-family:var(–ffj);font-size:clamp(10px,1.4vw,12px);font-weight:300;
+color:var(–ink-mid);margin-bottom:clamp(14px,2.5vh,20px);}
+.gbtns{display:flex;gap:clamp(8px,1.2vw,12px);}
+.gbtn{border:none;cursor:pointer;font-family:var(–ff);font-size:clamp(10px,1.4vw,13px);
+font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+padding:clamp(10px,1.8vh,14px) clamp(18px,3vw,28px);
+transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.gbtn-s{background:rgba(192,107,138,.15);border:1px solid rgba(192,107,138,.4);color:var(–accent);}
+.gbtn-t{background:rgba(237,217,154,.12);border:1px solid rgba(237,217,154,.38);color:var(–butter);}
+.gbtn:hover{filter:brightness(1.2);transform:translateY(-2px);}
+.gbtn-cost{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);letter-spacing:.1em;opacity:.7;}
+.g-result{display:flex;flex-wrap:wrap;gap:clamp(5px,.8vw,8px);margin-bottom:clamp(10px,1.8vh,16px);}
+.g-card{width:clamp(64px,9vw,88px);position:relative;cursor:pointer;perspective:600px;flex-shrink:0;}
+.g-card-inner{width:100%;transition:transform .55s cubic-bezier(.4,0,.2,1);
+transform-style:preserve-3d;aspect-ratio:2/3;}
+.g-card.flip .g-card-inner{transform:rotateY(180deg);}
+.g-front,.g-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+.g-front{background:linear-gradient(135deg,var(–panel),var(–panel2));
+border:1px solid var(–border);display:flex;align-items:center;justify-content:center;}
+.g-back{transform:rotateY(180deg);border:1px solid var(–border);}
+.g-back img{width:100%;height:100%;object-fit:cover;display:block;}
+.g-rarity{position:absolute;bottom:0;left:0;right:0;text-align:center;
+font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);font-weight:700;
+letter-spacing:.1em;padding:3px;background:rgba(7,5,14,.85);}
+.g-new{position:absolute;top:3px;right:3px;background:var(–rose);color:#fff;
+font-family:var(–ffm);font-size:6px;font-weight:700;letter-spacing:.08em;padding:2px 4px;}
+.coll-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(64px,9vw,86px),1fr));gap:clamp(5px,.8vw,8px);}
+.coll-card{background:var(–panel2);border:1px solid var(–border);
+position:relative;overflow:hidden;cursor:pointer;transition:all .18s;aspect-ratio:2/3;}
+.coll-card:hover{border-color:var(–border-s);transform:translateY(-2px);}
+.coll-card img{width:100%;height:100%;object-fit:cover;display:block;}
+.coll-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+.coll-ph-r{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);font-weight:700;letter-spacing:.08em;}
+.coll-ph-n{font-family:var(–ffj);font-size:clamp(8px,1vw,10px);font-weight:300;
+color:var(–ink-mid);text-align:center;padding:0 4px;line-height:1.3;}
+.coll-r{position:absolute;bottom:0;left:0;right:0;text-align:center;
+font-family:var(–ffm);font-size:clamp(6px,.75vw,7px);font-weight:700;
+letter-spacing:.1em;padding:3px;background:rgba(7,5,14,.85);}
+.coll-cnt{position:absolute;top:3px;left:3px;background:rgba(7,5,14,.8);color:var(–ink);
+font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);font-weight:700;padding:2px 5px;}
+.add-banner-btn{width:100%;padding:clamp(10px,1.8vh,14px) 14px;background:transparent;
+border:1px dashed rgba(192,180,224,.2);font-family:var(–ff);
+font-size:clamp(9px,1.2vw,11px);font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+color:var(–ink-dim);cursor:pointer;transition:all .16s;text-align:left;}
+.add-banner-btn:hover{border-color:var(–butter);color:var(–butter);}
+
+/* ── ARCHIVE ── */
+.disc-list{display:flex;flex-direction:column;gap:clamp(6px,1vh,9px);}
+.disc-item{background:rgba(13,11,20,.7);border:1px solid rgba(168,206,222,.16);
+padding:clamp(10px,1.8vh,14px) clamp(12px,1.8vw,16px);
+display:flex;align-items:center;gap:clamp(10px,1.5vw,14px);
+position:relative;overflow:hidden;backdrop-filter:blur(6px);}
+.disc-item::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:2px;background:var(–sky);}
+.disc-art{width:clamp(44px,7vw,60px);height:clamp(44px,7vw,60px);
+object-fit:cover;background:var(–panel2);flex-shrink:0;border:1px solid var(–border);}
+.disc-art-ph{width:clamp(44px,7vw,60px);height:clamp(44px,7vw,60px);
+background:var(–panel2);flex-shrink:0;border:1px solid var(–border);
+display:flex;align-items:center;justify-content:center;}
+.disc-art-ph svg{width:20px;height:20px;opacity:.18;}
+.disc-info{flex:1;min-width:0;}
+.disc-title{font-family:var(–ff);font-size:clamp(12px,1.8vw,15px);font-weight:700;
+color:var(–ink);letter-spacing:.02em;}
+.disc-meta{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);color:var(–ink-dim);letter-spacing:.1em;margin-top:3px;}
+.disc-type{display:inline-block;font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);font-weight:700;
+letter-spacing:.1em;padding:2px 7px;background:rgba(168,206,222,.1);
+border:1px solid rgba(168,206,222,.25);color:var(–sky);margin-top:5px;}
+.disc-toggle{flex-shrink:0;background:none;border:1px solid var(–border);
+padding:clamp(5px,.9vh,7px) clamp(8px,1.2vw,12px);
+font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(–ink-dim);
+transition:all .16s;white-space:nowrap;}
+.disc-toggle.owned{background:rgba(158,207,188,.12);border-color:rgba(158,207,188,.3);color:var(–mint);}
+.disc-toggle:hover{filter:brightness(1.2);}
+.goods-list{display:flex;flex-direction:column;gap:clamp(5px,.9vh,8px);}
+.goods-item{background:rgba(13,11,20,.7);border:1px solid rgba(192,107,138,.14);
+padding:clamp(9px,1.6vh,12px) clamp(12px,1.8vw,16px);
+display:flex;align-items:center;gap:clamp(10px,1.5vw,14px);
+position:relative;overflow:hidden;backdrop-filter:blur(6px);}
+.goods-item::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:2px;background:var(–rose);}
+.goods-img{width:clamp(40px,6vw,52px);height:clamp(40px,6vw,52px);
+object-fit:cover;border:1px solid var(–border);background:var(–panel2);flex-shrink:0;}
+.goods-img-ph{width:clamp(40px,6vw,52px);height:clamp(40px,6vw,52px);
+border:1px solid var(–border);background:var(–panel2);flex-shrink:0;
+display:flex;align-items:center;justify-content:center;}
+.goods-img-ph svg{width:16px;height:16px;opacity:.18;}
+.goods-info{flex:1;min-width:0;}
+.goods-name{font-family:var(–ff);font-size:clamp(11px,1.6vw,14px);font-weight:700;color:var(–ink);}
+.goods-cat{font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);color:var(–ink-dim);letter-spacing:.1em;margin-top:3px;}
+.goods-note{font-family:var(–ffj);font-size:clamp(9px,1.2vw,11px);font-weight:300;
+color:var(–ink-mid);margin-top:3px;line-height:1.4;}
+.goods-toggle{flex-shrink:0;background:none;border:1px solid var(–border);
+padding:clamp(4px,.8vh,6px) clamp(7px,1vw,10px);
+font-family:var(–ffm);font-size:clamp(7px,.85vw,9px);font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(–ink-dim);
+transition:all .16s;white-space:nowrap;}
+.goods-toggle.owned{background:rgba(158,207,188,.12);border-color:rgba(158,207,188,.3);color:var(–mint);}
+.goods-toggle:hover{filter:brightness(1.2);}
+
+/* ── ACHIEVEMENTS ── */
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(140px,20vw,200px),1fr));gap:clamp(7px,1.2vw,11px);}
+.ac-card{background:rgba(13,11,20,.72);border:1px solid rgba(192,180,224,.13);
+padding:clamp(11px,2vh,16px);transition:all .18s;position:relative;overflow:hidden;backdrop-filter:blur(6px);}
+.ac-card.ok{border-color:var(–acl,var(–lavender));}
+.ac-card:not(.ok){opacity:.3;}
+.ac-card.ok:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
+.ac-card.ok::before{content:’’;position:absolute;top:0;right:0;width:48px;height:48px;
+background:radial-gradient(circle at top right,var(–acl,var(–lavender)),transparent 70%);opacity:.2;}
+.ac-check{position:absolute;top:8px;right:8px;font-family:var(–ffm);
+font-size:clamp(6px,.78vw,8px);font-weight:700;color:var(–acl,transparent);letter-spacing:.1em;}
+.ac-icon-wrap{width:clamp(28px,3.8vw,36px);height:clamp(28px,3.8vw,36px);
+margin-bottom:8px;display:flex;align-items:center;justify-content:center;}
+.ac-icon-wrap svg{width:100%;height:100%;}
+.ac-name{font-family:var(–ff);font-size:clamp(10px,1.4vw,13px);font-weight:700;
+letter-spacing:.04em;color:var(–ink);margin-bottom:3px;text-transform:uppercase;}
+.ac-desc{font-family:var(–ffj);font-size:clamp(9px,1.2vw,11px);font-weight:300;
+color:var(–ink-dim);line-height:1.5;}
+
+/* ── SHARED ── */
+.empty{text-align:center;padding:clamp(30px,5vh,44px) 20px;
+color:var(–ink-dim);border:1px dashed rgba(192,180,224,.14);}
+.empty-i{font-family:var(–ffm);font-size:clamp(10px,1.4vw,14px);
+color:rgba(192,180,224,.18);margin-bottom:10px;display:block;letter-spacing:.1em;}
+.empty-t{font-family:var(–ffj);font-size:clamp(10px,1.3vw,12px);font-weight:300;}
+.ia{display:flex;gap:3px;}
+.act{width:clamp(22px,3vw,26px);height:clamp(22px,3vw,26px);
+border-radius:2px;border:1px solid var(–border);background:var(–panel2);
+color:var(–ink-dim);font-size:10px;cursor:pointer;
+display:flex;align-items:center;justify-content:center;transition:all .14s;flex-shrink:0;}
+.act:hover{background:var(–panel3);border-color:var(–border-s);color:var(–ink);}
+.act.del:hover{background:rgba(220,50,60,.1);border-color:rgba(220,50,60,.3);color:#DC323C;}
+.act.edt:hover{background:rgba(192,107,138,.1);border-color:var(–accent);color:var(–accent);}
+
+/* ── FAB ── */
+.fab{position:fixed;bottom:clamp(14px,3vh,22px);right:clamp(12px,2vw,18px);
+height:clamp(36px,5.5vh,42px);padding:0 clamp(14px,2.5vw,20px);
+background:var(–accent);color:#fff;border:none;cursor:pointer;
+font-family:var(–ff);font-size:clamp(9px,1.2vw,11px);font-weight:700;
+letter-spacing:.13em;text-transform:uppercase;
+box-shadow:0 4px 20px var(–accent-g);z-index:7900;
+display:none;align-items:center;gap:7px;transition:all .18s;}
+.fab:hover{filter:brightness(1.1);box-shadow:0 6px 26px rgba(192,107,138,.45);transform:translateY(-2px);}
+.fab:active{transform:scale(.97);}
+
+/* ── OVERLAY ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(7,5,14,.78);
+backdrop-filter:blur(8px);z-index:8200;align-items:flex-end;justify-content:center;}
+.overlay.open{display:flex;}
+.msheet{background:var(–panel);border-top:2px solid var(–accent);padding:0 20px 36px;
+width:100%;max-width:520px;max-height:92vh;overflow-y:auto;
+animation:sUp .24s cubic-bezier(.4,0,.2,1);position:relative;}
+@keyframes sUp{from{transform:translateY(100%);opacity:0;}to{transform:none;opacity:1;}}
+.sh{width:28px;height:3px;background:var(–border);margin:12px auto 16px;}
+.stitle{font-family:var(–ff);font-size:18px;font-weight:700;letter-spacing:.04em;
+text-transform:uppercase;color:var(–ink);margin-bottom:20px;
+display:flex;align-items:center;gap:8px;}
+.stitle::before{content:’’;width:3px;height:18px;background:var(–accent);flex-shrink:0;}
+.sclose{position:absolute;top:12px;right:14px;background:none;border:1px solid var(–border);
+width:28px;height:28px;font-size:12px;color:var(–ink-dim);cursor:pointer;
+transition:all .16s;display:flex;align-items:center;justify-content:center;}
+.sclose:hover{background:var(–accent);border-color:var(–accent);color:#fff;}
+.fg{margin-bottom:13px;}
+.fl{font-family:var(–ffm);font-size:9px;font-weight:700;letter-spacing:.15em;
+text-transform:uppercase;color:var(–ink-dim);display:block;margin-bottom:5px;}
+.fi,.fs,.ft{width:100%;background:var(–panel2);border:1px solid var(–border);
+padding:10px 12px;color:var(–ink);font-family:var(–ffj);font-size:14px;
+font-weight:300;outline:none;transition:border-color .16s;border-radius:0;}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(–accent);box-shadow:0 0 0 2px var(–accent-g);}
+.fs option{background:var(–panel2);color:var(–ink);}
+.ft{resize:vertical;min-height:120px;}
+.fi[type=“color”]{width:44px;height:40px;padding:3px;cursor:pointer;flex-shrink:0;}
+.crow{display:flex;gap:8px;}
+.bsub{width:100%;background:var(–accent);color:#fff;border:none;padding:13px;
+font-family:var(–ff);font-size:12px;font-weight:700;letter-spacing:.13em;
+text-transform:uppercase;cursor:pointer;transition:all .16s;margin-top:8px;}
+.bsub:hover{filter:brightness(1.1);}
+.btn-row{display:flex;gap:8px;margin-top:8px;}
+.bdanger{flex:1;padding:13px;background:transparent;border:1px solid rgba(220,50,60,.3);
+color:#DC323C;font-family:var(–ff);font-size:12px;font-weight:700;
+letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:all .16s;}
+.bdanger:hover{background:rgba(220,50,60,.1);}
+.img-zone{border:1px dashed var(–border-s);padding:16px;text-align:center;
+cursor:pointer;transition:all .18s;position:relative;background:var(–panel2);}
+.img-zone:hover{border-color:var(–accent);}
+.img-zone input[type=“file”]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.img-zone-label{font-family:var(–ffm);font-size:9px;letter-spacing:.18em;
+text-transform:uppercase;color:var(–ink-dim);}
+.img-preview{width:100%;max-height:160px;object-fit:cover;display:block;border:1px solid var(–border);}
+.img-preview-wrap{position:relative;margin-bottom:6px;}
+.img-clear{position:absolute;top:4px;right:4px;background:rgba(13,11,20,.8);color:#fff;
+border:none;width:22px;height:22px;cursor:pointer;font-size:11px;
+display:flex;align-items:center;justify-content:center;}
+.pwa-banner{background:var(–panel2);border:1px solid var(–border);border-left:3px solid var(–mint);
+padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;}
+.pwa-text{font-family:var(–ffj);font-size:12px;font-weight:300;color:var(–ink-mid);line-height:1.5;}
+.pwa-btn{flex-shrink:0;background:var(–ink);color:var(–bg);border:none;padding:8px 14px;
+font-family:var(–ff);font-size:10px;font-weight:700;letter-spacing:.12em;
+text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .16s;}
+.pwa-btn:hover{background:var(–accent);color:#fff;}
+.confirm-btns{display:flex;gap:8px;margin-top:20px;}
+.cbtn-cancel{flex:1;padding:12px;background:var(–panel2);border:1px solid var(–border);
+font-family:var(–ff);font-size:11px;font-weight:700;letter-spacing:.12em;
+text-transform:uppercase;cursor:pointer;color:var(–ink-mid);transition:all .16s;}
+.cbtn-del{flex:1;padding:12px;background:#DC323C;border:none;color:#fff;
+font-family:var(–ff);font-size:11px;font-weight:700;letter-spacing:.12em;
+text-transform:uppercase;cursor:pointer;transition:all .16s;}
+.flash{position:fixed;inset:0;z-index:998;pointer-events:none;background:#fff;opacity:0;}
+@keyframes flashA{0%{opacity:0;}25%{opacity:.22;}100%{opacity:0;}}
+.flash.on{animation:flashA .5s ease forwards;}
+.pww{position:fixed;inset:0;pointer-events:none;z-index:997;display:none;}
+.pww.on{display:block;}
+@keyframes pfly{0%{opacity:0;transform:translate(0,0) scale(0);}30%{opacity:1;transform:translate(var(–px),var(–py)) scale(1);}100%{opacity:0;transform:translate(calc(var(–px)*2.4),calc(var(–py)*2.4 + 30px)) scale(.5);}}
+.pt{position:absolute;animation:pfly .9s ease forwards;}
+.toast{position:fixed;top:clamp(10px,2vh,16px);left:50%;
+transform:translateX(-50%) translateY(-10px);
+background:var(–panel);color:var(–ink);font-family:var(–ffm);
+font-size:clamp(9px,1.2vw,11px);letter-spacing:.1em;padding:9px 18px;
+z-index:9000;opacity:0;transition:all .22s;white-space:nowrap;pointer-events:none;
+border:1px solid var(–border-s);border-left:2px solid var(–accent);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ══════════════════════════════════════════
+ROTATE PROMPT
+══════════════════════════════════════════ */
+#rotatePrompt{display:none;position:fixed;inset:0;z-index:10000;background:var(–bg);
+flex-direction:column;align-items:center;justify-content:center;gap:20px;}
+@keyframes rotateHint{0%,100%{transform:rotate(0deg);}45%{transform:rotate(90deg);}65%{transform:rotate(90deg);}}
+.rotate-icon-svg{width:44px;height:44px;animation:rotateHint 2s ease-in-out infinite;}
+.rotate-text{font-family:var(–ffm);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+color:var(–ink-dim);text-align:center;line-height:2.2;}
+
+/* ══════════════════════════════════════════
+HOME SCREEN  ·  Pastel HUD
+══════════════════════════════════════════ */
+#homeScreen{display:none;position:fixed;inset:0;z-index:8000;overflow:hidden;user-select:none;}
+
+/* ── BG PHOTO ── */
+#homeBgPhoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;}
+#homeBgPlaceholder{position:absolute;inset:0;z-index:0;
+background:radial-gradient(ellipse 90% 80% at 60% 40%,
+rgba(192,107,138,.14) 0%,rgba(168,206,222,.08) 40%,var(–bg) 100%);}
+
+/* center placeholder crosshair */
+.hud-placeholder-center{
+position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+display:flex;flex-direction:column;align-items:center;gap:14px;pointer-events:none;}
+.hud-reticle{
+width:56px;height:56px;position:relative;
+border-top:1.5px solid rgba(242,184,198,.4);
+border-left:1.5px solid rgba(242,184,198,.4);}
+.hud-reticle::after{
+content:’’;position:absolute;bottom:0;right:0;
+width:56px;height:56px;
+border-bottom:1.5px solid rgba(168,206,222,.4);
+border-right:1.5px solid rgba(168,206,222,.4);}
+.hud-reticle-dot{
+position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+width:4px;height:4px;background:var(–rose);border-radius:50%;
+box-shadow:0 0 8px var(–rose);animation:hudPulse 2s ease-in-out infinite;}
+.hud-placeholder-label{
+font-family:var(–ffm);font-size:8px;letter-spacing:.22em;
+text-transform:uppercase;color:rgba(240,237,248,.28);text-align:center;line-height:2;}
+
+/* ── VIGNETTE ── */
+#homeScreen::before{
+content:’’;position:absolute;inset:0;z-index:1;pointer-events:none;
+background:
+linear-gradient(to right, rgba(7,5,14,.82) 0%,rgba(7,5,14,.42) 24%,transparent 46%),
+linear-gradient(to left,  rgba(7,5,14,.65) 0%,rgba(7,5,14,.24) 26%,transparent 50%),
+linear-gradient(to bottom,rgba(7,5,14,.7)  0%,transparent 18%),
+linear-gradient(to top,   rgba(7,5,14,.6)  0%,transparent 20%);}
+
+/* ── SCAN LINE OVERLAY ── */
+#homeScreen::after{
+content:’’;position:absolute;inset:0;z-index:2;pointer-events:none;
+background:repeating-linear-gradient(
+0deg,transparent,transparent 2px,rgba(192,180,224,.022) 2px,rgba(192,180,224,.022) 3px);
+animation:scanScroll 8s linear infinite;}
+@keyframes scanScroll{from{background-position:0 0;}to{background-position:0 300px;}}
+
+/* ── CORNER BRACKETS (HUD decoration) ── */
+.hud-corner{position:absolute;z-index:4;width:18px;height:18px;pointer-events:none;}
+.hud-corner.tl{top:10px;left:10px;border-top:1.5px solid var(–rose);border-left:1.5px solid var(–rose);}
+.hud-corner.tr{top:10px;right:10px;border-top:1.5px solid var(–sky);border-right:1.5px solid var(–sky);}
+.hud-corner.bl{bottom:10px;left:10px;border-bottom:1.5px solid var(–mint);border-left:1.5px solid var(–mint);}
+.hud-corner.br{bottom:10px;right:10px;border-bottom:1.5px solid var(–lavender);border-right:1.5px solid var(–lavender);}
+/* pulsing glow on corners */
+.hud-corner::after{
+content:’’;position:absolute;
+width:4px;height:4px;border-radius:50%;
+animation:cornerPulse 2.4s ease-in-out infinite;}
+.hud-corner.tl::after{top:-1px;left:-1px;background:var(–rose);box-shadow:0 0 6px var(–rose);}
+.hud-corner.tr::after{top:-1px;right:-1px;background:var(–sky);box-shadow:0 0 6px var(–sky);}
+.hud-corner.bl::after{bottom:-1px;left:-1px;background:var(–mint);box-shadow:0 0 6px var(–mint);animation-delay:.6s;}
+.hud-corner.br::after{bottom:-1px;right:-1px;background:var(–lavender);box-shadow:0 0 6px var(–lavender);animation-delay:1.2s;}
+@keyframes cornerPulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:1;transform:scale(1.5);}}
+
+/* ── TOP BAR ── */
+.hud-topbar{
+position:absolute;top:0;left:0;right:0;height:clamp(28px,4.5vh,38px);z-index:6;
+display:flex;align-items:center;justify-content:space-between;
+padding:0 clamp(22px,3.5vw,36px);
+background:linear-gradient(to bottom,rgba(7,5,14,.65),transparent);
+border-bottom:1px solid rgba(192,180,224,.12);}
+.hud-topbar::before{/* rainbow line */
+content:’’;position:absolute;top:0;left:0;right:0;height:1.5px;
+background:linear-gradient(90deg,var(–rose),var(–accent),var(–lavender),var(–sky),var(–mint));}
+.hud-title{
+font-family:var(–ff);font-size:clamp(10px,1.5vw,14px);font-weight:700;
+letter-spacing:.14em;text-transform:uppercase;color:rgba(240,237,248,.55);}
+.hud-title em{color:var(–accent);font-style:normal;}
+/* center timestamp / status */
+.hud-status{
+position:absolute;left:50%;transform:translateX(-50%);
+font-family:var(–ffm);font-size:clamp(7px,.9vw,9px);letter-spacing:.18em;
+color:rgba(240,237,248,.3);white-space:nowrap;}
+/* right side: icon buttons */
+.hud-topbar-right{display:flex;gap:clamp(4px,.6vw,7px);align-items:center;}
+.htb-btn{
+width:clamp(24px,3.2vw,30px);height:clamp(24px,3.2vw,30px);
+background:rgba(13,11,20,.6);
+border:1px solid rgba(192,180,224,.2);
+cursor:pointer;color:var(–ink-mid);
+display:flex;align-items:center;justify-content:center;
+backdrop-filter:blur(8px);transition:all .18s;position:relative;overflow:hidden;}
+.htb-btn svg{width:clamp(11px,1.4vw,14px);height:clamp(11px,1.4vw,14px);flex-shrink:0;}
+.htb-btn::before{
+content:’’;position:absolute;inset:0;
+background:linear-gradient(135deg,rgba(255,255,255,.07),transparent);}
+.htb-btn:hover{border-color:var(–bc,var(–lavender));box-shadow:0 0 10px rgba(192,180,224,.25);}
+.htb-btn:hover svg{stroke:var(–bc,var(–lavender));}
+.htb-btn:active{transform:scale(.88);}
+.htb-cam{–bc:var(–rose);}
+.htb-set{–bc:var(–lavender);}
+
+/* ── BOTTOM BAR ── */
+.hud-botbar{
+position:absolute;bottom:0;left:0;right:0;height:clamp(20px,3.2vh,28px);z-index:6;
+display:flex;align-items:center;justify-content:space-between;
+padding:0 clamp(22px,3.5vw,36px);
+background:linear-gradient(to top,rgba(7,5,14,.6),transparent);
+border-top:1px solid rgba(192,180,224,.1);}
+.hud-bot-label{font-family:var(–ffm);font-size:clamp(6px,.8vw,8px);letter-spacing:.2em;
+text-transform:uppercase;color:rgba(240,237,248,.2);}
+/* animated signal dots */
+.hud-signal{display:flex;gap:3px;align-items:center;}
+.hud-signal-dot{
+width:3px;height:3px;border-radius:50%;
+background:var(–sd,var(–mint));
+animation:signalBlink 1.4s ease-in-out infinite;}
+.hud-signal-dot:nth-child(2){animation-delay:.2s;}
+.hud-signal-dot:nth-child(3){animation-delay:.4s;}
+@keyframes signalBlink{0%,100%{opacity:.25;}50%{opacity:1;box-shadow:0 0 5px var(–sd,var(–mint));}}
+
+/* ── LEFT PANEL ── */
+.home-left{
+position:absolute;left:0;top:clamp(28px,4.5vh,38px);bottom:clamp(20px,3.2vh,28px);
+width:clamp(128px,20vw,175px);z-index:5;
+display:flex;flex-direction:column;
+padding:clamp(12px,2vh,20px) clamp(10px,1.5vw,16px);}
+
+.home-logo-eyebrow{
+font-family:var(–ffm);font-size:clamp(6px,.82vw,8px);letter-spacing:.28em;
+text-transform:uppercase;color:rgba(240,237,248,.35);margin-bottom:5px;
+display:flex;align-items:center;gap:5px;}
+.home-logo-eyebrow::before{
+content:’’;width:16px;height:1px;background:rgba(240,237,248,.2);}
+.home-logo{
+font-family:var(–ff);font-size:clamp(16px,2.5vw,24px);font-weight:700;
+letter-spacing:.06em;color:var(–ink);text-transform:uppercase;line-height:1.05;
+text-shadow:0 0 20px rgba(192,107,138,.3),0 2px 12px rgba(0,0,0,.9);}
+.home-logo em{color:var(–accent);font-style:normal;}
+
+/* divider with HUD dash pattern */
+.home-divider{
+margin:clamp(10px,1.8vh,16px) 0;height:1px;
+background:linear-gradient(90deg,var(–rose),var(–sky),transparent);}
+
+/* stats with mini progress bars */
+.home-stats-block{display:flex;flex-direction:column;gap:clamp(4px,.8vh,7px);}
+.hstat{
+position:relative;padding:clamp(5px,.9vh,8px) clamp(6px,.9vw,10px);
+background:rgba(13,11,20,.55);
+border-left:1.5px solid var(–sc,var(–lavender));
+backdrop-filter:blur(8px);overflow:hidden;}
+/* subtle bg glow */
+.hstat::before{
+content:’’;position:absolute;inset:0;
+background:linear-gradient(90deg,rgba(var(–scr,192,180,224),.06),transparent 70%);
+pointer-events:none;}
+.hstat-row{display:flex;align-items:baseline;gap:5px;}
+.hstat-v{font-family:var(–ffm);font-size:clamp(14px,2.1vw,19px);color:var(–ink);line-height:1;font-weight:700;}
+.hstat-l{font-family:var(–ffm);font-size:clamp(6px,.78vw,8px);letter-spacing:.13em;text-transform:uppercase;color:var(–ink-dim);}
+/* thin progress bar at bottom of each stat */
+.hstat-bar{height:1.5px;background:rgba(255,255,255,.06);margin-top:4px;position:relative;}
+.hstat-bar-fill{position:absolute;inset:0;right:auto;background:var(–sc,var(–lavender));
+transition:width .6s ease;box-shadow:0 0 6px var(–sc,var(–lavender));}
+
+/* oshi name */
+.home-oshi-name{margin-top:auto;padding-bottom:clamp(6px,1.2vh,12px);}
+.hon-tag{
+font-family:var(–ffm);font-size:clamp(6px,.78vw,8px);letter-spacing:.22em;
+text-transform:uppercase;color:var(–accent);margin-bottom:5px;
+display:flex;align-items:center;gap:5px;}
+.hon-tag::after{content:’’;flex:1;height:1px;background:linear-gradient(90deg,var(–accent),transparent);}
+.hon-name{
+font-family:var(–ff);font-size:clamp(15px,2.2vw,22px);font-weight:700;
+letter-spacing:.04em;color:var(–ink);
+text-shadow:0 0 16px rgba(192,107,138,.4),0 2px 10px rgba(0,0,0,.95);line-height:1.2;}
+.hon-sub{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.18em;color:var(–ink-dim);margin-top:4px;}
+
+/* ── RIGHT PANEL ── */
+.home-right{
+position:absolute;right:0;top:clamp(28px,4.5vh,38px);bottom:clamp(20px,3.2vh,28px);
+width:clamp(115px,18vw,162px);z-index:5;
+display:flex;flex-direction:column;justify-content:center;
+padding:clamp(8px,1.4vh,14px) clamp(8px,1.2vw,13px);
+gap:clamp(5px,.9vh,8px);}
+
+/* ── HUD BADGE BUTTONS ── */
+.hbadge{
+cursor:pointer;position:relative;width:100%;
+transition:transform .16s cubic-bezier(.2,0,.2,1),filter .16s;
+-webkit-tap-highlight-color:transparent;}
+.hbadge:hover{transform:translateX(-4px);}
+.hbadge:hover .hb-card{border-color:var(–bc,var(–lavender));box-shadow:inset 0 0 20px rgba(var(–bca),.08),0 0 14px rgba(var(–bca),.15);}
+.hbadge:hover .hb-card::before{opacity:1;}
+.hbadge:hover .hb-lock-indicator{transform:scaleX(1);}
+.hbadge:active{transform:scale(.95) translateX(-2px);}
+
+/* card body */
+.hb-card{
+position:relative;width:100%;
+background:rgba(10,8,20,.78);
+border:1px solid rgba(var(–bca),.28);
+border-left:none; /* replaced by accent strip */
+backdrop-filter:blur(14px);
+padding:clamp(6px,1.1vh,10px) clamp(10px,1.4vw,13px) clamp(6px,1.1vh,10px) clamp(12px,1.6vw,16px);
+transition:border-color .18s,box-shadow .18s;
+overflow:hidden;}
+
+/* left accent strip — multi-layer HUD feel */
+.hb-card::before{
+content:’’;position:absolute;left:0;top:0;bottom:0;width:3px;
+background:linear-gradient(to bottom,
+transparent 0%,
+var(–bc,var(–lavender)) 20%,
+rgba(255,255,255,.6) 50%,
+var(–bc,var(–lavender)) 80%,
+transparent 100%);
+opacity:.7;transition:opacity .18s;}
+
+/* top micro-line */
+.hb-card::after{
+content:’’;position:absolute;top:0;left:3px;right:0;height:1px;
+background:linear-gradient(90deg,var(–bc,var(–lavender)),transparent 60%);
+opacity:.5;}
+
+/* animated bottom lock indicator */
+.hb-lock-indicator{
+position:absolute;bottom:0;left:3px;right:0;height:1px;
+background:var(–bc,var(–lavender));
+transform:scaleX(0);transform-origin:left;
+transition:transform .22s cubic-bezier(.4,0,.2,1);
+box-shadow:0 0 5px var(–bc,var(–lavender));}
+
+/* corner notch top-right */
+.hb-notch{
+position:absolute;top:0;right:0;width:0;height:0;
+border-style:solid;border-width:0 7px 7px 0;
+border-color:transparent var(–bc,var(–lavender)) transparent transparent;
+opacity:.55;}
+
+.hb-inner{display:flex;align-items:center;gap:clamp(7px,1vw,11px);position:relative;z-index:1;}
+
+/* SVG icon container */
+.hb-icon-shape{
+width:clamp(20px,2.8vw,28px);height:clamp(20px,2.8vw,28px);
+flex-shrink:0;display:flex;align-items:center;justify-content:center;
+position:relative;}
+/* glow ring behind icon */
+.hb-icon-shape::before{
+content:’’;position:absolute;inset:-2px;border-radius:50%;
+background:radial-gradient(circle,rgba(var(–bca),.18),transparent 70%);}
+.hb-icon-shape svg{width:100%;height:100%;position:relative;z-index:1;}
+
+.hb-texts{display:flex;flex-direction:column;gap:1px;min-width:0;}
+.hb-sub{
+font-family:var(–ffm);font-size:clamp(6px,.72vw,8px);
+letter-spacing:.18em;text-transform:uppercase;
+color:rgba(var(–bca),.75);line-height:1;}
+.hb-title{
+font-family:var(–ff);font-size:clamp(11px,1.55vw,15px);font-weight:700;
+letter-spacing:.04em;color:var(–ink);line-height:1.15;white-space:nowrap;}
+
+/* ANIMATIONS */
+@keyframes hudPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.4);box-shadow:0 0 10px var(–rose);}}
+
+/* ── DASHBOARD GRID ── */
+.home-right-new{
+position:absolute;right:0;top:clamp(28px,4.5vh,38px);bottom:clamp(20px,3.2vh,28px);
+width:clamp(200px,32vw,300px);z-index:5;
+padding:clamp(8px,1.4vh,14px) clamp(8px,1.2vw,14px);
+display:grid;
+grid-template-columns:1fr 1fr;
+grid-template-rows:1.6fr 1fr 1fr;
+gap:clamp(5px,.8vw,8px);}
+.hdp{
+position:relative;cursor:pointer;
+display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
+padding:clamp(8px,1.2vh,12px) clamp(8px,1.2vw,12px);
+background:rgba(4,8,18,.75);
+border:1px solid rgba(var(–hca,200,170,255),.3);
+border-top:2px solid rgba(var(–hca,200,170,255),.6);
+backdrop-filter:blur(12px);
+transition:transform .18s,filter .18s;
+overflow:hidden;-webkit-tap-highlight-color:transparent;}
+.hdp:hover{transform:scale(1.03);filter:brightness(1.15);}
+.hdp:active{transform:scale(.97);}
+.hdp.large{grid-row:span 2;}
+.hdp::before{content:’’;position:absolute;inset:0;
+background:linear-gradient(135deg,rgba(var(–hca,200,170,255),.06),transparent 60%);
+pointer-events:none;}
+.hdp-scan{position:absolute;inset:0;pointer-events:none;
+background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(var(–hca,200,170,255),.015) 4px,rgba(var(–hca,200,170,255),.015) 5px);}
+.hdp-content{position:relative;z-index:1;width:100%;}
+.hdp-icon{margin-bottom:clamp(4px,.7vh,8px);width:clamp(18px,2.4vw,26px);height:clamp(18px,2.4vw,26px);
+filter:drop-shadow(0 0 5px var(–hc,var(–lavender)));}
+.hdp-sub{font-family:var(–ffm);font-size:clamp(6px,.72vw,8px);letter-spacing:.18em;text-transform:uppercase;
+color:var(–hc,var(–lavender));line-height:1;margin-bottom:2px;}
+.hdp-title{font-family:var(–ff);font-size:clamp(11px,1.6vw,16px);font-weight:700;
+letter-spacing:.06em;color:var(–ink);line-height:1.1;}
+.hdp-badge{position:absolute;top:clamp(6px,1vh,10px);right:clamp(6px,1vw,10px);
+font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);letter-spacing:.1em;
+color:var(–hc,var(–lavender));border:1px solid rgba(var(–hca,200,170,255),.3);
+padding:2px 5px;background:rgba(var(–hca,200,170,255),.07);}
+
+.mail-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:clamp(10px,1.8vh,16px);}
+.mail-filter-btn{font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;background:rgba(4,8,18,.6);border:1px solid rgba(114,232,200,.2);color:var(–ink-dim);cursor:pointer;transition:all .16s;}
+.mail-filter-btn.active{background:rgba(114,232,200,.12);border-color:var(–mint);color:var(–mint);}
+.mail-list{display:flex;flex-direction:column;gap:clamp(5px,.9vh,7px);}
+.mail-row{display:flex;align-items:center;gap:clamp(10px,1.5vw,14px);padding:clamp(9px,1.5vh,13px) clamp(12px,1.8vw,16px);background:rgba(4,8,18,.65);border:1px solid rgba(114,232,200,.1);border-left:2px solid var(–mc,var(–mint));cursor:pointer;transition:all .16s;position:relative;overflow:hidden;}
+.mail-row::before{content:’’;position:absolute;inset:0;background:linear-gradient(90deg,rgba(114,232,200,.04),transparent 60%);pointer-events:none;}
+.mail-row:hover{border-color:rgba(114,232,200,.3);transform:translateX(3px);}
+.mail-row-left{flex-shrink:0;display:flex;flex-direction:column;align-items:center;width:clamp(32px,4.5vw,44px);}
+.mail-member-dot{width:8px;height:8px;border-radius:50%;background:var(–mc,var(–mint));box-shadow:0 0 6px var(–mc,var(–mint));margin-bottom:4px;}
+.mail-date-d{font-family:var(–ffm);font-size:clamp(13px,1.8vw,18px);font-weight:700;color:var(–ink);line-height:1;}
+.mail-date-m{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);letter-spacing:.1em;color:var(–ink-dim);text-transform:uppercase;}
+.mail-row-info{flex:1;min-width:0;}
+.mail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.14em;text-transform:uppercase;color:var(–mc,var(–mint));margin-bottom:2px;}
+.mail-subject{font-family:var(–ff);font-size:clamp(11px,1.5vw,14px);font-weight:700;color:var(–ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mail-preview{font-family:var(–ffj);font-size:clamp(9px,1.1vw,11px);font-weight:300;color:var(–ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+.mail-row-right{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.mail-fav-btn{background:none;border:none;cursor:pointer;padding:4px;font-size:clamp(13px,1.6vw,16px);line-height:1;opacity:.4;transition:all .16s;}
+.mail-fav-btn.active{opacity:1;filter:drop-shadow(0 0 4px var(–butter));}
+.mail-photo-icon{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);color:var(–sky);opacity:.7;}
+.mail-detail-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,2vw,20px);height:100%;min-height:0;}
+/* ── 左：写真エリア ── */
+.mail-detail-photos{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;}
+.mail-photo-stack{position:relative;width:clamp(120px,22vw,200px);aspect-ratio:3/4;}
+.mail-photo-card{position:absolute;width:100%;aspect-ratio:3/4;object-fit:cover;border:2px solid rgba(255,255,255,.18);box-shadow:0 8px 32px rgba(0,0,0,.5);cursor:pointer;transition:transform .2s,box-shadow .2s;display:block;border-radius:2px;}
+.mail-photo-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.7);}
+.mail-photo-card.card-1{transform:rotate(-4deg) translate(-8px,4px);z-index:1;}
+.mail-photo-card.card-2{transform:rotate(3deg) translate(8px,-4px);z-index:2;}
+.mail-photo-card.card-2:hover{transform:rotate(3deg) translate(8px,-4px) scale(1.03);}
+.mail-photo-card.card-1:hover{transform:rotate(-4deg) translate(-8px,4px) scale(1.03);}
+.mail-photo-none{width:clamp(120px,22vw,200px);aspect-ratio:3/4;border:1px dashed rgba(125,212,240,.15);display:flex;align-items:center;justify-content:center;font-family:var(–ffm);font-size:8px;letter-spacing:.12em;color:var(–ink-dim);text-transform:uppercase;border-radius:2px;}
+/* ── 右：メール内容エリア ── */
+.mail-detail-content{display:flex;flex-direction:column;gap:8px;min-height:0;overflow:hidden;}
+.mail-detail-header{flex-shrink:0;padding:clamp(8px,1.2vh,12px);background:rgba(4,8,18,.65);border:1px solid rgba(114,232,200,.12);border-left:2px solid var(–mint);}
+.mail-detail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.18em;text-transform:uppercase;color:var(–mint);margin-bottom:4px;}
+.mail-detail-subject{font-family:var(–ff);font-size:clamp(13px,1.8vw,17px);font-weight:700;color:var(–ink);line-height:1.2;}
+.mail-detail-date{font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);letter-spacing:.12em;color:var(–ink-dim);margin-top:4px;}
+.mail-detail-body{flex:1;padding:clamp(12px,1.8vh,18px);background:rgba(4,8,18,.5);border:1px solid rgba(114,232,200,.08);font-family:var(–ffj);font-size:clamp(11px,1.4vw,13px);font-weight:300;color:var(–ink-mid);line-height:1.9;white-space:pre-wrap;overflow-y:auto;overflow-x:hidden;}
+.mail-photo-viewer{position:fixed;inset:0;z-index:9500;background:rgba(4,8,18,.96);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.mail-photo-viewer img{max-width:95vw;max-height:95vh;object-fit:contain;}
+</style>
+
+</head>
+<body>
+<div class="flash" id="fl"></div>
+<div class="pww" id="pww"></div>
+
+<!-- ROTATE PROMPT -->
+
+<div id="rotatePrompt">
+  <div class="rotate-icon">📱</div>
+  <div class="rotate-text">横画面で開いてください<br>PLEASE ROTATE YOUR DEVICE</div>
+</div>
+
+<!-- HOME SCREEN — Pastel HUD -->
+
+<div id="homeScreen">
+
+  <!-- Full-screen photo -->
+
+  <img id="homeBgPhoto" style="display:none">
+  <div id="homeBgPlaceholder">
+    <div class="hud-placeholder-center">
+      <div class="hud-reticle"><div class="hud-reticle-dot"></div></div>
+      <div class="hud-placeholder-label">// SET OSHI PHOTO<br>CAMERA BUTTON · TOP RIGHT</div>
+    </div>
+  </div>
+
+  <!-- HUD corner brackets -->
+
+  <div class="hud-corner tl"></div>
+  <div class="hud-corner tr"></div>
+  <div class="hud-corner bl"></div>
+  <div class="hud-corner br"></div>
+
+  <!-- TOP BAR -->
+
+  <div class="hud-topbar">
+    <div class="hud-title">INI <em>CHRONICLE</em></div>
+    <div class="hud-status" id="hudClock">// ARCHIVE ONLINE</div>
+    <div class="hud-topbar-right">
+      <button class="htb-btn htb-cam" onclick="openOshiPhotoUpload()" title="推し写真を変更">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1.5" y="5.5" width="17" height="12" rx="1.5"/>
+          <circle cx="10" cy="11.5" r="3"/>
+          <path d="M7 5.5 L8.3 3h3.4L13 5.5"/>
+          <circle cx="15.5" cy="8.5" r=".8" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="htb-btn htb-set" id="homeSettingsBtn" title="Settings">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+          <circle cx="10" cy="10" r="2.6"/>
+          <path d="M10 2v1.8M10 16.2V18M2 10h1.8M16.2 10H18M4.6 4.6l1.3 1.3M14.1 14.1l1.3 1.3M4.6 15.4l1.3-1.3M14.1 5.9l1.3-1.3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- LEFT PANEL -->
+
+  <div class="home-left">
+    <div class="home-logo-eyebrow">Fan Archive</div>
+    <div class="home-logo">INI<br><em>CHRONICLE</em></div>
+    <div class="home-divider"></div>
+
+```
+<div class="home-stats-block">
+  <div class="hstat" style="--sc:var(--accent);--scr:192,107,138">
+    <div class="hstat-row">
+      <span class="hstat-v" id="homeStatStory">0</span>
+      <span class="hstat-l">Stories</span>
+    </div>
+    <div class="hstat-bar"><div class="hstat-bar-fill" id="homeBarStory" style="width:0%"></div></div>
+  </div>
+  <div class="hstat" style="--sc:var(--gold);--scr:212,162,60">
+    <div class="hstat-row">
+      <span class="hstat-v" id="homeStatCards">0</span>
+      <span class="hstat-l">Cards</span>
+    </div>
+    <div class="hstat-bar"><div class="hstat-bar-fill" id="homeBarCards" style="width:0%"></div></div>
+  </div>
+  <div class="hstat" style="--sc:var(--mint);--scr:158,207,188">
+    <div class="hstat-row">
+      <span class="hstat-v" id="homeStatAch">0</span>
+      <span class="hstat-l">Achievements</span>
+    </div>
+    <div class="hstat-bar"><div class="hstat-bar-fill" id="homeBarAch" style="width:0%"></div></div>
+  </div>
+</div>
+
+<div class="home-oshi-name">
+  <div class="hon-tag">My Oshi</div>
+  <div class="hon-name" id="homeOshiName">YOUR OSHI</div>
+  <div class="hon-sub">INI · CHRONICLE</div>
+</div>
+```
+
+  </div>
+
+  <!-- RIGHT PANEL — pastel HUD badges -->
+
+  <div class="home-right-new">
+    <div class="hdp large" style="--hc:var(--accent);--hca:255,133,168" onclick="goToTab('story')">
+      <div class="hdp-scan"></div>
+      <div class="hdp-badge">CHRONICLE</div>
+      <div class="hdp-content">
+        <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          <line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/>
+        </svg>
+        <div class="hdp-sub">Chronicle</div>
+        <div class="hdp-title">Story</div>
+      </div>
+    </div>
+    <div class="hdp" style="--hc:var(--rose);--hca:255,179,204" onclick="goToTab('members')">
+      <div class="hdp-scan"></div>
+      <div class="hdp-content">
+        <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
+          <circle cx="17" cy="7" r="2.5"/><path d="M21 21v-1.5a3.5 3.5 0 00-2.5-3.35"/>
+        </svg>
+        <div class="hdp-sub">Roster</div>
+        <div class="hdp-title">Members</div>
+      </div>
+    </div>
+    <div class="hdp" style="--hc:var(--mint);--hca:114,232,200" onclick="goToTab('mail')">
+      <div class="hdp-scan"></div>
+      <div class="hdp-content">
+        <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <div class="hdp-sub">Letters</div>
+        <div class="hdp-title">Mail</div>
+      </div>
+    </div>
+    <div class="hdp" style="--hc:var(--butter);--hca:255,224,128" onclick="goToTab('gacha')">
+      <div class="hdp-scan"></div>
+      <div class="hdp-content">
+        <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--butter)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+        </svg>
+        <div class="hdp-sub" id="homeCardCount">-- cards</div>
+        <div class="hdp-title">Gacha</div>
+      </div>
+    </div>
+    <div class="hdp" style="--hc:var(--sky);--hca:125,212,240" onclick="goToTab('archive')">
+      <div class="hdp-scan"></div>
+      <div class="hdp-content">
+        <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/>
+          <line x1="10" y1="12" x2="14" y2="12"/>
+        </svg>
+        <div class="hdp-sub">Releases</div>
+        <div class="hdp-title">Archive</div>
+      </div>
+    </div>
+    <div class="hdp" style="--hc:var(--lavender);--hca:200,170,255" onclick="goToTab('achievements')">
+      <div class="hdp-scan"></div>
+      <div class="hdp-content">
+        <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--lavender)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="6"/>
+          <path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/>
+        </svg>
+        <div class="hdp-sub">Unlocks</div>
+        <div class="hdp-title">Achieve</div>
+      </div>
+    </div>
+  </div>
+    <!-- BOTTOM BAR -->
+  <div class="hud-botbar">
+    <div class="hud-bot-label">INI CHRONICLE · FAN ARCHIVE</div>
+    <div class="hud-signal">
+      <div class="hud-signal-dot" style="--sd:var(--rose)"></div>
+      <div class="hud-signal-dot" style="--sd:var(--lavender)"></div>
+      <div class="hud-signal-dot" style="--sd:var(--sky)"></div>
+    </div>
+    <div class="hud-bot-label" id="hudDate"></div>
+  </div>
+
+  <input type="file" accept="image/*" id="oshiPhotoInput" style="display:none" onchange="setOshiPhoto(this)">
+</div>
+
+<!-- LOCK SCREEN -->
+
+<div id="lockScreen" style="display:none;position:fixed;inset:0;z-index:9999;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;">
+  <div style="width:100%;max-width:320px;display:flex;flex-direction:column;align-items:center;">
+    <div class="lock-eyebrow">// INI OFFICIAL FAN ARCHIVE</div>
+    <div class="lock-logo">INI <span>CHRONICLE</span></div>
+    <div class="lock-bar"></div>
+    <div class="lock-field-label">Password</div>
+    <input id="pwInput" type="password" class="lock-input" placeholder="パスワードを入力" onkeydown="if(event.key==='Enter')checkPW()">
+    <div id="pwError" class="lock-err">// パスワードが違います</div>
+    <button class="lock-btn" onclick="checkPW()">Enter</button>
+    <div class="lock-hint" id="pwHint"></div>
+  </div>
+</div>
+
+<!-- ═══ PAGES ═══ -->
+
+<!-- STORY PAGE -->
+
+<div class="page" id="page-story" style="--pc:var(--accent);--pc2:var(--lavender);">
+  <div class="pg-bg"></div>
+  <div class="pg-corner tl"></div><div class="pg-corner tr"></div>
+  <div class="pg-corner bl"></div><div class="pg-corner br"></div>
+  <div class="pg-header">
+    <button class="pg-back" onclick="goHome()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 3L5 8l5 5"/>
+      </svg>
+      Home
+    </button>
+    <div class="pg-title-area">
+      <div class="pg-eyebrow">Chronicle</div>
+      <div class="pg-name">Story</div>
+    </div>
+    <div class="pg-actions">
+      <button class="pg-btn" onclick="openAddChapter()" title="Add Chapter">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+      </button>
+      <button class="pg-btn" onclick="openM('importModal')" title="Import">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M3 11v2h10v-2"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="pg-body">
+    <div class="story-intro">
+      <div class="story-intro-tag">Main Story</div>
+      <div class="story-intro-title">INI Chronicle</div>
+      <div class="story-intro-sub">2021年のデビューから現在まで——INIの軌跡を記録したアーカイブ。各チャプターを読み進めてカードを解放しよう。</div>
+    </div>
+    <div class="slabel">Chapters</div>
+    <div class="chapter-list" id="chapterList"></div>
+    <div class="story-reader" id="storyReader">
+      <div class="reader-header">
+        <div><div class="reader-ch" id="readerChNum"></div><div class="reader-title" id="readerChTitle"></div></div>
+        <button class="reader-close" onclick="closeReader()">&#x2715;</button>
+      </div>
+      <div class="reader-body" id="readerBody"></div>
+      <div class="reader-footer">
+        <div class="reader-unlock" id="readerUnlock"></div>
+        <button class="reader-done" onclick="markRead()">Read ✓</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBERS PAGE -->
+
+<div class="page" id="page-members" style="--pc:var(--rose);--pc2:var(--peach);">
+  <div class="pg-bg"></div>
+  <div class="pg-corner tl"></div><div class="pg-corner tr"></div>
+  <div class="pg-corner bl"></div><div class="pg-corner br"></div>
+  <div class="pg-header">
+    <button class="pg-back" onclick="goHome()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+      Home
+    </button>
+    <div class="pg-title-area">
+      <div class="pg-eyebrow">Roster</div>
+      <div class="pg-name">Members</div>
+    </div>
+    <div class="pg-actions">
+      <button class="pg-btn" onclick="openAddMember()" title="Add Member">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="pg-body">
+    <div class="slabel">Roster — 11 Members</div>
+    <div class="members-grid" id="memberGrid"></div>
+    <div class="member-detail" id="memberDetail"></div>
+  </div>
+</div>
+
+<!-- GACHA PAGE -->
+
+<div class="page" id="page-gacha" style="--pc:var(--butter);--pc2:var(--gold);">
+  <div class="pg-bg"></div>
+  <div class="pg-corner tl"></div><div class="pg-corner tr"></div>
+  <div class="pg-corner bl"></div><div class="pg-corner br"></div>
+  <div class="pg-header">
+    <button class="pg-back" onclick="goHome()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+      Home
+    </button>
+    <div class="pg-title-area">
+      <div class="pg-eyebrow">Card Pull</div>
+      <div class="pg-name">Gacha</div>
+    </div>
+    <div class="pg-actions">
+      <button class="pg-btn" onclick="openAddCard()" title="Add Card">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="pg-body">
+    <div class="gbanner">
+      <div class="gtag">Pickup Gacha</div>
+      <div class="gtitle" id="bTitle">デビュー記念ガチャ</div>
+      <div class="gsub" id="bSub">限定カードが手に入るチャンス！</div>
+      <div class="gbtns">
+        <button class="gbtn gbtn-s" onclick="doGacha(1)">1× Pull<span class="gbtn-cost">100 pt</span></button>
+        <button class="gbtn gbtn-t" onclick="doGacha(10)">10× Pull<span class="gbtn-cost">900 pt</span></button>
+      </div>
+    </div>
+    <div class="g-result" id="gRes"></div>
+    <div class="slabel">Card Collection</div>
+    <div class="coll-grid" id="collGrid"></div>
+    <div class="slabel">Banner</div>
+    <button class="add-banner-btn" onclick="openM('bannerModal')">+ Update Banner</button>
+  </div>
+</div>
+
+<!-- ARCHIVE PAGE -->
+
+<div class="page" id="page-archive" style="--pc:var(--sky);--pc2:var(--mint);">
+  <div class="pg-bg"></div>
+  <div class="pg-corner tl"></div><div class="pg-corner tr"></div>
+  <div class="pg-corner bl"></div><div class="pg-corner br"></div>
+  <div class="pg-header">
+    <button class="pg-back" onclick="goHome()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+      Home
+    </button>
+    <div class="pg-title-area">
+      <div class="pg-eyebrow">Releases &amp; Goods</div>
+      <div class="pg-name">Archive</div>
+    </div>
+    <div class="pg-actions">
+      <button class="pg-btn" onclick="openAddDisc()" title="Add Release">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+      </button>
+      <button class="pg-btn" onclick="openAddGoods()" title="Add Goods" style="--pc:var(--rose)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="6" width="12" height="8"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="pg-body">
+    <div class="slabel">Discography</div>
+    <div class="disc-list" id="discList"></div>
+    <div class="slabel">Goods &amp; Collection</div>
+    <div class="goods-list" id="goodsList"></div>
+  </div>
+</div>
+
+<!-- ACHIEVEMENTS PAGE -->
+
+<div class="page" id="page-achievements" style="--pc:var(--lavender);--pc2:var(--mint);">
+  <div class="pg-bg"></div>
+  <div class="pg-corner tl"></div><div class="pg-corner tr"></div>
+  <div class="pg-corner bl"></div><div class="pg-corner br"></div>
+  <div class="pg-header">
+    <button class="pg-back" onclick="goHome()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+      Home
+    </button>
+    <div class="pg-title-area">
+      <div class="pg-eyebrow">Unlocks</div>
+      <div class="pg-name">Achievements</div>
+    </div>
+    <div class="pg-actions"></div>
+  </div>
+  <div class="pg-body">
+    <div class="slabel">Achievements</div>
+    <div class="ag" id="achGrid"></div>
+  </div>
+</div>
+
+<button class="fab" id="fab" onclick="fabClick()"><span style="font-size:16px;line-height:1">+</span><span id="fabL">Add</span></button>
+
+<!-- MAIL PAGE -->
+
+<div class="page" id="page-mail" style="--pc:var(--mint);--pc2:var(--sky);">
+  <div class="pg-bg"></div>
+  <div class="pg-corner tl"></div><div class="pg-corner tr"></div>
+  <div class="pg-corner bl"></div><div class="pg-corner br"></div>
+  <div class="pg-header">
+    <button class="pg-back" onclick="mailGoBack()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+      <span id="mailBackLabel">Home</span>
+    </button>
+    <div class="pg-title-area">
+      <div class="pg-eyebrow" id="mailPageEyebrow">Letters</div>
+      <div class="pg-name" id="mailPageTitle">Mail</div>
+    </div>
+    <div class="pg-actions"></div>
+  </div>
+  <div class="pg-body" id="mailBody"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ═══ MODALS ═══ -->
+
+<!-- Settings -->
+
+<div class="overlay" id="settingsModal" onclick="bgC(event,'settingsModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('settingsModal')">✕</button>
+    <div class="stitle">Settings</div>
+    <div class="fg"><label class="fl">推し名（ホーム画面に表示）</label><input class="fi" id="sOshiName" placeholder="例：慧人くん"></div>
+    <button onclick="saveOshiName()" style="width:100%;padding:11px;background:var(--panel2);border:1px solid var(--border-s);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--ink);transition:all .16s;margin-bottom:16px;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border-s)';this.style.color='var(--ink)'">Save Name</button>
+    <div class="fg" style="margin-top:16px;">
+      <div class="slabel" style="margin-top:0">Admin Mode</div>
+      <p style="font-family:var(--ffj);font-size:12px;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-bottom:12px;">管理者モードをONにすると、データの追加・編集ができます。通常使用時はOFFにしておくことで、ゲームアプリらしい体験になります。</p>
+      <button id="adminToggleBtn" onclick="toggleAdminMode()" style="width:100%;padding:12px;background:transparent;border:1px solid var(--border-s);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--ink-dim);transition:all .22s;">管理者モード: OFF</button>
+    </div>
+    <div class="fg" style="margin-top:16px;">
+      <div class="slabel" style="margin-top:0">Backup / Restore</div>
+      <p style="font-family:var(--ffj);font-size:12px;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-bottom:12px;">データをJSONで書き出してiCloud等に保存できます。</p>
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <button onclick="exportData()" style="flex:1;padding:12px 8px;background:var(--panel2);border:1px solid var(--border-s);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:6px;transition:all .16s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border-s)';this.style.color='var(--ink)'">⬇ Export</button>
+        <label style="flex:1;padding:12px 8px;background:var(--panel2);border:1px solid var(--border-s);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:6px;transition:all .16s;" onmouseover="this.style.borderColor='var(--sky)';this.style.color='var(--sky)'" onmouseout="this.style.borderColor='var(--border-s)';this.style.color='var(--ink)'">⬆ Import<input type="file" accept=".json" id="importJsonFile" style="display:none" onchange="importData(this)"></label>
+      </div>
+      <div id="backupInfo" style="font-family:var(--ffm);font-size:9px;letter-spacing:.1em;color:var(--ink-dim);"></div>
+    </div>
+    <div class="fg" style="margin-top:16px;">
+      <div class="slabel" style="margin-top:0">Install App</div>
+      <div class="pwa-banner">
+        <div class="pwa-text">ホーム画面に追加してアプリとして使えます</div>
+        <button class="pwa-btn" onclick="triggerInstall()">Install</button>
+      </div>
+      <p style="font-family:var(--ffm);font-size:9px;letter-spacing:.1em;color:var(--ink-dim);line-height:1.8;">iOS: Safari → 共有 → 「ホーム画面に追加」</p>
+    </div>
+    <div class="fg" style="margin-top:16px;">
+      <div class="slabel" style="margin-top:0">Security</div>
+      <div style="font-family:var(--ffm);font-size:9px;letter-spacing:.1em;margin-bottom:12px;" id="pwStatus"></div>
+      <div class="fg"><label class="fl">現在のパスワード</label><input class="fi" type="password" id="pwCurrent" placeholder="現在のパスワード"></div>
+      <div class="fg"><label class="fl">新しいパスワード（4文字以上）</label><input class="fi" type="password" id="pwNew" placeholder="新しいパスワード"></div>
+      <div class="fg"><label class="fl">確認</label><input class="fi" type="password" id="pwNew2" placeholder="もう一度入力"></div>
+      <div style="font-family:var(--ffm);font-size:9px;letter-spacing:.1em;min-height:16px;margin-bottom:8px;" id="pwChangeMsg"></div>
+      <button onclick="changePW()" style="width:100%;padding:12px;background:var(--panel2);border:1px solid var(--border-s);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--ink);transition:all .16s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border-s)';this.style.color='var(--ink)'">Change Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- Chapter modal -->
+
+<div class="overlay" id="chapterModal" onclick="bgC(event,'chapterModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('chapterModal')">✕</button>
+    <div class="stitle" id="chModalTitle">Add Chapter</div>
+    <input type="hidden" id="chId">
+    <div class="fg"><label class="fl">Chapter No.</label><input class="fi" id="chNum" placeholder="例: CH.01"></div>
+    <div class="fg"><label class="fl">Title</label><input class="fi" id="chTitle" placeholder="例: The Beginning"></div>
+    <div class="fg"><label class="fl">Date</label><input class="fi" type="date" id="chDate"></div>
+    <div class="fg"><label class="fl">Story Text</label><textarea class="ft" id="chBody" placeholder="ここにストーリー本文を入力...&#10;&#10;改行はそのまま反映されます。"></textarea></div>
+    <div class="fg"><label class="fl">Unlock Hint (optional)</label><input class="fi" id="chCard" placeholder="例: 🔓 デビューカードが解放されます"></div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveChapter()">Save</button>
+      <button class="bdanger" id="chDelBtn" style="display:none" onclick="delChapter()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Member modal -->
+
+<div class="overlay" id="memberModal" onclick="bgC(event,'memberModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('memberModal')">✕</button>
+    <div class="stitle" id="memModalTitle">Add Member</div>
+    <input type="hidden" id="mId">
+    <div class="fg"><label class="fl">Name</label><input class="fi" id="mN" placeholder="例：木村 慧人"></div>
+    <div class="fg"><label class="fl">Position / Role</label><input class="fi" id="mRo" placeholder="例：CENTER / VOCAL"></div>
+    <div class="fg"><label class="fl">Member Color</label>
+      <div class="crow"><input class="fi" type="color" id="mCo" value="#C0B4E0"><input class="fi" id="mCoH" placeholder="#C0B4E0" style="flex:1"></div>
+    </div>
+    <div class="fg"><label class="fl">Photo (optional)</label>
+      <div class="img-zone" id="memImgZone">
+        <input type="file" accept="image/*" id="memImgFile" onchange="previewImg(this,'memImgPrev','mem')">
+        <div id="memImgPrev"></div>
+        <div class="img-zone-label">写真をタップして選択</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveMember()">Save</button>
+      <button class="bdanger" id="memDelBtn" style="display:none" onclick="delMember()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Card modal -->
+
+<div class="overlay" id="cardModal" onclick="bgC(event,'cardModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('cardModal')">✕</button>
+    <div class="stitle" id="cardModalTitle">Add Card</div>
+    <input type="hidden" id="cId">
+    <div class="fg"><label class="fl">Card Name</label><input class="fi" id="cN" placeholder="例：1st Anniversary"></div>
+    <div class="fg"><label class="fl">Member</label><select class="fs" id="cMember"><option value="">— All Members —</option></select></div>
+    <div class="fg"><label class="fl">Rarity</label>
+      <select class="fs" id="cR"><option value="n">N</option><option value="r">R</option><option value="sr">SR</option><option value="ssr">SSR</option><option value="ur">UR</option></select>
+    </div>
+    <div class="fg"><label class="fl">Type</label><input class="fi" id="cT" placeholder="例：アー写 / LIVE / LIMITED"></div>
+    <div class="fg"><label class="fl">Card Image (optional)</label>
+      <div class="img-zone" id="cardImgZone">
+        <input type="file" accept="image/*" id="cardImgFile" onchange="previewImg(this,'cardImgPrev','card')">
+        <div id="cardImgPrev"></div>
+        <div class="img-zone-label">画像をタップして選択（アー写など）</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveCard()">Save</button>
+      <button class="bdanger" id="cardDelBtn" style="display:none" onclick="delCard()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Banner modal -->
+
+<div class="overlay" id="bannerModal" onclick="bgC(event,'bannerModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('bannerModal')">✕</button>
+    <div class="stitle">Update Banner</div>
+    <div class="fg"><label class="fl">Title</label><input class="fi" id="bTi" placeholder="例：2nd Anniversary ガチャ"></div>
+    <div class="fg"><label class="fl">Subtitle</label><input class="fi" id="bSi" placeholder="例：新衣装カードが登場！"></div>
+    <button class="bsub" onclick="saveBanner()">Update</button>
+  </div>
+</div>
+
+<!-- Disc modal -->
+
+<div class="overlay" id="discModal" onclick="bgC(event,'discModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('discModal')">✕</button>
+    <div class="stitle" id="discModalTitle">Add Release</div>
+    <input type="hidden" id="dId">
+    <div class="fg"><label class="fl">Type</label>
+      <select class="fs" id="dTy"><option value="single">Single</option><option value="album">Album</option><option value="digital">Digital</option></select>
+    </div>
+    <div class="fg"><label class="fl">Title</label><input class="fi" id="dTi" placeholder="例：「READY?」"></div>
+    <div class="fg"><label class="fl">Release Date</label><input class="fi" type="date" id="dDa"></div>
+    <div class="fg"><label class="fl">Tag</label><input class="fi" id="dTg" placeholder="例：デビューシングル"></div>
+    <div class="fg"><label class="fl">Jacket Image (optional)</label>
+      <div class="img-zone" id="discImgZone">
+        <input type="file" accept="image/*" id="discImgFile" onchange="previewImg(this,'discImgPrev','disc')">
+        <div id="discImgPrev"></div>
+        <div class="img-zone-label">画像をタップして選択</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveDisc()">Save</button>
+      <button class="bdanger" id="discDelBtn" style="display:none" onclick="delDisc()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Goods modal -->
+
+<div class="overlay" id="goodsModal" onclick="bgC(event,'goodsModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('goodsModal')">✕</button>
+    <div class="stitle" id="goodsModalTitle">Add Goods</div>
+    <input type="hidden" id="gId">
+    <div class="fg"><label class="fl">Category</label>
+      <select class="fs" id="gCat">
+        <option value="photobook">写真集</option><option value="photocard">フォトカード</option>
+        <option value="penlight">ペンライト</option><option value="cd">CD / アルバム</option>
+        <option value="goods">グッズ全般</option><option value="other">その他</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Item Name</label><input class="fi" id="gName" placeholder="例：写真集「INI FILE 01」"></div>
+    <div class="fg"><label class="fl">Note (optional)</label><input class="fi" id="gNote" placeholder="例：初回限定版 / 木村慧人ver."></div>
+    <div class="fg"><label class="fl">Owned?</label>
+      <select class="fs" id="gOwned"><option value="1">✅ 所持している</option><option value="0">○ まだ持っていない</option></select>
+    </div>
+    <div class="btn-row">
+      <button class="bsub" style="flex:1;margin-top:0" onclick="saveGoods()">Save</button>
+      <button class="bdanger" id="goodsDelBtn" style="display:none" onclick="delGoods()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Import modal -->
+
+<div class="overlay" id="importModal" onclick="bgC(event,'importModal')">
+  <div class="msheet">
+    <div class="sh"></div>
+    <button class="sclose" onclick="closeM('importModal')">✕</button>
+    <div class="stitle">CSV Import</div>
+    <div class="fg"><label class="fl">Target</label>
+      <select class="fs" id="csvType" onchange="updateCsvHint()">
+        <option value="members">Members</option>
+        <option value="discography">Discography</option>
+        <option value="chapters">Story Chapters</option>
+        <option value="goods">Goods</option>
+      </select>
+    </div>
+    <div id="csvHint" style="font-family:var(--ffm);font-size:9px;letter-spacing:.1em;color:var(--ink-dim);line-height:1.8;margin-bottom:10px;background:var(--panel2);padding:10px;border:1px solid var(--border);"></div>
+    <button onclick="downloadTemplate()" style="background:none;border:none;font-family:var(--ff);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:10px;display:flex;align-items:center;gap:6px;">⬇ テンプレートDL</button>
+    <div class="img-zone">
+      <input type="file" accept=".csv,text/csv" id="csvFile" onchange="readCSV(this)">
+      <div class="img-zone-label">CSVをタップして選択</div>
+    </div>
+    <div id="csvPreview" style="font-family:var(--ffm);font-size:10px;color:var(--ink-mid);margin-top:10px;min-height:18px;"></div>
+    <button class="bsub" id="csvImportBtn" style="display:none" onclick="executeImport()">Import</button>
+  </div>
+</div>
+
+<!-- Confirm -->
+
+<div class="overlay" id="confirmModal" onclick="bgC(event,'confirmModal')">
+  <div class="msheet" style="padding-bottom:24px">
+    <div class="sh"></div>
+    <div class="stitle">Confirm Delete</div>
+    <p style="font-family:var(--ffj);font-size:13px;font-weight:300;color:var(--ink-mid);" id="confMsg">削除しますか？</p>
+    <div class="confirm-btns">
+      <button class="cbtn-cancel" onclick="closeM('confirmModal')">Cancel</button>
+      <button class="cbtn-del" id="confOk">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══ STATE ═══
+const SAVE_KEY='ini_chronicle_v1';
+// ═══ SAVE KEY ═══
+// (SAVE_KEY already defined above)
+
+// ═══ STATE ═══
+// USER data: persisted in localStorage (owned, read, goods, oshi settings)
+// MASTER data: loaded from data/*.json at startup (chapters, cards, members, discography)
+let S = {
+  bannerTitle:'デビュー記念ガチャ', bannerSub:'限定カードが手に入るチャンス！',
+  // master (overwritten by fetch)
+  chapters:[], members:[], cards:[], discography:[],
+  // user data (persisted)
+  owned:{}, readIds:[], goods:[], mails:[], mailFavs:[], oshiName:'', oshiPhoto:'', currentTab:'story',
+  // settings
+  adminMode: false
+};
+
+// Load user data from localStorage (only user fields)
+try {
+  const saved = JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');
+  const USER_KEYS = ['owned','readIds','goods','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub','adminMode'];
+  USER_KEYS.forEach(k=>{ if(saved[k]!==undefined) S[k]=saved[k]; });
+} catch(e){}
+
+function save(){
+  const USER_KEYS = ['owned','readIds','goods','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub','adminMode'];
+  const payload = {};
+  USER_KEYS.forEach(k=>payload[k]=S[k]);
+  try{ localStorage.setItem(SAVE_KEY, JSON.stringify(payload)); }catch(e){}
+}
+
+// ═══ FALLBACK MASTER DATA (used when fetch fails e.g. local file:// open) ═══
+const FALLBACK = {
+  members:[
+    {id:'m1', name:'木村 慧人', kana:'KIMURA YOSHITO',   role:'CENTER / VOCAL', color:'#F2B8C6', bday:'2000-05-26', note:'', img:''},
+    {id:'m2', name:'松田 迅',   kana:'MATSUDA JIN',      role:'MAIN DANCE',     color:'#A8CEDE', bday:'2001-07-22', note:'', img:''},
+    {id:'m3', name:'尾崎 匠海', kana:'OZAKI TAKUMI',     role:'MAIN VOCAL',     color:'#C0B4E0', bday:'2001-02-10', note:'', img:''},
+    {id:'m4', name:'西 洸人',   kana:'NISHI HIROTO',     role:'MAIN VOCAL',     color:'#9ECFBC', bday:'2000-09-09', note:'', img:''},
+    {id:'m5', name:'藤牧 京介', kana:'FUJIMAKI KYOSUKE', role:'VOCAL / DANCE',  color:'#EDD99A', bday:'2001-07-20', note:'', img:''},
+    {id:'m6', name:'田島 将吾', kana:'TAJIMA SHOGO',     role:'MAIN RAP',       color:'#D4A23C', bday:'2002-01-11', note:'', img:''},
+    {id:'m7', name:'後藤 威尊', kana:'GOTO TAKERU',      role:'VOCAL / DANCE',  color:'#EEC4A4', bday:'2002-07-23', note:'', img:''},
+    {id:'m8', name:'許 豊凡',   kana:'XU FENGFAN',       role:'VOCAL / DANCE',  color:'#B8D8F2', bday:'2001-03-25', note:'', img:''},
+    {id:'m9', name:'高塚 大夢', kana:'TAKATSUKA HIROMU', role:'SUB VOCAL',      color:'#D4B8F2', bday:'2001-12-04', note:'', img:''},
+    {id:'m10',name:'佐野 雄大', kana:'SANO YUDAI',       role:'MAIN DANCE',     color:'#B8F2D4', bday:'2001-11-13', note:'', img:''},
+    {id:'m11',name:'槇 賢一郎', kana:'MAKI KENICHIRO',   role:'VOCAL / DANCE',  color:'#F2D4B8', bday:'1999-05-23', note:'', img:''},
+  ],
+  chapters:[
+    {id:'ch1',num:'CH.01',title:'The Beginning',  date:'2021-03-26',body:'2021年3月26日、「Produce 101 Japan Season 2」最終回。\n\n視聴者の投票によって選ばれた11人の名前が、一人ずつ呼ばれた。\n\nこの瞬間から、INIの物語が始まった。',cardHint:'',color:'#C0B4E0'},
+    {id:'ch2',num:'CH.02',title:'READY?',          date:'2021-11-03',body:'2021年11月3日、デビューシングル「READY?」リリース。\n\nデビューと同時に各種チャートを席巻。INIは走り出した。',cardHint:'',color:'#F2B8C6'},
+    {id:'ch3',num:'CH.03',title:'1st Anniversary', date:'2022-03-26',body:'デビューから1年。\n\n2022年3月26日、INIはデビュー1周年を迎えた。ファンとともに歩んだ365日——',cardHint:'',color:'#9ECFBC'},
+  ],
+  cards:[
+    {id:'card1',name:'デビュー記念カード',member:'m1',rarity:'sr',img:'',note:'2021年11月3日 デビュー記念'},
+    {id:'card2',name:'READY? ジャケット',member:'m3',rarity:'r', img:'',note:'1stシングル収録'},
+    {id:'card3',name:'Rocketeer MV Ver.',member:'m2',rarity:'sr',img:'',note:'2ndシングル'},
+  ],
+  discography:[
+    {id:'d1',type:'single',title:'「READY?」',       date:'2021-11-03',tag:'デビューシングル',img:''},
+    {id:'d2',type:'single',title:'「Rocketeer」',    date:'2022-02-16',tag:'2ndシングル',    img:''},
+    {id:'d3',type:'album', title:'「BREAK THE CODE」',date:'2022-09-14',tag:'1stアルバム',   img:''},
+    {id:'d4',type:'single',title:'「M」',            date:'2023-01-25',tag:'6thシングル',   img:''},
+    {id:'d5',type:'album', title:'「&」',            date:'2023-07-19',tag:'2ndアルバム',   img:''},
+  ]
+};
+
+// ═══ MASTER DATA LOADER ═══
+async function loadMasterData(){
+  const files = ['members','chapters','cards','discography'];
+  const results = await Promise.allSettled(
+    files.map(f => fetch(`./data/${f}.json`).then(r=>{ if(!r.ok)throw new Error(r.status); return r.json(); }))
+  );
+  let anyFailed = false;
+  files.forEach((f,i)=>{
+    if(results[i].status==='fulfilled'){
+      S[f] = results[i].value;
+    } else {
+      S[f] = FALLBACK[f];
+      anyFailed = true;
+    }
+  });
+  // merge read state into chapters
+  S.chapters = S.chapters.map(ch=>({...ch, read: S.readIds.includes(ch.id)}));
+  if(anyFailed) console.warn('// data fetch failed — using fallback');
+}
+
+// ═══ ADMIN MODE ═══
+function isAdmin(){ return S.adminMode===true; }
+function toggleAdminMode(){
+  S.adminMode = !S.adminMode;
+  save();
+  applyAdminUI();
+  toast(S.adminMode ? '// 管理者モード ON' : '// 管理者モード OFF');
+}
+function applyAdminUI(){
+  const admin = isAdmin();
+
+  // FAB
+  const fab = document.getElementById('fab');
+  if(fab){
+    if(admin && S.currentTab && S.currentTab!=='achievements') fab.style.display='flex';
+    else fab.style.display='none';
+  }
+
+  // Page header action buttons (+ buttons in each page header)
+  document.querySelectorAll('.pg-actions .pg-btn').forEach(btn=>{
+    btn.style.display = admin ? '' : 'none';
+  });
+
+  // Admin toggle button text/style
+  const btn = document.getElementById('adminToggleBtn');
+  if(btn){
+    btn.textContent = admin ? '管理者モード: ON' : '管理者モード: OFF';
+    btn.style.borderColor = admin ? 'var(--rose)' : '';
+    btn.style.color = admin ? 'var(--rose)' : '';
+  }
+
+  // Re-render currently visible page so inline edit buttons update
+  if(S.currentTab){
+    const rerender = {
+      story: renderStory,
+      members: renderMembers,
+      gacha: renderCollGrid,
+      archive: ()=>{renderDisc();renderGoods();},
+      achievements: renderAch
+    };
+    if(rerender[S.currentTab]) rerender[S.currentTab]();
+  }
+}
+
+
+// ═══ IMAGE ═══
+let _img={card:'',disc:'',mem:''};
+function previewImg(input,prevId,key){
+  if(!input.files||!input.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    _img[key]=e.target.result;
+    document.getElementById(prevId).innerHTML=`<div class="img-preview-wrap"><img class="img-preview" src="${e.target.result}"><button class="img-clear" onclick="clearImg('${prevId}','${key}')">✕</button></div>`;
+    const z=input.closest('.img-zone');
+    if(z){const lbl=z.querySelector('.img-zone-label');if(lbl)lbl.style.display='none';}
+  };
+  r.readAsDataURL(input.files[0]);
+}
+function clearImg(prevId,key){
+  _img[key]='';
+  document.getElementById(prevId).innerHTML='';
+  const el=document.getElementById(prevId);
+  const zone=el?el.closest('.img-zone'):null;
+  if(zone){const lbl=zone.querySelector('.img-zone-label');if(lbl)lbl.style.display='';const inp=zone.querySelector('input[type=file]');if(inp)inp.value='';}
+}
+function setImgZone(zoneId,prevId,key,data){
+  _img[key]=data||'';
+  const p=document.getElementById(prevId);
+  const lbl=document.querySelector('#'+zoneId+' .img-zone-label');
+  if(data){
+    p.innerHTML=`<div class="img-preview-wrap"><img class="img-preview" src="${data}"><button class="img-clear" onclick="clearImg('${prevId}','${key}')">✕</button></div>`;
+    if(lbl)lbl.style.display='none';
+  }else{
+    p.innerHTML='';if(lbl)lbl.style.display='';
+    const inp=document.querySelector('#'+zoneId+' input[type=file]');if(inp)inp.value='';
+  }
+}
+
+// ═══ STORY ═══
+let _openCh=null;
+const CH_COLORS=['var(--accent)','var(--rose)','var(--lavender)','var(--sky)','var(--mint)','var(--butter)','var(--peach)'];
+function renderStory(){
+  const list=document.getElementById('chapterList');list.innerHTML='';
+  if(!S.chapters.length){list.innerHTML='<div class="empty"><span class="empty-i">NO CHAPTERS</span><div class="empty-t">チャプターをまだ追加していません</div></div>';return;}
+  [...S.chapters].sort((a,b)=>a.num.localeCompare(b.num)).forEach((ch,i)=>{
+    const col=CH_COLORS[i%CH_COLORS.length];
+    const div=document.createElement('div');div.className='chapter-item';div.style.setProperty('--ch-color',col);
+    const preview=ch.body?ch.body.replace(/\n/g,' ').slice(0,60)+'…':'（本文未入力）';
+    div.innerHTML=`<div class="chapter-inner">
+      <div class="chapter-num">${ch.num}</div>
+      <div class="chapter-info">
+        <div class="chapter-title">${ch.title}</div>
+        <div class="chapter-date">${ch.date||''}</div>
+        <div class="chapter-desc" style="${!ch.body?'font-style:italic;color:var(--ink-dim)':''}">${preview}</div>
+      </div>
+      <div class="chapter-status">
+        <span class="chapter-badge ${ch.read?'read':'unread'}">${ch.read?'READ':'UNREAD'}</span>
+        ${ch.cardHint?`<span class="chapter-card-hint">🔓 ${ch.cardHint}</span>`:''}
+        ${isAdmin()?`<button class="chapter-edit-btn" onclick="event.stopPropagation();openEditChapter('${ch.id}')">✎</button>`:''}
+      </div>
+    </div>`;
+    if(ch.body)div.addEventListener('click',()=>openReader(ch.id));
+    list.appendChild(div);
+  });
+}
+function openReader(id){
+  const ch=S.chapters.find(x=>x.id===id);if(!ch||!ch.body)return;
+  _openCh=id;
+  document.getElementById('readerChNum').textContent=ch.num;
+  document.getElementById('readerChTitle').textContent=ch.title;
+  document.getElementById('readerBody').textContent=ch.body;
+  document.getElementById('readerUnlock').textContent=ch.cardHint?'🔓 '+ch.cardHint:'';
+  const r=document.getElementById('storyReader');r.classList.add('open');
+  setTimeout(()=>r.scrollIntoView({behavior:'smooth',block:'nearest'}),60);
+}
+function closeReader(){document.getElementById('storyReader').classList.remove('open');_openCh=null;}
+function markRead(){
+  if(!_openCh)return;
+  const ch=S.chapters.find(x=>x.id===_openCh);
+  if(ch){
+    if(!S.readIds.includes(ch.id)) S.readIds.push(ch.id);
+    ch.read=true;
+    save();renderStory();updateStats();
+  }
+  closeReader();toast('// READ ✓');
+}
+function openAddChapter(){
+  document.getElementById('chModalTitle').textContent='Add Chapter';
+  document.getElementById('chId').value='';
+  ['chNum','chTitle','chCard','chBody'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('chDate').value='';
+  document.getElementById('chDelBtn').style.display='none';
+  openM('chapterModal');
+}
+function openEditChapter(id){
+  const ch=S.chapters.find(x=>x.id===id);if(!ch)return;
+  document.getElementById('chModalTitle').textContent='Edit Chapter';
+  document.getElementById('chId').value=id;
+  document.getElementById('chNum').value=ch.num;
+  document.getElementById('chTitle').value=ch.title;
+  document.getElementById('chDate').value=ch.date||'';
+  document.getElementById('chBody').value=ch.body||'';
+  document.getElementById('chCard').value=ch.cardHint||'';
+  document.getElementById('chDelBtn').style.display='';
+  openM('chapterModal');
+}
+function saveChapter(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('chId').value;
+  const title=document.getElementById('chTitle').value.trim();if(!title){toast('// TITLE REQUIRED');return;}
+  const obj={id:id||'ch'+Date.now(),num:document.getElementById('chNum').value||'CH.??',title,date:document.getElementById('chDate').value||'',body:document.getElementById('chBody').value,cardHint:document.getElementById('chCard').value,color:'#C0B4E0',read:S.readIds.includes(id)};
+  if(id){const i=S.chapters.findIndex(x=>x.id===id);if(i>=0)S.chapters[i]=obj;}
+  else S.chapters.push(obj);
+  save();renderStory();updateStats();closeM('chapterModal');toast(id?'// SAVED':'// CHAPTER ADDED');
+}
+function delChapter(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('chId').value;confirmDel('chapter',id,'このチャプターを削除しますか？');
+}
+
+// ═══ MEMBERS ═══
+function renderMembers(){
+  const g=document.getElementById('memberGrid');g.innerHTML='';
+  populateMemberSelect();
+  if(!S.members.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="empty-i">NO DATA</span><div class="empty-t">メンバーをまだ追加していません</div></div>';return;}
+  S.members.forEach(m=>{
+    const hex=m.color||'#C0B4E0';
+    const cardCount=S.cards.filter(c=>c.member===m.id&&(S.owned[c.id]||0)>0).length;
+    const d=document.createElement('div');
+    d.className='member-card';
+    d.style.setProperty('--mc',hex);
+    const pSvg=`<svg viewBox="0 0 24 24" fill="none" stroke="${hex}" stroke-width="1.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`;
+    const av=m.img?`<img class="member-photo" src="${m.img}">`:`<div class="member-photo-placeholder">${pSvg}</div>`;
+    const ia=isAdmin()?`<div class="ia" style="position:absolute;top:4px;right:4px;z-index:2"><button class="act edt" onclick="event.stopPropagation();openEditMember('${m.id}')">✎</button></div>`:'';
+    d.innerHTML=`${ia}${av}<div class="member-info"><div class="member-name">${m.name}</div><div class="member-pos">${m.role||''}</div>${cardCount?`<div class="member-card-count">★ ${cardCount} cards</div>`:''}</div>`;
+    d.addEventListener('click',()=>openMemberDetail(m.id));
+    g.appendChild(d);
+  });
+}
+function openMemberDetail(id){
+  const m=S.members.find(x=>x.id===id);if(!m)return;
+  const hex=m.color||'#C0B4E0';
+  const detail=document.getElementById('memberDetail');
+  const memberCards=S.cards.filter(c=>c.member===id);
+  const pSvg=`<svg viewBox="0 0 24 24" fill="none" stroke="${hex}" stroke-width="1.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`;
+  const av=m.img?`<img class="md-photo" src="${m.img}">`:`<div class="md-photo-placeholder">${pSvg}</div>`;
+  const cardsHtml=memberCards.length
+    ?`<div class="md-cards-grid">`+memberCards.map(c=>{
+      const owned=S.owned[c.id]||0;
+      return `<div class="md-card-thumb">
+        ${c.img?`<img src="${c.img}">`:`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(192,180,224,.3)" stroke-width="1" stroke-linecap="round" width="24" height="24"><rect x="3" y="2" width="18" height="20" rx="2"/></svg></div>`}
+        <div class="md-card-rarity" style="color:var(--r-${c.rarity},var(--ink-dim))">${c.rarity.toUpperCase()}</div>
+        ${owned?`<div class="coll-cnt">×${owned}</div>`:''}
+      </div>`;}).join('')+`</div>`
+    :`<div class="empty"><span class="empty-i">--</span><div class="empty-t">No cards yet</div></div>`;
+  detail.innerHTML=`
+    <div class="md-header">
+      <div style="font-family:var(--ffm);font-size:9px;letter-spacing:.2em;color:var(--ink-dim);">// MEMBER DETAIL</div>
+      <button class="md-close" onclick="closeMemberDetail()">&#x2715;</button>
+    </div>
+    <div class="md-body">
+      <div class="md-top">
+        <div class="md-photo-wrap">${av}</div>
+        <div class="md-names">
+          <div class="md-name">${m.name}</div>
+          <div class="md-kana">${m.kana||''}</div>
+          <div class="md-group">INI</div>
+        </div>
+      </div>
+      <div class="md-profile">
+        <div class="md-prow"><span class="md-pk">Role</span><span class="md-pv">${m.role||'—'}</span></div>
+        ${m.bday?`<div class="md-prow"><span class="md-pk">Birthday</span><span class="md-pv">${m.bday}</span></div>`:''}
+      </div>
+      ${m.note?`<div class="md-note">${m.note}</div>`:''}
+      <div class="slabel">Cards</div>
+      ${cardsHtml}
+      <div class="md-actions">
+        ${isAdmin()?`<button class="bsub" style="margin-top:0;flex:1" onclick="openEditMember('${m.id}');closeMemberDetail()">Edit Member</button>`:''}
+      </div>
+    </div>`;
+  detail.classList.add('open');
+}
+function closeMemberDetail(){document.getElementById('memberDetail').classList.remove('open');}
+function populateMemberSelect(){
+  const sel=document.getElementById('cMember');const cur=sel.value;
+  sel.innerHTML='<option value="">— All Members —</option>';
+  S.members.forEach(m=>sel.innerHTML+=`<option value="${m.id}">${m.name}</option>`);
+  sel.value=cur;
+}
+function openAddMember(){
+  document.getElementById('memModalTitle').textContent='Add Member';
+  document.getElementById('mId').value='';
+  ['mN','mRo','mCoH'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('mCo').value='#C0B4E0';
+  document.getElementById('memDelBtn').style.display='none';
+  setImgZone('memImgZone','memImgPrev','mem','');
+  openM('memberModal');
+}
+function openEditMember(id){
+  const m=S.members.find(x=>x.id===id);if(!m)return;
+  document.getElementById('memModalTitle').textContent='Edit Member';
+  document.getElementById('mId').value=id;
+  document.getElementById('mN').value=m.name;
+  document.getElementById('mRo').value=m.role||'';
+  document.getElementById('mCo').value=m.color||'#C0B4E0';
+  document.getElementById('mCoH').value=m.color||'#C0B4E0';
+  document.getElementById('memDelBtn').style.display='';
+  setImgZone('memImgZone','memImgPrev','mem',m.img);
+  openM('memberModal');
+}
+function saveMember(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('mId').value;
+  const name=document.getElementById('mN').value.trim();if(!name){toast('// NAME REQUIRED');return;}
+  const hex=document.getElementById('mCoH').value||document.getElementById('mCo').value;
+  const existImg=id?(S.members.find(x=>x.id===id)||{}).img||'':'';
+  const obj={id:id||'m'+Date.now(),name,kana:'',role:document.getElementById('mRo').value,color:hex,bday:'',note:'',img:_img.mem||existImg};
+  if(id){const i=S.members.findIndex(x=>x.id===id);if(i>=0)S.members[i]=obj;}
+  else S.members.push(obj);
+  save();renderMembers();closeM('memberModal');toast(id?'// SAVED':'// MEMBER ADDED');
+}
+function delMember(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('mId').value;confirmDel('member',id,'このメンバーを削除しますか？');
+}
+
+// ═══ GACHA ═══
+const rPool=[{r:'ur',w:1},{r:'ssr',w:3},{r:'sr',w:8},{r:'r',w:20},{r:'n',w:68}];
+function rollR(){let x=Math.random()*100,c=0;for(const{r,w}of rPool){c+=w;if(x<c)return r;}return 'n';}
+function doGacha(n){
+  if(!S.cards.length){toast('// カードをまず追加してください');return;}
+  const res=[];
+  for(let i=0;i<n;i++){
+    const pool=S.cards.filter(c=>c.rarity===rollR());
+    const from=pool.length?pool:S.cards;
+    const c=from[Math.floor(Math.random()*from.length)];
+    res.push(c);S.owned[c.id]=(S.owned[c.id]||0)+1;
+  }
+  save();renderGachaResult(res);renderCollGrid();updateStats();renderAch();
+}
+function renderGachaResult(res){
+  const el=document.getElementById('gRes');el.innerHTML='';el.classList.add('show');
+  res.forEach((c,i)=>{
+    const m=S.members.find(x=>x.id===c.member);
+    const d=document.createElement('div');d.className='flip-card';
+    const front=c.img?`<img class="flip-img" src="${c.img}">`:`<div class="flip-emoji">✦</div>`;
+    d.innerHTML=`<div class="flip-inner"><div class="flip-face flip-back"><div class="flip-back-c">INI</div></div><div class="flip-face flip-front r-${c.rarity}"><div class="flip-rbar"></div><div class="flip-rtag">${c.rarity.toUpperCase()}</div>${front}<div class="flip-name">${c.name}</div><div class="flip-member">${m?m.name:''}</div></div></div>`;
+    d.addEventListener('click',()=>d.classList.toggle('flipped'));
+    el.appendChild(d);
+    setTimeout(()=>{d.classList.add('flipped');if(c.rarity==='ur'||c.rarity==='ssr')setTimeout(burst,80);},i*100+240);
+  });
+  setTimeout(()=>el.querySelectorAll('.flip-card').forEach(x=>x.classList.add('flipped')),res.length*100+580);
+}
+function renderCollGrid(){
+  const g=document.getElementById('collGrid');g.innerHTML='';
+  if(!S.cards.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="empty-i">NO CARDS</span><div class="empty-t">カードをまだ追加していません<br>+ Add Card から追加しよう</div></div>';return;}
+  S.cards.forEach(c=>{
+    const owned=S.owned[c.id]||0;const m=S.members.find(x=>x.id===c.member);
+    const d=document.createElement('div');d.className=`coll-card r-${c.rarity}${owned?' owned':''}`;
+    const editBtns=isAdmin()?`<div class="coll-ia"><button class="act edt" style="flex:1" onclick="openEditCard('${c.id}')">✎</button><button class="act del" style="flex:1" onclick="confirmDel('card','${c.id}','削除しますか？')">✕</button></div>`:'';
+    d.innerHTML=`${owned?`<div class="coll-cnt">×${owned}</div>`:''}`+(c.img?`<img class="coll-img" src="${c.img}">`:`<span class="coll-emoji">✦</span>`)+`<div class="coll-name">${c.name}</div><div class="coll-r">${c.rarity.toUpperCase()}</div><div class="coll-member">${m?m.name:''}</div>${editBtns}`;
+    g.appendChild(d);
+  });
+}
+function openAddCard(){
+  document.getElementById('cardModalTitle').textContent='Add Card';
+  document.getElementById('cId').value='';
+  ['cN','cT'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('cR').value='r';document.getElementById('cMember').value='';
+  document.getElementById('cardDelBtn').style.display='none';
+  setImgZone('cardImgZone','cardImgPrev','card','');
+  openM('cardModal');
+}
+function openEditCard(id){
+  const c=S.cards.find(x=>x.id===id);if(!c)return;
+  document.getElementById('cardModalTitle').textContent='Edit Card';
+  document.getElementById('cId').value=id;
+  document.getElementById('cN').value=c.name;
+  document.getElementById('cR').value=c.rarity;
+  document.getElementById('cT').value=c.type||'';
+  document.getElementById('cMember').value=c.member||'';
+  document.getElementById('cardDelBtn').style.display='';
+  setImgZone('cardImgZone','cardImgPrev','card',c.img);
+  openM('cardModal');
+}
+function saveCard(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('cId').value;
+  const name=document.getElementById('cN').value.trim();if(!name){toast('// NAME REQUIRED');return;}
+  const existImg=id?(S.cards.find(x=>x.id===id)||{}).img||'':'';
+  const obj={id:id||'c'+Date.now(),name,rarity:document.getElementById('cR').value,type:document.getElementById('cT').value.toUpperCase(),member:document.getElementById('cMember').value,img:_img.card||existImg};
+  if(id){const i=S.cards.findIndex(x=>x.id===id);if(i>=0)S.cards[i]=obj;}
+  else S.cards.push(obj);
+  save();renderCollGrid();closeM('cardModal');toast(id?'// SAVED':'// CARD ADDED');
+}
+function delCard(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('cId').value;confirmDel('card',id,'このカードを削除しますか？');
+}
+function saveBanner(){
+  const t=document.getElementById('bTi').value.trim(),s=document.getElementById('bSi').value.trim();
+  if(t)S.bannerTitle=t;if(s)S.bannerSub=s;
+  document.getElementById('bTitle').textContent=S.bannerTitle;
+  document.getElementById('bSub').textContent=S.bannerSub;
+  save();closeM('bannerModal');toast('// BANNER UPDATED');
+}
+function burst(){
+  const f=document.getElementById('fl');f.classList.remove('on');void f.offsetWidth;f.classList.add('on');
+  const pw=document.getElementById('pww');pw.classList.add('on');
+  const cols=['#F2B8C6','#C0B4E0','#A8CEDE','#9ECFBC','#EDD99A'];
+  const cx=window.innerWidth/2,cy=window.innerHeight/2;
+  for(let i=0;i<22;i++){
+    const p=document.createElement('div');p.className='pt';
+    const a=Math.random()*Math.PI*2,d=70+Math.random()*140;
+    p.style.cssText=`left:${cx}px;top:${cy}px;background:${cols[i%cols.length]};--px:${Math.cos(a)*d}px;--py:${Math.sin(a)*d}px;animation-delay:${Math.random()*.15}s;width:${2+Math.random()*5}px;height:${2+Math.random()*5}px;`;
+    pw.appendChild(p);
+  }
+  setTimeout(()=>{pw.classList.remove('on');pw.innerHTML='';},1100);
+}
+
+// ═══ ARCHIVE ═══
+function renderDisc(){
+  const el=document.getElementById('discList');el.innerHTML='';
+  if(!S.discography.length){el.innerHTML='<div class="empty"><span class="empty-i">NO DATA</span><div class="empty-t">作品データがありません</div></div>';return;}
+  const sorted=[...S.discography].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  sorted.forEach((d,i)=>{
+    const owned=!!(S.owned['disc_'+d.id]);
+    const div=document.createElement('div');div.className='disc-item';
+    const art=d.img?`<img class="disc-art" src="${d.img}">`:`<div class="disc-art-ph"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(168,206,222,.3)" stroke-width="1" stroke-linecap="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></div>`;
+    const editBtn=isAdmin()?`<button class="act edt" onclick="openEditDisc('${d.id}')">✎</button>`:'';
+    div.innerHTML=`${art}<div class="disc-info"><div class="disc-title">${d.title}</div><div class="disc-meta">${d.date}${d.tag?' · '+d.tag:''}</div><div class="disc-type">${d.type.toUpperCase()}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><button class="disc-toggle${owned?' owned':''}" onclick="toggleDiscOwned('${d.id}')">${owned?'✓ 所持':'未所持'}</button>${editBtn}</div>`;
+    el.appendChild(div);
+  });
+}
+function toggleDiscOwned(id){
+  const key='disc_'+id;
+  S.owned[key]=S.owned[key]?0:1;
+  save();renderDisc();renderAch();
+}
+function openAddDisc(){
+  document.getElementById('discModalTitle').textContent='Add Release';
+  document.getElementById('dId').value='';
+  ['dTi','dDa','dTg'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('dTy').value='single';document.getElementById('discDelBtn').style.display='none';
+  setImgZone('discImgZone','discImgPrev','disc','');openM('discModal');
+}
+function openEditDisc(id){
+  const d=S.discography.find(x=>x.id===id);if(!d)return;
+  document.getElementById('discModalTitle').textContent='Edit Release';
+  document.getElementById('dId').value=id;document.getElementById('dTy').value=d.type;
+  document.getElementById('dTi').value=d.title;document.getElementById('dDa').value=d.date||'';
+  document.getElementById('dTg').value=d.tag||'';document.getElementById('discDelBtn').style.display='';
+  setImgZone('discImgZone','discImgPrev','disc',d.img);openM('discModal');
+}
+function saveDisc(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('dId').value;
+  const title=document.getElementById('dTi').value.trim();if(!title){toast('// TITLE REQUIRED');return;}
+  const existImg=id?(S.discography.find(x=>x.id===id)||{}).img||'':'';
+  const obj={id:id||'d'+Date.now(),type:document.getElementById('dTy').value,title,date:document.getElementById('dDa').value||'—',tag:document.getElementById('dTg').value,img:_img.disc||existImg};
+  if(id){const i=S.discography.findIndex(x=>x.id===id);if(i>=0)S.discography[i]=obj;}
+  else S.discography.push(obj);
+  save();renderDisc();renderAch();updateStats();closeM('discModal');toast(id?'// SAVED':'// RELEASE ADDED');
+}
+function delDisc(){
+  if(!isAdmin()){toast('// 管理者モードが必要です');return;}
+  const id=document.getElementById('dId').value;confirmDel('disc',id,'この作品を削除しますか？');
+}
+function renderGoods(){
+  const el=document.getElementById('goodsList');el.innerHTML='';
+  if(!S.goods.length){el.innerHTML='<div class="empty"><span class="empty-i">NO DATA</span><div class="empty-t">グッズをまだ追加していません</div></div>';return;}
+  S.goods.forEach(g=>{
+    const d=document.createElement('div');d.className='goods-item';
+    const ph=`<div class="goods-img-ph"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(192,107,138,.28)" stroke-width="1.2" stroke-linecap="round" width="18" height="18"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M8 6V4a4 4 0 018 0v2"/></svg></div>`;
+    const img=g.img?`<img class="goods-img" src="${g.img}">`  : ph;
+    const editBtn=isAdmin()?`<button class="act edt" onclick="openEditGoods('${g.id}')">✎</button>`:'';
+    d.innerHTML=`${img}<div class="goods-info"><div class="goods-name">${g.name}</div><div class="goods-cat">${g.cat}</div>${g.note?`<div class="goods-note">${g.note}</div>`:''}</div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><button class="goods-toggle${g.owned?' owned':''}" onclick="toggleGoods('${g.id}')">${g.owned?'✓ 所持':'未所持'}</button>${editBtn}</div>`;
+    el.appendChild(d);
+  });
+}
+function toggleGoods(id){const g=S.goods.find(x=>x.id===id);if(!g)return;g.owned=!g.owned;save();renderGoods();renderAch();}
+function openAddGoods(){
+  document.getElementById('goodsModalTitle').textContent='Add Goods';
+  document.getElementById('gId').value='';
+  ['gName','gNote'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('gCat').value='goods';document.getElementById('gOwned').value='0';
+  document.getElementById('goodsDelBtn').style.display='none';openM('goodsModal');
+}
+function openEditGoods(id){
+  const g=S.goods.find(x=>x.id===id);if(!g)return;
+  document.getElementById('goodsModalTitle').textContent='Edit Goods';
+  document.getElementById('gId').value=id;document.getElementById('gCat').value=g.cat;
+  document.getElementById('gName').value=g.name;document.getElementById('gNote').value=g.note||'';
+  document.getElementById('gOwned').value=g.owned?'1':'0';
+  document.getElementById('goodsDelBtn').style.display='';openM('goodsModal');
+}
+function saveGoods(){
+  const id=document.getElementById('gId').value;
+  const name=document.getElementById('gName').value.trim();if(!name){toast('// NAME REQUIRED');return;}
+  const obj={id:id||'g'+Date.now(),cat:document.getElementById('gCat').value,name,note:document.getElementById('gNote').value,owned:document.getElementById('gOwned').value==='1'};
+  if(id){const i=S.goods.findIndex(x=>x.id===id);if(i>=0)S.goods[i]=obj;}
+  else S.goods.push(obj);
+  save();renderGoods();renderAch();closeM('goodsModal');toast(id?'// SAVED':'// GOODS ADDED');
+}
+function delGoods(){const id=document.getElementById('gId').value;confirmDel('goods',id,'このグッズを削除しますか？');}
+
+
+// =========================================================
+// MAIL
+// =========================================================
+var MEMBER_SLUG={
+  '木村　柾哉':'masaya','西　洸人':'hiroto','許　豊凡':'fenfan',
+  '田島　将吾':'shogo','髙塚　大夢':'hiromu','後藤　威尊':'takeru',
+  '尾崎　匠海':'takumi','藤牧　京介':'kyosuke','佐野　雄大':'yudai',
+  '池﨑　理人':'rihito','松田　迅':'jin'
+};
+var MEMBER_COLORS_MAP={'木村　柾哉':'var(--rose)','西　洸人':'var(--sky)','許　豊凡':'var(--mint)','田島　将吾':'var(--butter)','髙塚　大夢':'var(--lavender)','後藤　威尊':'var(--peach)','尾崎　匠海':'var(--accent)','藤牧　京介':'var(--sky)','佐野　雄大':'var(--mint)','池﨑　理人':'var(--rose)','松田　迅':'var(--lavender)'};
+var MEMBER_NAMES=['木村　柾哉','西　洸人','許　豊凡','田島　将吾','髙塚　大夢','後藤　威尊','尾崎　匠海','藤牧　京介','佐野　雄大','池﨑　理人','松田　迅'];
+var _mailFilter='all';
+var _mailView='list';
+var _mailCurrent=null;
+
+function setMailFilter(f){renderMailList(f);}
+
+function renderMailList(filter){
+  if(filter!==undefined)_mailFilter=filter;
+  _mailView='list';
+  document.getElementById('mailPageEyebrow').textContent='Letters';
+  document.getElementById('mailPageTitle').textContent='Mail';
+  document.getElementById('mailBackLabel').textContent='Home';
+  var mails=S.mails||[];
+  var members=[];
+  mails.forEach(function(m){if(members.indexOf(m.member)===-1)members.push(m.member);});
+  members.sort();
+  var filtered;
+  if(_mailFilter==='all')filtered=mails;
+  else if(_mailFilter==='fav')filtered=mails.filter(function(m){return (S.mailFavs||[]).indexOf(m.id)!==-1;});
+  else filtered=mails.filter(function(m){return m.member===_mailFilter;});
+  filtered=filtered.slice().sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+
+  var filterHtml='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">';
+  filterHtml+='<div class="mail-filter" style="margin-bottom:0;flex:1;" id="mailFilterBar"></div>';
+  filterHtml+='<button id="mailAddBtn" style="flex-shrink:0;margin-left:10px;padding:6px 14px;background:rgba(114,232,200,.12);border:1px solid rgba(114,232,200,.35);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--mint);">+ ADD</button>';
+  filterHtml+='</div>';
+
+  var listHtml='';
+  if(!filtered.length){
+    listHtml='<div class="empty"><span class="empty-i">NO MAIL</span><div class="empty-t">メールはまだありません</div></div>';
+  } else {
+    listHtml='<div class="mail-list" id="mailListEl">';
+    filtered.forEach(function(mail){
+      var dt=mail.date?new Date(mail.date):null;
+      var day=dt?String(dt.getDate()).padStart(2,'0'):'--';
+      var mon=dt?dt.toLocaleString('en',{month:'short'}).toUpperCase():'';
+      var col=MEMBER_COLORS_MAP[mail.member]||'var(--mint)';
+      var isFav=(S.mailFavs||[]).indexOf(mail.id)!==-1;
+      var hasPhoto=mail.photos&&mail.photos.length>0;
+      var preview=(mail.body||'').replace(/\n/g,' ').slice(0,40);
+      listHtml+='<div class="mail-row" style="--mc:'+col+'" data-id="'+mail.id+'">'+
+        '<div class="mail-row-left"><div class="mail-member-dot"></div><div class="mail-date-d">'+day+'</div><div class="mail-date-m">'+mon+'</div></div>'+
+        '<div class="mail-row-info"><div class="mail-member">'+mail.member+'</div><div class="mail-subject">'+(mail.subject||'(件名なし)')+'</div><div class="mail-preview">'+preview+'</div></div>'+
+        '<div class="mail-row-right"><button class="mail-fav-btn'+(isFav?' active':'')+'" data-fav="'+mail.id+'">&#9733;</button>'+(hasPhoto?'<div class="mail-photo-icon">IMG</div>':'')+'</div>'+
+      '</div>';
+    });
+    listHtml+='</div>';
+  }
+
+  document.getElementById('mailBody').innerHTML=filterHtml+listHtml;
+
+  // フィルターボタンをJSで生成
+  var bar=document.getElementById('mailFilterBar');
+  if(bar){
+    var allBtn=document.createElement('button');
+    allBtn.className='mail-filter-btn'+(_mailFilter==='all'?' active':'');
+    allBtn.textContent='ALL';
+    allBtn.addEventListener('click',function(){renderMailList('all');});
+    bar.appendChild(allBtn);
+    var favBtn=document.createElement('button');
+    favBtn.className='mail-filter-btn'+(_mailFilter==='fav'?' active':'');
+    favBtn.textContent='FAV';
+    favBtn.addEventListener('click',function(){renderMailList('fav');});
+    bar.appendChild(favBtn);
+    members.forEach(function(m){
+      var btn=document.createElement('button');
+      btn.className='mail-filter-btn'+(_mailFilter===m?' active':'');
+      btn.textContent=m.replace(/　/g,'').slice(0,4);
+      btn.addEventListener('click',function(){renderMailList(m);});
+      bar.appendChild(btn);
+    });
+  }
+
+  // ADD ボタン
+  var addBtn=document.getElementById('mailAddBtn');
+  if(addBtn)addBtn.addEventListener('click',function(){openMailForm(null);});
+
+  // メール行クリック
+  var listEl=document.getElementById('mailListEl');
+  if(listEl){
+    listEl.addEventListener('click',function(e){
+      var favBtn=e.target.closest('[data-fav]');
+      if(favBtn){e.stopPropagation();toggleMailFav(favBtn.dataset.fav);return;}
+      var row=e.target.closest('[data-id]');
+      if(row)openMailDetail(row.dataset.id);
+    });
+  }
+}
+
+function openMailDetail(id){
+  var mail=(S.mails||[]).filter(function(m){return m.id===id;})[0];
+  if(!mail)return;
+  _mailView='detail';_mailCurrent=id;
+  document.getElementById('mailPageEyebrow').textContent=mail.member;
+  document.getElementById('mailPageTitle').textContent=mail.subject||'(件名なし)';
+  document.getElementById('mailBackLabel').textContent='一覧';
+  var isFav=(S.mailFavs||[]).indexOf(mail.id)!==-1;
+  var dt=mail.date?new Date(mail.date):null;
+  var dateStr=dt?dt.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+
+  // ── 写真エリア ──
+  var photosHtml='';
+  if(mail.photos&&mail.photos.length>0){
+    photosHtml='<div class="mail-photo-stack">';
+    if(mail.photos[0]){
+      var cls=mail.photos[1]?'mail-photo-card card-1':'mail-photo-card card-2'; // 1枚だけなら正面
+      photosHtml+='<img class="'+cls+'" data-photo="'+mail.photos[0]+'" src="'+mail.photos[0]+'" loading="lazy">';
+    }
+    if(mail.photos[1]){
+      photosHtml+='<img class="mail-photo-card card-2" data-photo="'+mail.photos[1]+'" src="'+mail.photos[1]+'" loading="lazy">';
+    }
+    photosHtml+='</div>';
+  }else{
+    photosHtml='<div class="mail-photo-none">NO PHOTO</div>';
+  }
+
+  var wrap=document.createElement('div');
+  wrap.className='mail-detail-wrap';
+  wrap.innerHTML=
+    '<div class="mail-detail-photos">'+photosHtml+'</div>'+
+    '<div class="mail-detail-content">'+
+      '<div class="mail-detail-header">'+
+        '<div class="mail-detail-member">'+mail.member+'</div>'+
+        '<div class="mail-detail-subject">'+(mail.subject||'(件名なし)')+'</div>'+
+        '<div class="mail-detail-date">'+dateStr+'</div>'+
+        '<div style="display:flex;gap:8px;margin-top:8px;" id="mailDetailBtns"></div>'+
+      '</div>'+
+      '<div class="mail-detail-body">'+(mail.body||'').replace(/</g,'&lt;')+'</div>'+
+    '</div>';
+
+  document.getElementById('mailBody').innerHTML='';
+  document.getElementById('mailBody').appendChild(wrap);
+
+  // ── ボタン ──
+  var btns=document.getElementById('mailDetailBtns');
+
+  var favB=document.createElement('button');
+  favB.className='mail-fav-btn'+(isFav?' active':'');
+  favB.style.cssText='font-size:13px;padding:4px 10px;border:1px solid rgba(255,224,128,.3);background:rgba(255,224,128,.08);';
+  favB.innerHTML='&#9733; '+(isFav?'解除':'FAV');
+  favB.addEventListener('click',function(){toggleMailFav(mail.id);});
+  btns.appendChild(favB);
+
+  var editB=document.createElement('button');
+  editB.style.cssText='padding:4px 10px;background:rgba(125,212,240,.08);border:1px solid rgba(125,212,240,.25);font-family:var(--ff);font-size:10px;font-weight:700;cursor:pointer;color:var(--sky);';
+  editB.textContent='EDIT';
+  editB.addEventListener('click',function(){openMailForm(mail.id);});
+  btns.appendChild(editB);
+
+  var delB=document.createElement('button');
+  delB.style.cssText='padding:4px 10px;background:rgba(220,50,60,.08);border:1px solid rgba(220,50,60,.25);font-family:var(--ff);font-size:10px;font-weight:700;cursor:pointer;color:#DC323C;';
+  delB.textContent='DEL';
+  delB.addEventListener('click',function(){deleteMailConfirm(mail.id);});
+  btns.appendChild(delB);
+
+  // ── 写真タップで全画面 ──
+  wrap.querySelectorAll('[data-photo]').forEach(function(img){
+    img.addEventListener('click',function(){openPhotoViewer(img.dataset.photo);});
+  });
+}
+function mailGoBack(){if(_mailView==='detail')renderMailList();else goHome();}
+
+function toggleMailFav(id){
+  if(!S.mailFavs)S.mailFavs=[];
+  var idx=S.mailFavs.indexOf(id);
+  if(idx===-1)S.mailFavs.push(id);else S.mailFavs.splice(idx,1);
+  save();
+  if(_mailView==='detail')openMailDetail(id);else renderMailList();
+}
+
+function openPhotoViewer(url){
+  var d=document.createElement('div');
+  d.className='mail-photo-viewer';
+  var img=document.createElement('img');
+  img.src=url;
+  d.appendChild(img);
+  d.addEventListener('click',function(){d.remove();});
+  document.body.appendChild(d);
+}
+
+function openMailForm(editId){
+  var mail=editId?(S.mails||[]).filter(function(m){return m.id===editId;})[0]:null;
+  var now=new Date();
+  function pad(n){return String(n).padStart(2,'0');}
+  var defaultDate=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'T'+pad(now.getHours())+':'+pad(now.getMinutes());
+
+  var photo1='',photo2='';
+  if(mail&&mail.photos){
+    if(mail.photos[0])photo1=mail.photos[0].replace('./images/mails/','');
+    if(mail.photos[1])photo2=mail.photos[1].replace('./images/mails/','');
+  }
+
+  var overlay=document.createElement('div');
+  overlay.className='overlay';
+  overlay.style.cssText='display:flex;z-index:9600;align-items:center;justify-content:center;padding:0;';
+
+  var sheet=document.createElement('div');
+  sheet.className='msheet';
+  // 横画面全体に収まるよう高さ制限・パディング最小化
+  sheet.style.cssText='width:min(96vw,720px);max-height:96vh;height:auto;overflow:hidden;padding:12px 16px 10px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;';
+
+  var memberOpts=MEMBER_NAMES.map(function(n){return '<option value="'+n+'"'+(mail&&mail.member===n?' selected':'')+'>'+n+'</option>';}).join('');
+
+  sheet.innerHTML=
+    // タイトル行
+    '<div style="display:flex;justify-content:space-between;align-items:center;">'+
+      '<div style="display:flex;align-items:center;gap:6px;">'+
+        '<div style="width:3px;height:14px;background:var(--mint);flex-shrink:0;"></div>'+
+        '<div style="font-family:var(--ff);font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink);">'+(editId?'メールを編集':'メールを追加')+'</div>'+
+      '</div>'+
+      '<button id="mfCloseBtn" style="background:none;border:1px solid rgba(255,255,255,.15);color:var(--ink-dim);width:24px;height:24px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">&#x2715;</button>'+
+    '</div>'+
+    // 2カラムメイン
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;min-height:0;">'+
+      // 左カラム
+      '<div style="display:flex;flex-direction:column;gap:6px;">'+
+        '<div><label class="fl" style="font-size:9px;margin-bottom:2px;">送信メンバー</label>'+
+          '<select class="fi" id="mfMember" style="background:var(--panel2);border:1px solid var(--border-s);color:var(--ink);padding:6px 8px;width:100%;font-size:12px;outline:none;">'+memberOpts+'</select>'+
+        '</div>'+
+        '<div><label class="fl" style="font-size:9px;margin-bottom:2px;">日時</label>'+
+          '<input class="fi" type="datetime-local" id="mfDate" style="padding:6px 8px;font-size:12px;width:100%;box-sizing:border-box;" value="'+(mail?mail.date.slice(0,16):defaultDate)+'">'+
+        '</div>'+
+        '<div><label class="fl" style="font-size:9px;margin-bottom:2px;">件名</label>'+
+          '<input class="fi" type="text" id="mfSubject" placeholder="件名" style="padding:6px 8px;font-size:12px;width:100%;box-sizing:border-box;">'+
+        '</div>'+
+        '<div><label class="fl" style="font-size:9px;margin-bottom:2px;">写真① ファイル名 <span id="mfPhoto1Auto" style="color:var(--mint);font-size:8px;margin-left:4px;">自動生成</span></label>'+
+          '<input class="fi" type="text" id="mfPhoto1" placeholder="自動生成されます" style="padding:6px 8px;font-size:11px;font-family:var(--ffm);width:100%;box-sizing:border-box;" value="'+photo1+'">'+
+        '</div>'+
+        '<div><label class="fl" style="font-size:9px;margin-bottom:2px;">写真② ファイル名 <span id="mfPhoto2Auto" style="color:var(--mint);font-size:8px;margin-left:4px;">自動生成</span></label>'+
+          '<input class="fi" type="text" id="mfPhoto2" placeholder="不要な場合は空欄" style="padding:6px 8px;font-size:11px;font-family:var(--ffm);width:100%;box-sizing:border-box;" value="'+photo2+'">'+
+        '</div>'+
+      '</div>'+
+      // 右カラム：本文
+      '<div style="display:flex;flex-direction:column;gap:4px;">'+
+        '<label class="fl" style="font-size:9px;margin-bottom:2px;">本文</label>'+
+        '<textarea class="fi" id="mfBody" style="flex:1;resize:none;line-height:1.8;font-size:12px;padding:8px;box-sizing:border-box;min-height:0;"></textarea>'+
+
+```
+  '</div>'+
+'</div>'+
+// 保存ボタン
+'<button id="mfSaveBtn" style="width:100%;padding:8px;background:rgba(114,232,200,.12);border:1px solid rgba(114,232,200,.35);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:var(--mint);flex-shrink:0;">保存する</button>'+
+'<div style="font-family:var(--ffm);font-size:8px;letter-spacing:.08em;color:var(--ink-dim);text-align:center;flex-shrink:0;">写真は GitHub の images/mails/ フォルダに置いてください</div>';
+```
+
+overlay.appendChild(sheet);
+document.body.appendChild(overlay);
+
+// 値をセット
+var subEl=document.getElementById(‘mfSubject’);
+var bodyEl=document.getElementById(‘mfBody’);
+if(subEl&&mail)subEl.value=mail.subject||’’;
+if(bodyEl&&mail)bodyEl.value=mail.body||’’;
+
+// ファイル名自動生成
+function generateFileNames(){
+var member=document.getElementById(‘mfMember’).value;
+var dateVal=document.getElementById(‘mfDate’).value;
+if(!member||!dateVal)return;
+var slug=MEMBER_SLUG[member]||‘member’;
+var d=dateVal.slice(0,10).replace(/-/g,’’);
+var p1El=document.getElementById(‘mfPhoto1’);
+var p2El=document.getElementById(‘mfPhoto2’);
+// 手動で変更済みかチェック：自動生成パターンに一致するか
+var autoPattern=new RegExp(’^’+slug+’_\d{8}*0[12]\.\w+$’);
+var isEmpty1=!p1El.value||autoPattern.test(p1El.value);
+var isEmpty2=!p2El.value||autoPattern.test(p2El.value);
+if(isEmpty1)p1El.value=slug+’*’+d+’*01.jpg’;
+if(isEmpty2)p2El.value=slug+’*’+d+’_02.jpg’;
+}
+
+document.getElementById(‘mfMember’).addEventListener(‘change’,generateFileNames);
+document.getElementById(‘mfDate’).addEventListener(‘change’,generateFileNames);
+document.getElementById(‘mfDate’).addEventListener(‘blur’,generateFileNames);
+
+// 編集時は既存ファイル名があるのでそのまま。新規は即生成
+if(!editId)generateFileNames();
+
+document.getElementById(‘mfCloseBtn’).addEventListener(‘click’,function(){overlay.remove();});
+document.getElementById(‘mfSaveBtn’).addEventListener(‘click’,function(){saveMailForm(editId,overlay);});
+}
+function saveMailForm(editId,overlay){
+var member=document.getElementById(‘mfMember’).value;
+var dateVal=document.getElementById(‘mfDate’).value;
+var date=dateVal.replace(‘T’,’ ‘)+’:00’;
+var subject=(document.getElementById(‘mfSubject’).value||’’).trim();
+var body=document.getElementById(‘mfBody’).value;
+var p1=(document.getElementById(‘mfPhoto1’).value||’’).trim();
+var p2=(document.getElementById(‘mfPhoto2’).value||’’).trim();
+var photos=[];
+if(p1)photos.push(’./images/mails/’+p1);
+if(p2)photos.push(’./images/mails/’+p2);
+if(!member||!dateVal){toast(’// メンバーと日時は必須です’);return;}
+if(!S.mails)S.mails=[];
+if(editId){
+var idx=S.mails.findIndex(function(m){return m.id===editId;});
+if(idx!==-1)S.mails[idx]={id:editId,member:member,date:date,subject:subject,body:body,photos:photos};
+}else{
+S.mails.push({id:‘mail_’+Date.now(),member:member,date:date,subject:subject,body:body,photos:photos});
+}
+save();overlay.remove();
+toast(editId?’// 更新しました’:’// 追加しました’);
+if(editId&&_mailCurrent===editId)openMailDetail(editId);else renderMailList();
+}
+function deleteMailConfirm(id){
+var mail=(S.mails||[]).filter(function(m){return m.id===id;})[0];
+if(!mail)return;
+var overlay=document.createElement(‘div’);
+overlay.className=‘overlay’;
+overlay.style.cssText=‘display:flex;z-index:9600;’;
+var sheet=document.createElement(‘div’);
+sheet.className=‘msheet’;
+sheet.style.cssText=‘padding-bottom:24px;’;
+sheet.innerHTML=’<div class="sh"></div><div class="stitle">削除の確認</div><p style="font-family:var(--ffj);font-size:13px;color:var(--ink-mid);line-height:1.7;margin-bottom:20px;">’+mail.member+’「’+(mail.subject||‘件名なし’)+’」を削除しますか？</p><div class="confirm-btns" id="delConfirmBtns"></div>’;
+var cancelBtn=document.createElement(‘button’);
+cancelBtn.className=‘cbtn-cancel’;
+cancelBtn.textContent=‘キャンセル’;
+cancelBtn.addEventListener(‘click’,function(){overlay.remove();});
+var delBtn=document.createElement(‘button’);
+delBtn.className=‘cbtn-del’;
+delBtn.textContent=‘削除する’;
+delBtn.addEventListener(‘click’,function(){deleteMail(id,overlay);});
+sheet.querySelector(’#delConfirmBtns’).appendChild(cancelBtn);
+sheet.querySelector(’#delConfirmBtns’).appendChild(delBtn);
+overlay.appendChild(sheet);
+document.body.appendChild(overlay);
+}
+
+function deleteMail(id,overlay){
+S.mails=(S.mails||[]).filter(function(m){return m.id!==id;});
+S.mailFavs=(S.mailFavs||[]).filter(function(f){return f!==id;});
+save();overlay.remove();toast(’// 削除しました’);renderMailList();
+}
+
+// ═══ ACHIEVEMENTS ═══
+const ACH_COLORS=[‘var(–accent)’,‘var(–rose)’,‘var(–lavender)’,‘var(–sky)’,‘var(–mint)’,‘var(–butter)’,‘var(–peach)’,‘var(–gold)’];
+const ACHS=[
+{icon:‘📖’,name:‘First Read’,desc:‘最初のチャプターを読んだ’,check:()=>S.chapters.some(c=>c.read)},
+{icon:‘⭐’,name:‘Collector’,desc:‘カードを5枚以上所持した’,check:()=>Object.values(S.owned).reduce((a,b)=>a+b,0)>=5},
+{icon:‘✨’,name:‘SSR Hunter’,desc:‘SSRカードを入手した’,check:()=>S.cards.some(c=>(c.rarity===‘ssr’||c.rarity===‘ur’)&&(S.owned[c.id]||0)>0)},
+{icon:‘👥’,name:‘Full Roster’,desc:‘11人全員を登録した’,check:()=>S.members.length>=11},
+{icon:‘💿’,name:‘Discophile’,desc:‘3作品以上を記録した’,check:()=>S.discography.length>=3},
+{icon:‘🎁’,name:‘Goods Hunter’,desc:‘グッズを5件以上記録した’,check:()=>S.goods.length>=5},
+{icon:‘📚’,name:‘Archivist’,desc:‘全タブにデータを入力した’,check:()=>S.chapters.length>0&&S.members.length>0&&S.cards.length>0&&S.discography.length>0&&S.goods.length>0},
+{icon:‘👑’,name:‘Chronicle’,desc:‘5チャプター以上を読んだ’,check:()=>S.chapters.filter(c=>c.read).length>=5},
+];
+function renderAch(){
+const g=document.getElementById(‘achGrid’);g.innerHTML=’’;
+ACHS.forEach((a,i)=>{
+const ok=a.check();const col=ACH_COLORS[i];
+const d=document.createElement(‘div’);d.className=`ac-card${ok?' ok':''}`;
+if(ok)d.style.setProperty(’–acl’,col);
+d.innerHTML=`<div class="ac-check">${ok?'UNLOCKED':''}</div><div class="ac-icon-wrap">${a.svgIcon||`<svg viewBox="0 0 24 24" fill="none" stroke="var(--acl,var(--lavender))" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/></svg>`}</div><div class="ac-name">${a.name}</div><div class="ac-desc">${a.desc}</div>`;
+g.appendChild(d);
+});
+}
+
+// ═══ STATS ═══
+function updateStats(){
+// delegate to home stats updater (header DOM removed)
+updateHomeStats();
+}
+
+// ═══ TABS ═══
+function showTab(tab){
+// legacy shim — redirect to new page system
+goToTab(tab);
+}
+function fabClick(){
+const map={story:openAddChapter,members:openAddMember,gacha:openAddCard,archive:openAddGoods};
+if(map[S.currentTab])map[S.currentTab]();
+}
+
+// ═══ MODALS ═══
+function openM(id){document.getElementById(id).classList.add(‘open’);}
+function closeM(id){
+document.getElementById(id).classList.remove(‘open’);
+}
+function bgC(e,id){if(e.target.id===id)closeM(id);}
+
+// ═══ CONFIRM DELETE ═══
+let _del=null;
+function confirmDel(type,id,msg){
+_del={type,id};document.getElementById(‘confMsg’).textContent=msg;
+document.getElementById(‘confOk’).onclick=execDel;openM(‘confirmModal’);
+}
+function execDel(){
+if(!_del)return;const{type,id}=_del;
+if(type===‘chapter’)S.chapters=S.chapters.filter(x=>x.id!==id);
+if(type===‘member’)S.members=S.members.filter(x=>x.id!==id);
+if(type===‘card’){S.cards=S.cards.filter(x=>x.id!==id);delete S.owned[id];}
+if(type===‘disc’)S.discography=S.discography.filter(x=>x.id!==id);
+if(type===‘goods’)S.goods=S.goods.filter(x=>x.id!==id);
+save();updateStats();renderAch();
+const renders={chapter:renderStory,member:renderMembers,card:renderCollGrid,disc:renderDisc,goods:renderGoods};
+if(renders[type])renders[type]();
+document.querySelectorAll(’.overlay.open’).forEach(o=>o.classList.remove(‘open’));
+toast(’// DELETED’);_del=null;
+}
+
+// ═══ CSV IMPORT ═══
+const CSV_SCHEMAS={
+members:{fields:[‘name’,‘role’,‘color’],hint:‘name, role, color\n例: 木村 慧人, CENTER / VOCAL, #F2B8C6’},
+discography:{fields:[‘type’,‘title’,‘date’,‘tag’],hint:‘type(single/album/digital), title, date(YYYY-MM-DD), tag\n例: single, 「READY?」, 2021-11-03, デビューシングル’},
+chapters:{fields:[‘num’,‘title’,‘date’,‘body’],hint:‘num, title, date, body\n例: CH.04, 武道館, 2023-11-03, 本文テキスト’},
+goods:{fields:[‘cat’,‘name’,‘note’],hint:‘cat(photobook/photocard/penlight/cd/goods/other), name, note\n例: photobook, 写真集, 初回限定版’},
+};
+let _csvRows=null;
+function updateCsvHint(){
+const t=document.getElementById(‘csvType’).value;
+document.getElementById(‘csvHint’).innerHTML=CSV_SCHEMAS[t].hint.replace(/\n/g,’<br>’);
+_csvRows=null;document.getElementById(‘csvPreview’).innerHTML=’’;
+document.getElementById(‘csvImportBtn’).style.display=‘none’;
+document.getElementById(‘csvFile’).value=’’;
+}
+updateCsvHint();
+function readCSV(inp){
+if(!inp.files||!inp.files[0])return;
+const r=new FileReader();
+r.onload=e=>{
+const lines=e.target.result.trim().split(’\n’).filter(l=>l.trim());
+const schema=CSV_SCHEMAS[document.getElementById(‘csvType’).value];
+let start=0;
+if(schema.fields.includes(lines[0].split(’,’)[0].trim().toLowerCase()))start=1;
+_csvRows=lines.slice(start).map(l=>{const cells=l.split(’,’).map(c=>c.trim());const obj={};schema.fields.forEach((f,i)=>obj[f]=cells[i]||’’);return obj;}).filter(r=>Object.values(r).some(v=>v));
+document.getElementById(‘csvPreview’).innerHTML=`<span style="color:var(--accent)">${_csvRows.length}件検出</span> — 先頭3件:<br>`+_csvRows.slice(0,3).map(r=>Object.values(r).join(’ / ‘)).join(’<br>’);
+document.getElementById(‘csvImportBtn’).style.display=’’;
+};
+r.readAsText(inp.files[0],‘UTF-8’);
+}
+function executeImport(){
+if(!_csvRows||!_csvRows.length){toast(’// NO DATA’);return;}
+const t=document.getElementById(‘csvType’).value;let added=0;
+_csvRows.forEach(r=>{
+if(t===‘members’&&r.name){S.members.push({id:‘m’+Date.now()+Math.random(),name:r.name,role:r.role||’’,color:r.color||’#C0B4E0’,img:’’});added++;}
+else if(t===‘discography’&&r.title){S.discography.push({id:‘d’+Date.now()+Math.random(),type:r.type||‘single’,title:r.title,date:r.date||’—’,tag:r.tag||’’,img:’’,owned:false});added++;}
+else if(t===‘chapters’&&r.title){S.chapters.push({id:‘ch’+Date.now()+Math.random(),num:r.num||‘CH.??’,title:r.title,date:r.date||’’,body:r.body||’’,cardHint:’’,read:false});added++;}
+else if(t===‘goods’&&r.name){S.goods.push({id:‘g’+Date.now()+Math.random(),cat:r.cat||‘goods’,name:r.name,note:r.note||’’,owned:false});added++;}
+});
+save();updateStats();renderAch();
+if(t===‘members’)renderMembers();if(t===‘discography’)renderDisc();
+if(t===‘chapters’)renderStory();if(t===‘goods’)renderGoods();
+closeM(‘importModal’);toast(`// ${added}件インポート完了`);_csvRows=null;
+}
+function downloadTemplate(){
+const t=document.getElementById(‘csvType’).value;
+const ex={members:‘木村 慧人,CENTER / VOCAL,#F2B8C6\n松田 迅,MAIN DANCE,#A8CEDE’,discography:‘single,「READY?」,2021-11-03,デビューシングル’,chapters:‘CH.04,武道館公演,2023-11-03,本文テキストをここに入力’,goods:‘photobook,写真集「INI FILE 01」,初回限定版’};
+const blob=new Blob([ex[t]],{type:‘text/csv;charset=utf-8’});
+const url=URL.createObjectURL(blob);const a=document.createElement(‘a’);
+a.href=url;a.download=`template_${t}.csv`;a.click();URL.revokeObjectURL(url);
+}
+
+// ═══ BACKUP / RESTORE ═══
+function exportData(){
+const payload={version:2,exportedAt:new Date().toISOString(),data:S};
+const blob=new Blob([JSON.stringify(payload,null,2)],{type:‘application/json;charset=utf-8’});
+const url=URL.createObjectURL(blob);const a=document.createElement(‘a’);
+a.href=url;a.download=`ini_chronicle_backup_${new Date().toISOString().slice(0,10)}.json`;
+a.click();URL.revokeObjectURL(url);toast(’// バックアップを保存しました’);updateBackupInfo();
+}
+function importData(input){
+if(!input.files||!input.files[0])return;
+const r=new FileReader();
+r.onload=e=>{
+try{
+const payload=JSON.parse(e.target.result);const imported=payload.data||payload;
+if(!imported.chapters&&!imported.members){toast(’// ファイルが無効です’);return;}
+if(!confirm(`バックアップを読み込みます。現在のデータは上書きされます。\nバックアップ日時: ${payload.exportedAt||'不明'}\n\nよろしいですか？`))return;
+S={…S,…imported};save();
+renderStory();renderMembers();renderCollGrid();renderDisc();renderGoods();renderAch();updateStats();updateBackupInfo();
+document.getElementById(‘bTitle’).textContent=S.bannerTitle||’’;
+document.getElementById(‘bSub’).textContent=S.bannerSub||’’;
+toast(’// リストア完了’);
+}catch(err){toast(’// 読み込みに失敗しました’);}
+};
+r.readAsText(input.files[0],‘UTF-8’);input.value=’’;
+}
+function updateBackupInfo(){
+const el=document.getElementById(‘backupInfo’);if(!el)return;
+el.textContent=`現在: チャプター ${S.chapters.length}件 / カード ${S.cards.length}枚 / メンバー ${S.members.length}人`;
+}
+
+// ═══ PWA ═══
+let _dp=null;
+window.addEventListener(‘beforeinstallprompt’,e=>{e.preventDefault();_dp=e;});
+function triggerInstall(){if(_dp){_dp.prompt();_dp.userChoice.then(()=>{_dp=null;});}else{toast(’// Safari → 共有 → ホーム画面に追加’);}}
+
+// ═══ PASSWORD ═══
+const PW_KEY=‘ifb_pw’;
+const DEFAULT_PW=‘fanbook’;
+function hashPW(pw){let h=0;for(let i=0;i<pw.length;i++){h=((h<<5)-h)+pw.charCodeAt(i);h|=0;}return btoa(‘ifb:’+Math.abs(h)+’:’+pw.length);}
+function getStoredHash(){return localStorage.getItem(PW_KEY)||hashPW(DEFAULT_PW);}
+function checkPW(){
+const val=document.getElementById(‘pwInput’).value;
+if(!val){showPWErr();return;}
+if(hashPW(val)===getStoredHash()){unlockApp();}
+else{showPWErr();document.getElementById(‘pwInput’).value=’’;document.getElementById(‘pwInput’).focus();}
+}
+function showPWErr(){const e=document.getElementById(‘pwError’);e.style.opacity=‘1’;setTimeout(()=>e.style.opacity=‘0’,2000);}
+function unlockApp(){
+const ls=document.getElementById(‘lockScreen’);
+ls.style.opacity=‘0’;ls.style.transition=‘opacity 0.3s ease’;
+setTimeout(()=>{ls.style.display=‘none’;showHome();},300);
+}
+function showHome(){
+checkOrientation();
+document.getElementById(‘homeScreen’).style.display=‘block’;
+// hide all pages
+document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
+document.getElementById(‘fab’).style.display=‘none’;
+updateHomeStats();
+const sb=document.getElementById(‘homeSettingsBtn’);
+if(sb)sb.onclick=()=>{
+document.querySelectorAll(’.overlay’).forEach(o=>o.style.zIndex=‘8500’);
+openM(‘settingsModal’);
+document.getElementById(‘settingsModal’).addEventListener(‘click’,function restore(){
+if(!document.getElementById(‘settingsModal’).classList.contains(‘open’)){
+document.querySelectorAll(’.overlay’).forEach(o=>o.style.zIndex=’’);
+document.getElementById(‘settingsModal’).removeEventListener(‘click’,restore);
+}
+});
+};
+}
+function goHome(){
+document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
+document.getElementById(‘homeScreen’).style.display=‘block’;
+document.getElementById(‘fab’).style.display=‘none’;
+updateHomeStats();
+S.currentTab=null;
+}
+function hideHome(){
+document.getElementById(‘homeScreen’).style.display=‘none’;
+}
+function goToTab(tab){
+hideHome();
+document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
+const page=document.getElementById(‘page-’+tab);
+if(page)page.classList.add(‘active’);
+S.currentTab=tab;
+// render content
+const renders={
+story:renderStory,
+members:renderMembers,
+gacha:()=>{renderCollGrid();populateMemberSelect();},
+archive:()=>{renderDisc();renderGoods();},
+achievements:renderAch,
+mail:function(){renderMailList();}
+};
+if(renders[tab])renders[tab]();
+// FAB
+const fab=document.getElementById(‘fab’);
+if(tab===‘achievements’||tab===‘mail’||!fab){fab.style.display=‘none’;}
+else if(fab){fab.style.display=‘flex’;const labels={story:‘Chapter’,members:‘Member’,gacha:‘Card’,archive:‘Item’};document.getElementById(‘fabL’).textContent=labels[tab]||‘Add’;}
+}
+function updateHomeStats(){
+const total=Object.values(S.owned).reduce((a,b)=>a+b,0);
+const readCount=S.chapters.filter(c=>c.read).length;
+const totalChap=Math.max(S.chapters.length,1);
+const achCount=ACHS.filter(a=>a.check()).length;
+
+// card count badge
+const el=document.getElementById(‘homeCardCount’);
+if(el)el.textContent=total+’ cards’;
+
+// stats numbers
+const ss=document.getElementById(‘homeStatStory’);if(ss)ss.textContent=readCount+’/’+S.chapters.length;
+const sc=document.getElementById(‘homeStatCards’);if(sc)sc.textContent=total;
+const sa=document.getElementById(‘homeStatAch’);if(sa)sa.textContent=achCount+’/’+ACHS.length;
+
+// progress bars
+const bs=document.getElementById(‘homeBarStory’);if(bs)bs.style.width=Math.round(readCount/totalChap*100)+’%’;
+const bc=document.getElementById(‘homeBarCards’);if(bc)bc.style.width=Math.min(total,50)/50*100+’%’;
+const ba=document.getElementById(‘homeBarAch’);if(ba)ba.style.width=Math.round(achCount/ACHS.length*100)+’%’;
+
+// oshi name
+const nameEl=document.getElementById(‘homeOshiName’);
+if(nameEl&&S.oshiName)nameEl.textContent=S.oshiName;
+
+// HUD bottom date
+const dateEl=document.getElementById(‘hudDate’);
+if(dateEl){const d=new Date();dateEl.textContent=d.getFullYear()+’.’+(String(d.getMonth()+1).padStart(2,‘0’))+’.’+String(d.getDate()).padStart(2,‘0’);}
+
+// restore photo
+if(S.oshiPhoto){
+const bg=document.getElementById(‘homeBgPhoto’);
+const ph=document.getElementById(‘homeBgPlaceholder’);
+if(bg){bg.src=S.oshiPhoto;bg.style.display=‘block’;}
+if(ph)ph.style.display=‘none’;
+}
+}
+function openOshiPhotoUpload(){
+document.getElementById(‘oshiPhotoInput’).click();
+}
+function setOshiPhoto(input){
+if(!input.files||!input.files[0])return;
+const r=new FileReader();
+r.onload=e=>{
+S.oshiPhoto=e.target.result;save();
+const bg=document.getElementById(‘homeBgPhoto’);
+const ph=document.getElementById(‘homeBgPlaceholder’);
+if(bg){bg.src=e.target.result;bg.style.display=‘block’;}
+if(ph)ph.style.display=‘none’;
+toast(’// 推し写真を設定しました ✓’);
+};
+r.readAsDataURL(input.files[0]);
+}
+
+function saveOshiName(){
+const v=document.getElementById(‘sOshiName’).value.trim();
+if(v){S.oshiName=v;save();updateHomeStats();}
+toast(’// SAVED’);
+}
+// Orientation detection
+function checkOrientation(){
+const isPortrait=window.innerHeight>window.innerWidth;
+const rp=document.getElementById(‘rotatePrompt’);
+const hs=document.getElementById(‘homeScreen’);
+if(isPortrait){
+rp.style.display=‘flex’;
+if(hs.style.display!==‘none’)hs.style.visibility=‘hidden’;
+}else{
+rp.style.display=‘none’;
+if(hs.style.display!==‘none’)hs.style.visibility=‘visible’;
+}
+}
+window.addEventListener(‘resize’,()=>{
+if(document.getElementById(‘homeScreen’).style.display!==‘none’)checkOrientation();
+});
+window.addEventListener(‘orientationchange’,()=>{
+setTimeout(()=>{if(document.getElementById(‘homeScreen’).style.display!==‘none’)checkOrientation();},200);
+});
+function showLock(){const ls=document.getElementById(‘lockScreen’);ls.style.display=‘flex’;ls.style.opacity=‘1’;ls.style.transition=’’;document.getElementById(‘pwInput’).value=’’;document.getElementById(‘pwError’).style.opacity=‘0’;setTimeout(()=>document.getElementById(‘pwInput’).focus(),100);}
+function isDefaultPW(){return getStoredHash()===hashPW(DEFAULT_PW);}
+function changePW(){
+const cur=document.getElementById(‘pwCurrent’).value,nw=document.getElementById(‘pwNew’).value,nw2=document.getElementById(‘pwNew2’).value;
+const msg=document.getElementById(‘pwChangeMsg’);
+if(hashPW(cur)!==getStoredHash()){msg.textContent=’// 現在のパスワードが違います’;msg.style.color=‘var(–accent)’;return;}
+if(nw.length<4){msg.textContent=’// 4文字以上で設定してください’;msg.style.color=‘var(–accent)’;return;}
+if(nw!==nw2){msg.textContent=’// 新しいパスワードが一致しません’;msg.style.color=‘var(–accent)’;return;}
+localStorage.setItem(PW_KEY,hashPW(nw));msg.textContent=’// パスワードを変更しました’;msg.style.color=‘var(–mint)’;
+[‘pwCurrent’,‘pwNew’,‘pwNew2’].forEach(i=>document.getElementById(i).value=’’);
+updatePWStatus();toast(’// パスワードを変更しました’);
+}
+function updatePWStatus(){
+const el=document.getElementById(‘pwStatus’);if(!el)return;
+if(isDefaultPW()){el.textContent=‘⚠ デフォルトパスワード使用中（変更を推奨）’;el.style.color=‘var(–butter)’;}
+else{el.textContent=‘✓ カスタムパスワード設定済み’;el.style.color=‘var(–mint)’;}
+}
+
+// ═══ COLOR SYNC ═══
+document.getElementById(‘mCo’).addEventListener(‘input’,function(){document.getElementById(‘mCoH’).value=this.value;});
+document.getElementById(‘mCoH’).addEventListener(‘input’,function(){if(/^#[0-9A-Fa-f]{6}$/.test(this.value))document.getElementById(‘mCo’).value=this.value;});
+
+// ═══ TOAST ═══
+let _tt;
+function toast(msg){const t=document.getElementById(‘toast’);t.textContent=msg;t.classList.add(‘show’);clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove(‘show’),2200);}
+
+// ═══ INIT ═══
+async function initApp(){
+await loadMasterData();
+document.getElementById(‘bTitle’).textContent=S.bannerTitle;
+document.getElementById(‘bSub’).textContent=S.bannerSub;
+applyAdminUI();
+renderStory();updateStats();updateBackupInfo();updatePWStatus();populateMemberSelect();
+showLock();
+if(isDefaultPW())document.getElementById(‘pwHint’).textContent=‘初期パスワード: fanbook\nSettings から変更できます’;
+}
+initApp();
+
+</script>
+</body>
+</html>
