@@ -473,6 +473,84 @@ text-transform:uppercase;cursor:pointer;color:var(–ink-mid);transition:all .16
 .cbtn-del{flex:1;padding:12px;background:#DC323C;border:none;color:#fff;
 font-family:var(–ff);font-size:11px;font-weight:700;letter-spacing:.12em;
 text-transform:uppercase;cursor:pointer;transition:all .16s;}
+/* ── MAIL LIST ── */
+.mail-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:clamp(10px,1.8vh,16px);}
+.mail-filter-btn{
+font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);letter-spacing:.12em;
+text-transform:uppercase;padding:4px 10px;
+background:rgba(4,8,18,.6);border:1px solid rgba(114,232,200,.2);
+color:var(–ink-dim);cursor:pointer;transition:all .16s;}
+.mail-filter-btn.active{background:rgba(114,232,200,.12);border-color:var(–mint);color:var(–mint);}
+.mail-list{display:flex;flex-direction:column;gap:clamp(5px,.9vh,7px);}
+.mail-row{
+display:flex;align-items:center;gap:clamp(10px,1.5vw,14px);
+padding:clamp(9px,1.5vh,13px) clamp(12px,1.8vw,16px);
+background:rgba(4,8,18,.65);
+border:1px solid rgba(114,232,200,.1);
+border-left:2px solid var(–mc,var(–mint));
+cursor:pointer;transition:all .16s;position:relative;overflow:hidden;
+backdrop-filter:blur(6px);}
+.mail-row::before{content:’’;position:absolute;inset:0;
+background:linear-gradient(90deg,rgba(114,232,200,.04),transparent 60%);pointer-events:none;}
+.mail-row:hover{border-color:rgba(114,232,200,.35);background:rgba(4,8,18,.85);transform:translateX(3px);}
+.mail-row-left{flex-shrink:0;display:flex;flex-direction:column;align-items:center;width:clamp(32px,4.5vw,44px);}
+.mail-member-dot{width:8px;height:8px;border-radius:50%;background:var(–mc,var(–mint));
+box-shadow:0 0 6px var(–mc,var(–mint));margin-bottom:4px;}
+.mail-date-d{font-family:var(–ffm);font-size:clamp(13px,1.8vw,18px);font-weight:700;color:var(–ink);line-height:1;}
+.mail-date-m{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);letter-spacing:.1em;color:var(–ink-dim);text-transform:uppercase;}
+.mail-row-info{flex:1;min-width:0;}
+.mail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.14em;
+text-transform:uppercase;color:var(–mc,var(–mint));margin-bottom:2px;}
+.mail-subject{font-family:var(–ff);font-size:clamp(11px,1.5vw,14px);font-weight:700;
+color:var(–ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mail-preview{font-family:var(–ffj);font-size:clamp(9px,1.1vw,11px);font-weight:300;
+color:var(–ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+.mail-row-right{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.mail-fav-btn{background:none;border:none;cursor:pointer;padding:4px;
+font-size:clamp(13px,1.6vw,16px);line-height:1;opacity:.4;transition:all .16s;}
+.mail-fav-btn.active{opacity:1;filter:drop-shadow(0 0 4px var(–butter));}
+.mail-photo-icon{font-family:var(–ffm);font-size:clamp(6px,.75vw,8px);
+letter-spacing:.08em;color:var(–sky);opacity:.7;}
+
+/* ── MAIL DETAIL ── */
+.mail-detail-wrap{display:flex;gap:clamp(10px,1.5vw,16px);height:100%;}
+.mail-detail-photos{
+flex-shrink:0;width:clamp(100px,18vw,160px);
+display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
+.mail-photo-thumb{
+width:100%;aspect-ratio:3/4;object-fit:cover;
+border:1px solid rgba(125,212,240,.2);cursor:pointer;
+transition:all .16s;display:block;}
+.mail-photo-thumb:hover{border-color:var(–sky);box-shadow:0 0 10px rgba(125,212,240,.3);}
+.mail-photo-none{
+width:100%;aspect-ratio:3/4;
+border:1px dashed rgba(125,212,240,.15);
+display:flex;align-items:center;justify-content:center;
+font-family:var(–ffm);font-size:8px;letter-spacing:.12em;
+color:var(–ink-dim);text-transform:uppercase;}
+.mail-detail-content{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
+.mail-detail-header{
+padding:clamp(10px,1.5vh,14px);
+background:rgba(4,8,18,.65);border:1px solid rgba(114,232,200,.12);
+border-left:2px solid var(–mint);}
+.mail-detail-member{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);
+letter-spacing:.18em;text-transform:uppercase;color:var(–mint);margin-bottom:4px;}
+.mail-detail-subject{font-family:var(–ff);font-size:clamp(13px,1.8vw,17px);
+font-weight:700;color:var(–ink);line-height:1.2;}
+.mail-detail-date{font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);
+letter-spacing:.12em;color:var(–ink-dim);margin-top:4px;}
+.mail-detail-body{
+flex:1;padding:clamp(12px,1.8vh,18px);
+background:rgba(4,8,18,.5);border:1px solid rgba(114,232,200,.08);
+font-family:var(–ffj);font-size:clamp(11px,1.4vw,13px);font-weight:300;
+color:var(–ink-mid);line-height:1.9;white-space:pre-wrap;overflow-y:auto;}
+
+/* fullscreen photo viewer */
+.mail-photo-viewer{
+position:fixed;inset:0;z-index:9500;background:rgba(4,8,18,.96);
+display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.mail-photo-viewer img{max-width:95vw;max-height:95vh;object-fit:contain;}
+
 .flash{position:fixed;inset:0;z-index:998;pointer-events:none;background:#fff;opacity:0;}
 @keyframes flashA{0%{opacity:0;}25%{opacity:.22;}100%{opacity:0;}}
 .flash.on{animation:flashA .5s ease forwards;}
@@ -685,94 +763,87 @@ letter-spacing:.04em;color:var(–ink);
 text-shadow:0 0 16px rgba(192,107,138,.4),0 2px 10px rgba(0,0,0,.95);line-height:1.2;}
 .hon-sub{font-family:var(–ffm);font-size:clamp(7px,.88vw,9px);letter-spacing:.18em;color:var(–ink-dim);margin-top:4px;}
 
-/* ── RIGHT PANEL ── */
+/* ── RIGHT PANEL — Dashboard Grid ── */
 .home-right{
 position:absolute;right:0;top:clamp(28px,4.5vh,38px);bottom:clamp(20px,3.2vh,28px);
-width:clamp(115px,18vw,162px);z-index:5;
-display:flex;flex-direction:column;justify-content:center;
-padding:clamp(8px,1.4vh,14px) clamp(8px,1.2vw,13px);
-gap:clamp(5px,.9vh,8px);}
+width:clamp(200px,32vw,300px);z-index:5;
+padding:clamp(8px,1.4vh,14px) clamp(8px,1.2vw,14px);
+display:grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: 1.6fr 1fr 1fr;
+gap:clamp(5px,.8vw,8px);}
 
-/* ── HUD BADGE BUTTONS ── */
-.hbadge{
-cursor:pointer;position:relative;width:100%;
-transition:transform .16s cubic-bezier(.2,0,.2,1),filter .16s;
+/* ── DASHBOARD PANEL BASE ── */
+.hdp{
+position:relative;cursor:pointer;
+display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
+padding:clamp(8px,1.2vh,12px) clamp(8px,1.2vw,12px);
+background:rgba(4,8,18,.75);
+backdrop-filter:blur(12px);
+transition:transform .18s cubic-bezier(.2,0,.2,1),filter .18s;
+overflow:hidden;
 -webkit-tap-highlight-color:transparent;}
-.hbadge:hover{transform:translateX(-5px);}
-.hbadge:hover .hb-card{border-color:var(–bc,var(–lavender));box-shadow:inset 0 0 24px rgba(var(–bca),.12),0 0 20px rgba(var(–bca),.25);}
-.hbadge:hover .hb-card::before{opacity:1;}
-.hbadge:hover .hb-lock-indicator{transform:scaleX(1);}
-.hbadge:active{transform:scale(.95) translateX(-2px);}
+.hdp:hover{transform:scale(1.03);filter:brightness(1.15);}
+.hdp:active{transform:scale(.97);}
 
-/* card body */
-.hb-card{
-position:relative;width:100%;
-background:rgba(4,8,18,.82);
-border:1px solid rgba(var(–bca),.38);
-border-left:none;
-backdrop-filter:blur(14px);
-padding:clamp(6px,1.1vh,10px) clamp(10px,1.4vw,13px) clamp(6px,1.1vh,10px) clamp(12px,1.6vw,16px);
-transition:border-color .18s,box-shadow .18s;
-overflow:hidden;}
+/* sketch border via SVG overlay */
+.hdp-border{
+position:absolute;inset:0;width:100%;height:100%;
+pointer-events:none;z-index:0;overflow:visible;}
+.hdp-border rect{
+fill:none;
+stroke:var(–hc,var(–lavender));
+stroke-width:1.5;
+opacity:.6;
+vector-effect:non-scaling-stroke;}
+/* second slightly offset rect for hand-drawn feel */
+.hdp-border rect:nth-child(2){
+stroke-width:1;
+opacity:.25;
+transform:translate(2px,2px);}
 
-/* left accent strip */
-.hb-card::before{
-content:’’;position:absolute;left:0;top:0;bottom:0;width:3px;
-background:linear-gradient(to bottom,
-transparent 0%,
-var(–bc,var(–lavender)) 20%,
-rgba(255,255,255,.8) 50%,
-var(–bc,var(–lavender)) 80%,
-transparent 100%);
-opacity:.85;transition:opacity .18s;
-box-shadow:0 0 8px var(–bc,var(–lavender));}
+/* glow on hover */
+.hdp::after{
+content:’’;position:absolute;inset:0;
+background:radial-gradient(ellipse at 30% 70%,rgba(var(–hca,200,170,255),.12),transparent 65%);
+pointer-events:none;z-index:0;}
 
-/* top micro-line */
-.hb-card::after{
-content:’’;position:absolute;top:0;left:3px;right:0;height:1px;
-background:linear-gradient(90deg,var(–bc,var(–lavender)),transparent 60%);
-opacity:.7;}
+/* top accent line */
+.hdp::before{
+content:’’;position:absolute;top:0;left:8%;right:30%;height:1.5px;
+background:linear-gradient(90deg,var(–hc,var(–lavender)),transparent);
+box-shadow:0 0 8px var(–hc,var(–lavender));
+z-index:1;}
 
-/* animated bottom lock indicator */
-.hb-lock-indicator{
-position:absolute;bottom:0;left:3px;right:0;height:1.5px;
-background:var(–bc,var(–lavender));
-transform:scaleX(0);transform-origin:left;
-transition:transform .22s cubic-bezier(.4,0,.2,1);
-box-shadow:0 0 8px var(–bc,var(–lavender));}
+/* large panel spans 2 rows */
+.hdp.large{grid-row:span 2;}
 
-/* corner notch top-right */
-.hb-notch{
-position:absolute;top:0;right:0;width:0;height:0;
-border-style:solid;border-width:0 8px 8px 0;
-border-color:transparent var(–bc,var(–lavender)) transparent transparent;
-opacity:.75;}
-
-.hb-inner{display:flex;align-items:center;gap:clamp(7px,1vw,11px);position:relative;z-index:1;}
-
-/* SVG icon container */
-.hb-icon-shape{
-width:clamp(20px,2.8vw,28px);height:clamp(20px,2.8vw,28px);
-flex-shrink:0;display:flex;align-items:center;justify-content:center;
-position:relative;}
-.hb-icon-shape::before{
-content:’’;position:absolute;inset:-2px;border-radius:50%;
-background:radial-gradient(circle,rgba(var(–bca),.28),transparent 70%);}
-.hb-icon-shape svg{width:100%;height:100%;position:relative;z-index:1;
-filter:drop-shadow(0 0 4px rgba(var(–bca),.6));}
-
-.hb-texts{display:flex;flex-direction:column;gap:1px;min-width:0;}
-.hb-sub{
+/* content inside panel */
+.hdp-content{position:relative;z-index:1;width:100%;}
+.hdp-icon{
+margin-bottom:clamp(4px,.7vh,8px);
+width:clamp(18px,2.4vw,26px);height:clamp(18px,2.4vw,26px);
+filter:drop-shadow(0 0 5px var(–hc,var(–lavender)));}
+.hdp-sub{
 font-family:var(–ffm);font-size:clamp(6px,.72vw,8px);
 letter-spacing:.18em;text-transform:uppercase;
-color:rgba(var(–bca),1);line-height:1;}
-.hb-title{
-font-family:var(–ff);font-size:clamp(11px,1.55vw,15px);font-weight:700;
-letter-spacing:.04em;color:var(–ink);line-height:1.15;white-space:nowrap;
-text-shadow:0 0 10px rgba(var(–bca),.4);}
+color:var(–hc,var(–lavender));line-height:1;margin-bottom:2px;}
+.hdp-title{
+font-family:var(–ff);font-size:clamp(11px,1.6vw,16px);font-weight:700;
+letter-spacing:.06em;color:var(–ink);line-height:1.1;
+text-shadow:0 0 12px rgba(var(–hca,200,170,255),.5);}
+.hdp-badge{
+position:absolute;top:clamp(6px,1vh,10px);right:clamp(6px,1vw,10px);
+font-family:var(–ffm);font-size:clamp(7px,.82vw,9px);
+letter-spacing:.1em;color:var(–hc,var(–lavender));
+border:1px solid rgba(var(–hca,200,170,255),.35);
+padding:2px 6px;background:rgba(var(–hca,200,170,255),.08);}
 
-/* ANIMATIONS */
-@keyframes hudPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.5);box-shadow:0 0 14px var(–rose),0 0 24px var(–rose);}}
+/* scan line inside panel */
+.hdp-scan{
+position:absolute;inset:0;pointer-events:none;z-index:0;
+background:repeating-linear-gradient(
+0deg,transparent,transparent 4px,rgba(var(–hca,200,170,255),.018) 4px,rgba(var(–hca,200,170,255),.018) 5px);}
 
 </style>
 </head>
@@ -872,107 +943,92 @@ text-shadow:0 0 10px rgba(var(–bca),.4);}
 
   </div>
 
-  <!-- RIGHT PANEL — pastel HUD badges -->
+  <!-- RIGHT PANEL — Dashboard Grid -->
 
   <div class="home-right">
 
 ```
-<!-- Story -->
-<div class="hbadge" onclick="goToTab('story')">
-  <div class="hb-card" style="--bc:var(--accent);--bca:192,107,138">
-    <div class="hb-lock-indicator"></div>
-    <div class="hb-notch"></div>
-    <div class="hb-inner">
-      <div class="hb-icon-shape">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-          <line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/>
-        </svg>
-      </div>
-      <div class="hb-texts">
-        <div class="hb-sub">Chronicle</div>
-        <div class="hb-title">Story</div>
-      </div>
-    </div>
+<!-- LARGE: Story -->
+<div class="hdp large" style="--hc:var(--accent);--hca:255,133,168" onclick="goToTab('story')">
+  <div class="hdp-scan"></div>
+  <svg class="hdp-border" preserveAspectRatio="none"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="2"/><rect x="3" y="3" width="calc(100% - 6px)" height="calc(100% - 6px)" rx="1"/></svg>
+  <div class="hdp-badge">CHRONICLE</div>
+  <div class="hdp-content">
+    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+      <line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/>
+    </svg>
+    <div class="hdp-sub">Chronicle</div>
+    <div class="hdp-title">Story</div>
   </div>
 </div>
 
 <!-- Members -->
-<div class="hbadge" onclick="goToTab('members')">
-  <div class="hb-card" style="--bc:var(--rose);--bca:242,184,198">
-    <div class="hb-lock-indicator"></div>
-    <div class="hb-notch"></div>
-    <div class="hb-inner">
-      <div class="hb-icon-shape">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
-          <circle cx="17" cy="7" r="2.5"/><path d="M21 21v-1.5a3.5 3.5 0 00-2.5-3.35"/>
-        </svg>
-      </div>
-      <div class="hb-texts">
-        <div class="hb-sub">Roster</div>
-        <div class="hb-title">Members</div>
-      </div>
-    </div>
+<div class="hdp" style="--hc:var(--rose);--hca:255,179,204" onclick="goToTab('members')">
+  <div class="hdp-scan"></div>
+  <svg class="hdp-border" preserveAspectRatio="none"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="2"/><rect x="3" y="3" width="calc(100% - 6px)" height="calc(100% - 6px)" rx="1"/></svg>
+  <div class="hdp-content">
+    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
+      <circle cx="17" cy="7" r="2.5"/><path d="M21 21v-1.5a3.5 3.5 0 00-2.5-3.35"/>
+    </svg>
+    <div class="hdp-sub">Roster</div>
+    <div class="hdp-title">Members</div>
+  </div>
+</div>
+
+<!-- Mail -->
+<div class="hdp" style="--hc:var(--mint);--hca:114,232,200" onclick="goToTab('mail')">
+  <div class="hdp-scan"></div>
+  <svg class="hdp-border" preserveAspectRatio="none"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="2"/><rect x="3" y="3" width="calc(100% - 6px)" height="calc(100% - 6px)" rx="1"/></svg>
+  <div class="hdp-content">
+    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <polyline points="22,6 12,13 2,6"/>
+    </svg>
+    <div class="hdp-sub">Letters</div>
+    <div class="hdp-title">Mail</div>
   </div>
 </div>
 
 <!-- Gacha -->
-<div class="hbadge" onclick="goToTab('gacha')">
-  <div class="hb-card" style="--bc:var(--butter);--bca:237,217,154">
-    <div class="hb-lock-indicator"></div>
-    <div class="hb-notch"></div>
-    <div class="hb-inner">
-      <div class="hb-icon-shape">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--butter)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-        </svg>
-      </div>
-      <div class="hb-texts">
-        <div class="hb-sub" id="homeCardCount">-- cards</div>
-        <div class="hb-title">Gacha</div>
-      </div>
-    </div>
+<div class="hdp" style="--hc:var(--butter);--hca:255,224,128" onclick="goToTab('gacha')">
+  <div class="hdp-scan"></div>
+  <svg class="hdp-border" preserveAspectRatio="none"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="2"/><rect x="3" y="3" width="calc(100% - 6px)" height="calc(100% - 6px)" rx="1"/></svg>
+  <div class="hdp-content">
+    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--butter)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+    </svg>
+    <div class="hdp-sub" id="homeCardCount">-- cards</div>
+    <div class="hdp-title">Gacha</div>
   </div>
 </div>
 
 <!-- Archive -->
-<div class="hbadge" onclick="goToTab('archive')">
-  <div class="hb-card" style="--bc:var(--sky);--bca:168,206,222">
-    <div class="hb-lock-indicator"></div>
-    <div class="hb-notch"></div>
-    <div class="hb-inner">
-      <div class="hb-icon-shape">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/>
-          <line x1="10" y1="12" x2="14" y2="12"/>
-        </svg>
-      </div>
-      <div class="hb-texts">
-        <div class="hb-sub">Releases</div>
-        <div class="hb-title">Archive</div>
-      </div>
-    </div>
+<div class="hdp" style="--hc:var(--sky);--hca:125,212,240" onclick="goToTab('archive')">
+  <div class="hdp-scan"></div>
+  <svg class="hdp-border" preserveAspectRatio="none"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="2"/><rect x="3" y="3" width="calc(100% - 6px)" height="calc(100% - 6px)" rx="1"/></svg>
+  <div class="hdp-content">
+    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/>
+      <line x1="10" y1="12" x2="14" y2="12"/>
+    </svg>
+    <div class="hdp-sub">Releases</div>
+    <div class="hdp-title">Archive</div>
   </div>
 </div>
 
 <!-- Achievements -->
-<div class="hbadge" onclick="goToTab('achievements')">
-  <div class="hb-card" style="--bc:var(--lavender);--bca:192,180,224">
-    <div class="hb-lock-indicator"></div>
-    <div class="hb-notch"></div>
-    <div class="hb-inner">
-      <div class="hb-icon-shape">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--lavender)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="8" r="6"/>
-          <path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/>
-        </svg>
-      </div>
-      <div class="hb-texts">
-        <div class="hb-sub">Unlocks</div>
-        <div class="hb-title">Achieve</div>
-      </div>
-    </div>
+<div class="hdp" style="--hc:var(--lavender);--hca:200,170,255" onclick="goToTab('achievements')">
+  <div class="hdp-scan"></div>
+  <svg class="hdp-border" preserveAspectRatio="none"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="2"/><rect x="3" y="3" width="calc(100% - 6px)" height="calc(100% - 6px)" rx="1"/></svg>
+  <div class="hdp-content">
+    <svg class="hdp-icon" viewBox="0 0 24 24" fill="none" stroke="var(--lavender)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="8" r="6"/>
+      <path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/>
+    </svg>
+    <div class="hdp-sub">Unlocks</div>
+    <div class="hdp-title">Achieve</div>
   </div>
 </div>
 ```
@@ -1157,6 +1213,28 @@ text-shadow:0 0 10px rgba(var(–bca),.4);}
   </div>
 </div>
 
+<!-- MAIL PAGE -->
+
+<div class="page" id="page-mail" style="--pc:var(--mint);--pc2:var(--sky);">
+  <div class="pg-bg"></div>
+  <div class="pg-corner tl"></div><div class="pg-corner tr"></div>
+  <div class="pg-corner bl"></div><div class="pg-corner br"></div>
+  <div class="pg-header">
+    <button class="pg-back" id="mailBackBtn" onclick="mailGoBack()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+      <span id="mailBackLabel">Home</span>
+    </button>
+    <div class="pg-title-area">
+      <div class="pg-eyebrow" id="mailPageEyebrow">Letters</div>
+      <div class="pg-name" id="mailPageTitle">Mail</div>
+    </div>
+    <div class="pg-actions"></div>
+  </div>
+  <div class="pg-body" id="mailBody">
+    <!-- リスト or 個別ビューをJSで切り替え -->
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <!-- ═══ MODALS ═══ -->
@@ -1219,18 +1297,18 @@ const SAVE_KEY='ini_chronicle_v1';
 // USER data: persisted in localStorage | MASTER data: loaded from data/*.json
 let S = {
   bannerTitle:'デビュー記念ガチャ', bannerSub:'限定カードが手に入るチャンス！',
-  chapters:[], members:[], cards:[], discography:[],
-  owned:{}, readIds:[], lives:[], oshiName:'', oshiPhoto:'', currentTab:'story'
+  chapters:[], members:[], cards:[], discography:[], mails:[],
+  owned:{}, readIds:[], lives:[], mailFavs:[], oshiName:'', oshiPhoto:'', currentTab:'story'
 };
 
 try {
   const saved = JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');
-  const USER_KEYS = ['owned','readIds','lives','oshiName','oshiPhoto','bannerTitle','bannerSub'];
+  const USER_KEYS = ['owned','readIds','lives','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub'];
   USER_KEYS.forEach(k=>{ if(saved[k]!==undefined) S[k]=saved[k]; });
 } catch(e){}
 
 function save(){
-  const USER_KEYS = ['owned','readIds','lives','oshiName','oshiPhoto','bannerTitle','bannerSub'];
+  const USER_KEYS = ['owned','readIds','lives','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub'];
   const payload = {};
   USER_KEYS.forEach(k=>payload[k]=S[k]);
   try{ localStorage.setItem(SAVE_KEY, JSON.stringify(payload)); }catch(e){}
@@ -1346,20 +1424,19 @@ INIは確実に、次のステージへと進んでいた。`},
 
 // ═══ MASTER DATA LOADER ═══
 async function loadMasterData(){
-  const files = ['members','chapters','cards','discography'];
+  const files = ['members','chapters','cards','discography','mails'];
   const results = await Promise.allSettled(
-    files.map(f => fetch(`./data/${f}.json`).then(r=>{ if(!r.ok)throw new Error(r.status); return r.json(); }))
+    files.map(f => fetch('./data/'+f+'.json').then(r=>{ if(!r.ok)throw new Error(r.status); return r.json(); }))
   );
   let anyFailed = false;
   files.forEach((f,i)=>{
     if(results[i].status==='fulfilled'){
       S[f] = results[i].value;
     } else {
-      S[f] = FALLBACK[f];
+      S[f] = FALLBACK[f]||[];
       anyFailed = true;
     }
   });
-  // merge read state into chapters
   S.chapters = S.chapters.map(ch=>({...ch, read: S.readIds.includes(ch.id)}));
   if(anyFailed) console.warn('// data fetch failed — using fallback');
 }
@@ -1609,6 +1686,130 @@ function toggleLiveAttend(id){
   lv.attended=!lv.attended;save();renderLives();renderAch();
 }
 
+// ═══ MAIL ═══
+const MEMBER_COLORS={
+  '木村　柾哉':'var(--rose)','西　洸人':'var(--sky)','許　豊凡':'var(--mint)',
+  '田島　将吾':'var(--butter)','髙塚　大夢':'var(--lavender)','後藤　威尊':'var(--peach)',
+  '尾崎　匠海':'var(--accent)','藤牧　京介':'var(--sky)','佐野　雄大':'var(--mint)',
+  '池﨑　理人':'var(--rose)','松田　迅':'var(--lavender)',
+};
+let _mailFilter='all';
+let _mailView='list'; // 'list' or 'detail'
+let _mailCurrent=null;
+
+function renderMailList(filter){
+  if(filter!==undefined) _mailFilter=filter;
+  _mailView='list';
+  document.getElementById('mailPageEyebrow').textContent='Letters';
+  document.getElementById('mailPageTitle').textContent='Mail';
+  document.getElementById('mailBackLabel').textContent='Home';
+
+  const mails=S.mails||[];
+  const members=[...new Set(mails.map(m=>m.member))].sort();
+  let filtered=_mailFilter==='all'?mails:_mailFilter==='fav'?mails.filter(m=>S.mailFavs.includes(m.id)):mails.filter(m=>m.member===_mailFilter);
+
+  let html='<div class="mail-filter">';
+  html+='<button class="mail-filter-btn'+(_mailFilter==='all'?' active':'')+'" onclick="renderMailList(\'all\')">ALL</button>';
+  html+='<button class="mail-filter-btn'+(_mailFilter==='fav'?' active':'')+'" onclick="renderMailList(\'fav\')">★ FAV</button>';
+  members.forEach(m=>{
+    const short=m.replace(/　/g,'').slice(0,4);
+    html+='<button class="mail-filter-btn'+(_mailFilter===m?' active':'')+'" onclick="renderMailList(\''+m+'\')">'+short+'</button>';
+  });
+  html+='</div>';
+
+  if(!filtered.length){
+    html+='<div class="empty"><span class="empty-i">NO MAIL</span><div class="empty-t">メールはまだありません</div></div>';
+  } else {
+    html+='<div class="mail-list">';
+    filtered.forEach(mail=>{
+      const dt=mail.date?new Date(mail.date):null;
+      const day=dt?String(dt.getDate()).padStart(2,'0'):'--';
+      const mon=dt?dt.toLocaleString('en',{month:'short'}).toUpperCase():'';
+      const col=MEMBER_COLORS[mail.member]||'var(--mint)';
+      const isFav=S.mailFavs.includes(mail.id);
+      const hasPhoto=mail.photos&&mail.photos.length>0;
+      const preview=(mail.body||'').replace(/\n/g,' ').slice(0,40);
+      html+=`<div class="mail-row" style="--mc:${col}" onclick="openMailDetail('${mail.id}')">
+        <div class="mail-row-left">
+          <div class="mail-member-dot"></div>
+          <div class="mail-date-d">${day}</div>
+          <div class="mail-date-m">${mon}</div>
+        </div>
+        <div class="mail-row-info">
+          <div class="mail-member">${mail.member}</div>
+          <div class="mail-subject">${mail.subject||'(件名なし)'}</div>
+          <div class="mail-preview">${preview}</div>
+        </div>
+        <div class="mail-row-right">
+          <button class="mail-fav-btn${isFav?' active':''}" onclick="event.stopPropagation();toggleMailFav('${mail.id}')">★</button>
+          ${hasPhoto?'<div class="mail-photo-icon">📷</div>':''}
+        </div>
+      </div>`;
+    });
+    html+='</div>';
+  }
+  document.getElementById('mailBody').innerHTML=html;
+}
+
+function openMailDetail(id){
+  const mail=(S.mails||[]).find(m=>m.id===id);
+  if(!mail)return;
+  _mailView='detail';
+  _mailCurrent=id;
+  document.getElementById('mailPageEyebrow').textContent=mail.member;
+  document.getElementById('mailPageTitle').textContent=mail.subject||'(件名なし)';
+  document.getElementById('mailBackLabel').textContent='一覧';
+
+  const isFav=S.mailFavs.includes(mail.id);
+  const dt=mail.date?new Date(mail.date):null;
+  const dateStr=dt?dt.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+
+  let photosHtml='';
+  if(mail.photos&&mail.photos.length>0){
+    mail.photos.forEach(url=>{
+      photosHtml+=`<img class="mail-photo-thumb" src="${url}" loading="lazy" onclick="openPhotoViewer('${url}')">`;
+    });
+  } else {
+    photosHtml='<div class="mail-photo-none">NO<br>PHOTO</div>';
+  }
+
+  const html=`<div class="mail-detail-wrap">
+    <div class="mail-detail-photos">${photosHtml}</div>
+    <div class="mail-detail-content">
+      <div class="mail-detail-header">
+        <div class="mail-detail-member">${mail.member}</div>
+        <div class="mail-detail-subject">${mail.subject||'(件名なし)'}</div>
+        <div class="mail-detail-date">${dateStr}</div>
+        <button class="mail-fav-btn${isFav?' active':''}" style="margin-top:6px;font-size:14px;" onclick="toggleMailFav('${mail.id}')">★ ${isFav?'お気に入り解除':'お気に入り登録'}</button>
+      </div>
+      <div class="mail-detail-body">${(mail.body||'').replace(/</g,'&lt;')}</div>
+    </div>
+  </div>`;
+  document.getElementById('mailBody').innerHTML=html;
+}
+
+function mailGoBack(){
+  if(_mailView==='detail'){renderMailList();}
+  else{goHome();}
+}
+
+function toggleMailFav(id){
+  const idx=S.mailFavs.indexOf(id);
+  if(idx===-1)S.mailFavs.push(id);
+  else S.mailFavs.splice(idx,1);
+  save();
+  if(_mailView==='detail')openMailDetail(id);
+  else renderMailList();
+}
+
+function openPhotoViewer(url){
+  const d=document.createElement('div');
+  d.className='mail-photo-viewer';
+  d.innerHTML=`<img src="${url}">`;
+  d.onclick=()=>d.remove();
+  document.body.appendChild(d);
+}
+
 // ═══ ACHIEVEMENTS ═══
 const ACH_COLORS=['var(--accent)','var(--rose)','var(--lavender)','var(--sky)','var(--mint)','var(--butter)','var(--peach)','var(--gold)'];
 const ACHS=[
@@ -1760,7 +1961,8 @@ function goToTab(tab){
     members:renderMembers,
     gacha:renderCollGrid,
     archive:()=>{renderDisc();renderLives();},
-    achievements:renderAch
+    achievements:renderAch,
+    mail:()=>renderMailList(),
   };
   if(renders[tab])renders[tab]();
 }
