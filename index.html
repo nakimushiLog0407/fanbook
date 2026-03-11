@@ -1303,12 +1303,12 @@ let S = {
 
 try {
   const saved = JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');
-  const USER_KEYS = ['owned','readIds','lives','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub'];
+  const USER_KEYS = ['owned','readIds','lives','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub'];
   USER_KEYS.forEach(k=>{ if(saved[k]!==undefined) S[k]=saved[k]; });
 } catch(e){}
 
 function save(){
-  const USER_KEYS = ['owned','readIds','lives','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub'];
+  const USER_KEYS = ['owned','readIds','lives','mails','mailFavs','oshiName','oshiPhoto','bannerTitle','bannerSub'];
   const payload = {};
   USER_KEYS.forEach(k=>payload[k]=S[k]);
   try{ localStorage.setItem(SAVE_KEY, JSON.stringify(payload)); }catch(e){}
@@ -1424,7 +1424,7 @@ INIは確実に、次のステージへと進んでいた。`},
 
 // ═══ MASTER DATA LOADER ═══
 async function loadMasterData(){
-  const files = ['members','chapters','cards','discography','mails'];
+  const files = ['members','chapters','cards','discography'];
   const results = await Promise.allSettled(
     files.map(f => fetch('./data/'+f+'.json').then(r=>{ if(!r.ok)throw new Error(r.status); return r.json(); }))
   );
@@ -1693,9 +1693,12 @@ const MEMBER_COLORS={
   '尾崎　匠海':'var(--accent)','藤牧　京介':'var(--sky)','佐野　雄大':'var(--mint)',
   '池﨑　理人':'var(--rose)','松田　迅':'var(--lavender)',
 };
+const MEMBER_NAMES=['木村　柾哉','西　洸人','許　豊凡','田島　将吾','髙塚　大夢','後藤　威尊','尾崎　匠海','藤牧　京介','佐野　雄大','池﨑　理人','松田　迅'];
 let _mailFilter='all';
-let _mailView='list'; // 'list' or 'detail'
+let _mailView='list';
 let _mailCurrent=null;
+
+function getMailList(){return S.mails||[];}
 
 function renderMailList(filter){
   if(filter!==undefined) _mailFilter=filter;
@@ -1704,17 +1707,21 @@ function renderMailList(filter){
   document.getElementById('mailPageTitle').textContent='Mail';
   document.getElementById('mailBackLabel').textContent='Home';
 
-  const mails=S.mails||[];
+  const mails=getMailList();
   const members=[...new Set(mails.map(m=>m.member))].sort();
   let filtered=_mailFilter==='all'?mails:_mailFilter==='fav'?mails.filter(m=>S.mailFavs.includes(m.id)):mails.filter(m=>m.member===_mailFilter);
+  filtered=[...filtered].sort((a,b)=>new Date(b.date)-new Date(a.date));
 
-  let html='<div class="mail-filter">';
+  let html='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">';
+  html+='<div class="mail-filter" style="margin-bottom:0;flex:1;">';
   html+='<button class="mail-filter-btn'+(_mailFilter==='all'?' active':'')+'" onclick="renderMailList(\'all\')">ALL</button>';
   html+='<button class="mail-filter-btn'+(_mailFilter==='fav'?' active':'')+'" onclick="renderMailList(\'fav\')">★ FAV</button>';
   members.forEach(m=>{
     const short=m.replace(/　/g,'').slice(0,4);
     html+='<button class="mail-filter-btn'+(_mailFilter===m?' active':'')+'" onclick="renderMailList(\''+m+'\')">'+short+'</button>';
   });
+  html+='</div>';
+  html+='<button onclick="openMailForm()" style="flex-shrink:0;margin-left:10px;padding:6px 14px;background:rgba(114,232,200,.12);border:1px solid rgba(114,232,200,.35);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--mint);transition:all .16s;white-space:nowrap;">+ 追加</button>';
   html+='</div>';
 
   if(!filtered.length){
@@ -1729,22 +1736,22 @@ function renderMailList(filter){
       const isFav=S.mailFavs.includes(mail.id);
       const hasPhoto=mail.photos&&mail.photos.length>0;
       const preview=(mail.body||'').replace(/\n/g,' ').slice(0,40);
-      html+=`<div class="mail-row" style="--mc:${col}" onclick="openMailDetail('${mail.id}')">
-        <div class="mail-row-left">
-          <div class="mail-member-dot"></div>
-          <div class="mail-date-d">${day}</div>
-          <div class="mail-date-m">${mon}</div>
-        </div>
-        <div class="mail-row-info">
-          <div class="mail-member">${mail.member}</div>
-          <div class="mail-subject">${mail.subject||'(件名なし)'}</div>
-          <div class="mail-preview">${preview}</div>
-        </div>
-        <div class="mail-row-right">
-          <button class="mail-fav-btn${isFav?' active':''}" onclick="event.stopPropagation();toggleMailFav('${mail.id}')">★</button>
-          ${hasPhoto?'<div class="mail-photo-icon">📷</div>':''}
-        </div>
-      </div>`;
+      html+='<div class="mail-row" style="--mc:'+col+'" onclick="openMailDetail(\''+mail.id+'\')">'+
+        '<div class="mail-row-left">'+
+          '<div class="mail-member-dot"></div>'+
+          '<div class="mail-date-d">'+day+'</div>'+
+          '<div class="mail-date-m">'+mon+'</div>'+
+        '</div>'+
+        '<div class="mail-row-info">'+
+          '<div class="mail-member">'+mail.member+'</div>'+
+          '<div class="mail-subject">'+(mail.subject||'(件名なし)')+'</div>'+
+          '<div class="mail-preview">'+preview+'</div>'+
+        '</div>'+
+        '<div class="mail-row-right">'+
+          '<button class="mail-fav-btn'+(isFav?' active':'')+'" onclick="event.stopPropagation();toggleMailFav(\''+mail.id+'\')">★</button>'+
+          (hasPhoto?'<div class="mail-photo-icon">📷</div>':'')+
+        '</div>'+
+      '</div>';
     });
     html+='</div>';
   }
@@ -1752,7 +1759,7 @@ function renderMailList(filter){
 }
 
 function openMailDetail(id){
-  const mail=(S.mails||[]).find(m=>m.id===id);
+  const mail=getMailList().find(m=>m.id===id);
   if(!mail)return;
   _mailView='detail';
   _mailCurrent=id;
@@ -1767,24 +1774,28 @@ function openMailDetail(id){
   let photosHtml='';
   if(mail.photos&&mail.photos.length>0){
     mail.photos.forEach(url=>{
-      photosHtml+=`<img class="mail-photo-thumb" src="${url}" loading="lazy" onclick="openPhotoViewer('${url}')">`;
+      photosHtml+='<img class="mail-photo-thumb" src="'+url+'" loading="lazy" onclick="openPhotoViewer(\''+url+'\')">';
     });
   } else {
     photosHtml='<div class="mail-photo-none">NO<br>PHOTO</div>';
   }
 
-  const html=`<div class="mail-detail-wrap">
-    <div class="mail-detail-photos">${photosHtml}</div>
-    <div class="mail-detail-content">
-      <div class="mail-detail-header">
-        <div class="mail-detail-member">${mail.member}</div>
-        <div class="mail-detail-subject">${mail.subject||'(件名なし)'}</div>
-        <div class="mail-detail-date">${dateStr}</div>
-        <button class="mail-fav-btn${isFav?' active':''}" style="margin-top:6px;font-size:14px;" onclick="toggleMailFav('${mail.id}')">★ ${isFav?'お気に入り解除':'お気に入り登録'}</button>
-      </div>
-      <div class="mail-detail-body">${(mail.body||'').replace(/</g,'&lt;')}</div>
-    </div>
-  </div>`;
+  const html='<div class="mail-detail-wrap">'+
+    '<div class="mail-detail-photos">'+photosHtml+'</div>'+
+    '<div class="mail-detail-content">'+
+      '<div class="mail-detail-header">'+
+        '<div class="mail-detail-member">'+mail.member+'</div>'+
+        '<div class="mail-detail-subject">'+(mail.subject||'(件名なし)')+'</div>'+
+        '<div class="mail-detail-date">'+dateStr+'</div>'+
+        '<div style="display:flex;gap:8px;margin-top:8px;">'+
+          '<button class="mail-fav-btn'+(isFav?' active':'')+'" style="font-size:13px;padding:4px 10px;border:1px solid rgba(255,224,128,.3);background:rgba(255,224,128,.08);" onclick="toggleMailFav(\''+mail.id+'\')">★ '+(isFav?'解除':'お気に入り')+'</button>'+
+          '<button onclick="openMailForm(\''+mail.id+'\')" style="padding:4px 10px;background:rgba(125,212,240,.08);border:1px solid rgba(125,212,240,.25);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--sky);">✎ 編集</button>'+
+          '<button onclick="deleteMailConfirm(\''+mail.id+'\')" style="padding:4px 10px;background:rgba(220,50,60,.08);border:1px solid rgba(220,50,60,.25);font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:#DC323C;">✕ 削除</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="mail-detail-body">'+(mail.body||'').replace(/</g,'&lt;')+'</div>'+
+    '</div>'+
+  '</div>';
   document.getElementById('mailBody').innerHTML=html;
 }
 
@@ -1805,278 +1816,361 @@ function toggleMailFav(id){
 function openPhotoViewer(url){
   const d=document.createElement('div');
   d.className='mail-photo-viewer';
-  d.innerHTML=`<img src="${url}">`;
+  d.innerHTML='<img src="'+url+'">';
   d.onclick=()=>d.remove();
   document.body.appendChild(d);
 }
 
+// メール追加・編集フォーム
+function openMailForm(editId){
+  const mail=editId?getMailList().find(m=>m.id===editId):null;
+  const now=new Date();
+  const defaultDate=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+'T'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+
+  let memberOpts=MEMBER_NAMES.map(n=>'<option value="'+n+'"'+(mail&&mail.member===n?' selected':'')+'>'+n+'</option>').join('');
+
+  const overlay=document.createElement('div');
+  overlay.className='overlay';
+  overlay.style.cssText='display:flex;z-index:9600;';
+  overlay.innerHTML='<div class="msheet" style="max-height:92vh;overflow-y:auto;">'+
+    '<div class="sh"></div>'+
+    '<button class="sclose" onclick="this.closest(\'.overlay\').remove()">✕</button>'+
+    '<div class="stitle">'+(editId?'メールを編集':'メールを追加')+'</div>'+
+    '<div class="fg"><label class="fl">送信メンバー</label>'+
+      '<select class="fi" id="mfMember" style="background:var(--panel2);border:1px solid var(--border-s);color:var(--ink);padding:10px;font-family:var(--ffj);font-size:13px;width:100%;outline:none;">'+memberOpts+'</select>'+
+    '</div>'+
+    '<div class="fg"><label class="fl">日時</label><input class="fi" type="datetime-local" id="mfDate" value="'+(mail?mail.date.slice(0,16):defaultDate)+'"></div>'+
+    '<div class="fg"><label class="fl">件名</label><input class="fi" type="text" id="mfSubject" placeholder="件名" value="'+(mail?mail.subject.replace(/"/g,'&quot;'):'')+'"></div>'+
+    '<div class="fg"><label class="fl">本文</label><textarea class="fi" id="mfBody" rows="6" style="resize:vertical;line-height:1.7;font-family:var(--ffj);font-size:13px;">'+(mail?mail.body:'')+'</textarea></div>'+
+
+```
+'<div class="fg"><label class="fl">写真URL（1行1枚、GitHubの相対パスまたはURL）</label><textarea class="fi" id="mfPhotos" rows="3" placeholder="./images/mails/ファイル名.jpg" style="resize:vertical;font-family:var(--ffm);font-size:11px;line-height:1.6;">'+(mail&&mail.photos?mail.photos.join('\n'):'')+'</textarea></div>'+
+'<button onclick="saveMailForm(\''+( editId||'')+'\',this.closest(\'.overlay\'))" style="width:100%;padding:12px;background:rgba(114,232,200,.12);border:1px solid rgba(114,232,200,.35);font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--mint);margin-top:4px;">保存する</button>'+
+```
+
+‘</div>’;
+document.body.appendChild(overlay);
+}
+
+function saveMailForm(editId, overlay){
+const member=document.getElementById(‘mfMember’).value;
+const date=document.getElementById(‘mfDate’).value.replace(‘T’,’ ‘)+’:00’;
+const subject=document.getElementById(‘mfSubject’).value.trim();
+const body=document.getElementById(‘mfBody’).value;
+const photosRaw=document.getElementById(‘mfPhotos’).value.trim();
+const photos=photosRaw?photosRaw.split(’\n’).map(s=>s.trim()).filter(Boolean):[];
+
+if(!member||!date){toast(’// メンバーと日時は必須です’);return;}
+
+if(!S.mails) S.mails=[];
+
+if(editId){
+const idx=S.mails.findIndex(m=>m.id===editId);
+if(idx!==-1) S.mails[idx]={…S.mails[idx],member,date,subject,body,photos};
+} else {
+const id=‘mail_’+Date.now();
+S.mails.push({id,member,date,subject,body,photos});
+}
+save();
+overlay.remove();
+toast(editId?’// 更新しました’:’// メールを追加しました’);
+if(editId&&_mailCurrent===editId) openMailDetail(editId);
+else renderMailList();
+}
+
+function deleteMailConfirm(id){
+const mail=getMailList().find(m=>m.id===id);
+if(!mail)return;
+const overlay=document.createElement(‘div’);
+overlay.className=‘overlay’;
+overlay.style.cssText=‘display:flex;z-index:9600;’;
+overlay.innerHTML=’<div class="msheet" style="padding-bottom:24px;">’+
+‘<div class="sh"></div>’+
+‘<div class="stitle">削除の確認</div>’+
+‘<p style="font-family:var(--ffj);font-size:13px;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-bottom:20px;">’+mail.member+’「’+(mail.subject||‘件名なし’)+’」を削除しますか？この操作は取り消せません。</p>’+
+‘<div class="confirm-btns">’+
+‘<button class="cbtn-cancel" onclick="this.closest(\'.overlay\').remove()">キャンセル</button>’+
+‘<button class="cbtn-del" onclick="deleteMail(\''+id+'\',this.closest(\'.overlay\'))">削除する</button>’+
+‘</div>’+
+‘</div>’;
+document.body.appendChild(overlay);
+}
+
+function deleteMail(id, overlay){
+S.mails=(S.mails||[]).filter(m=>m.id!==id);
+S.mailFavs=S.mailFavs.filter(f=>f!==id);
+save();
+overlay.remove();
+toast(’// 削除しました’);
+renderMailList();
+}
+
 // ═══ ACHIEVEMENTS ═══
-const ACH_COLORS=['var(--accent)','var(--rose)','var(--lavender)','var(--sky)','var(--mint)','var(--butter)','var(--peach)','var(--gold)'];
+const ACH_COLORS=[‘var(–accent)’,‘var(–rose)’,‘var(–lavender)’,‘var(–sky)’,‘var(–mint)’,‘var(–butter)’,‘var(–peach)’,‘var(–gold)’];
 const ACHS=[
-  {icon:'📖',name:'First Read',    desc:'最初のチャプターを読んだ',      check:()=>S.chapters.some(c=>c.read)},
-  {icon:'⭐',name:'Collector',     desc:'カードを5枚以上所持した',        check:()=>Object.values(S.owned).filter((_,i)=>!Object.keys(S.owned)[i].startsWith('disc_')).reduce((a,b)=>a+b,0)>=5},
-  {icon:'✨',name:'SSR Hunter',    desc:'SSRカードを入手した',            check:()=>S.cards.some(c=>(c.rarity==='ssr'||c.rarity==='ur')&&(S.owned[c.id]||0)>0)},
-  {icon:'👥',name:'Full Roster',   desc:'INI 11人全員がいる',             check:()=>S.members.length>=11},
-  {icon:'💿',name:'Discophile',    desc:'3作品以上を記録した',             check:()=>S.discography.length>=3},
-  {icon:'🎤',name:'First Live',    desc:'初めて参戦記録をつけた',          check:()=>S.lives&&S.lives.some(l=>l.attended)},
-  {icon:'🔥',name:'Live Addict',   desc:'3回以上のライブ参戦を記録した',   check:()=>S.lives&&S.lives.filter(l=>l.attended).length>=3},
-  {icon:'👑',name:'Chronicle',     desc:'5チャプター以上を読んだ',         check:()=>S.chapters.filter(c=>c.read).length>=5},
+{icon:‘📖’,name:‘First Read’,    desc:‘最初のチャプターを読んだ’,      check:()=>S.chapters.some(c=>c.read)},
+{icon:‘⭐’,name:‘Collector’,     desc:‘カードを5枚以上所持した’,        check:()=>Object.values(S.owned).filter((*,i)=>!Object.keys(S.owned)[i].startsWith(’disc*’)).reduce((a,b)=>a+b,0)>=5},
+{icon:‘✨’,name:‘SSR Hunter’,    desc:‘SSRカードを入手した’,            check:()=>S.cards.some(c=>(c.rarity===‘ssr’||c.rarity===‘ur’)&&(S.owned[c.id]||0)>0)},
+{icon:‘👥’,name:‘Full Roster’,   desc:‘INI 11人全員がいる’,             check:()=>S.members.length>=11},
+{icon:‘💿’,name:‘Discophile’,    desc:‘3作品以上を記録した’,             check:()=>S.discography.length>=3},
+{icon:‘🎤’,name:‘First Live’,    desc:‘初めて参戦記録をつけた’,          check:()=>S.lives&&S.lives.some(l=>l.attended)},
+{icon:‘🔥’,name:‘Live Addict’,   desc:‘3回以上のライブ参戦を記録した’,   check:()=>S.lives&&S.lives.filter(l=>l.attended).length>=3},
+{icon:‘👑’,name:‘Chronicle’,     desc:‘5チャプター以上を読んだ’,         check:()=>S.chapters.filter(c=>c.read).length>=5},
 ];
 function renderAch(){
-  const g=document.getElementById('achGrid');g.innerHTML='';
-  ACHS.forEach((a,i)=>{
-    const ok=a.check();const col=ACH_COLORS[i];
-    const d=document.createElement('div');d.className=`ac-card${ok?' ok':''}`;
-    if(ok)d.style.setProperty('--acl',col);
-    d.innerHTML=`<div class="ac-check">${ok?'UNLOCKED':''}</div><div class="ac-icon-wrap">${a.svgIcon||`<svg viewBox="0 0 24 24" fill="none" stroke="var(--acl,var(--lavender))" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/></svg>`}</div><div class="ac-name">${a.name}</div><div class="ac-desc">${a.desc}</div>`;
-    g.appendChild(d);
-  });
+const g=document.getElementById(‘achGrid’);g.innerHTML=’’;
+ACHS.forEach((a,i)=>{
+const ok=a.check();const col=ACH_COLORS[i];
+const d=document.createElement(‘div’);d.className=`ac-card${ok?' ok':''}`;
+if(ok)d.style.setProperty(’–acl’,col);
+d.innerHTML=`<div class="ac-check">${ok?'UNLOCKED':''}</div><div class="ac-icon-wrap">${a.svgIcon||`<svg viewBox="0 0 24 24" fill="none" stroke="var(--acl,var(--lavender))" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.88L7 22l5-3 5 3-1.56-7.12"/></svg>`}</div><div class="ac-name">${a.name}</div><div class="ac-desc">${a.desc}</div>`;
+g.appendChild(d);
+});
 }
 
 // ═══ STATS ═══
 function updateStats(){
-  // delegate to home stats updater (header DOM removed)
-  updateHomeStats();
+// delegate to home stats updater (header DOM removed)
+updateHomeStats();
 }
 
 // ═══ TABS ═══
 function showTab(tab){
-  // legacy shim — redirect to new page system
-  goToTab(tab);
+// legacy shim — redirect to new page system
+goToTab(tab);
 }
 // ═══ MODALS ═══
-function openM(id){document.getElementById(id).classList.add('open');}
+function openM(id){document.getElementById(id).classList.add(‘open’);}
 function closeM(id){
-  document.getElementById(id).classList.remove('open');
+document.getElementById(id).classList.remove(‘open’);
 }
 function bgC(e,id){if(e.target.id===id)closeM(id);}
 
 // ═══ CONFIRM DELETE ═══
 let _del=null;
 function confirmDel(type,id,msg){
-  _del={type,id};document.getElementById('confMsg').textContent=msg;
-  document.getElementById('confOk').onclick=execDel;openM('confirmModal');
+_del={type,id};document.getElementById(‘confMsg’).textContent=msg;
+document.getElementById(‘confOk’).onclick=execDel;openM(‘confirmModal’);
 }
 function execDel(){
-  if(!_del)return;const{type,id}=_del;
-  if(type==='chapter')S.chapters=S.chapters.filter(x=>x.id!==id);
-  if(type==='member')S.members=S.members.filter(x=>x.id!==id);
-  if(type==='card'){S.cards=S.cards.filter(x=>x.id!==id);delete S.owned[id];}
-  if(type==='disc')S.discography=S.discography.filter(x=>x.id!==id);
-  if(type==='goods')S.goods=S.goods.filter(x=>x.id!==id);
-  save();updateStats();renderAch();
-  const renders={chapter:renderStory,member:renderMembers,card:renderCollGrid,disc:renderDisc,live:renderLives};
-  if(renders[type])renders[type]();
-  document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));
-  toast('// DELETED');_del=null;
+if(!_del)return;const{type,id}=_del;
+if(type===‘chapter’)S.chapters=S.chapters.filter(x=>x.id!==id);
+if(type===‘member’)S.members=S.members.filter(x=>x.id!==id);
+if(type===‘card’){S.cards=S.cards.filter(x=>x.id!==id);delete S.owned[id];}
+if(type===‘disc’)S.discography=S.discography.filter(x=>x.id!==id);
+if(type===‘goods’)S.goods=S.goods.filter(x=>x.id!==id);
+save();updateStats();renderAch();
+const renders={chapter:renderStory,member:renderMembers,card:renderCollGrid,disc:renderDisc,live:renderLives};
+if(renders[type])renders[type]();
+document.querySelectorAll(’.overlay.open’).forEach(o=>o.classList.remove(‘open’));
+toast(’// DELETED’);_del=null;
 }
 
 // ═══ BACKUP / RESTORE ═══
 function exportData(){
-  const payload={version:2,exportedAt:new Date().toISOString(),data:S};
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
-  const url=URL.createObjectURL(blob);const a=document.createElement('a');
-  a.href=url;a.download=`ini_chronicle_backup_${new Date().toISOString().slice(0,10)}.json`;
-  a.click();URL.revokeObjectURL(url);toast('// バックアップを保存しました');updateBackupInfo();
+const payload={version:2,exportedAt:new Date().toISOString(),data:S};
+const blob=new Blob([JSON.stringify(payload,null,2)],{type:‘application/json;charset=utf-8’});
+const url=URL.createObjectURL(blob);const a=document.createElement(‘a’);
+a.href=url;a.download=`ini_chronicle_backup_${new Date().toISOString().slice(0,10)}.json`;
+a.click();URL.revokeObjectURL(url);toast(’// バックアップを保存しました’);updateBackupInfo();
 }
 function importData(input){
-  if(!input.files||!input.files[0])return;
-  const r=new FileReader();
-  r.onload=e=>{
-    try{
-      const payload=JSON.parse(e.target.result);const imported=payload.data||payload;
-      if(!imported.chapters&&!imported.members){toast('// ファイルが無効です');return;}
-      if(!confirm(`バックアップを読み込みます。現在のデータは上書きされます。\nバックアップ日時: ${payload.exportedAt||'不明'}\n\nよろしいですか？`))return;
-      S={...S,...imported};save();
-      renderStory();renderMembers();renderCollGrid();renderDisc();renderLives();renderAch();updateStats();updateBackupInfo();
-      document.getElementById('bTitle').textContent=S.bannerTitle||'';
-      document.getElementById('bSub').textContent=S.bannerSub||'';
-      toast('// リストア完了');
-    }catch(err){toast('// 読み込みに失敗しました');}
-  };
-  r.readAsText(input.files[0],'UTF-8');input.value='';
+if(!input.files||!input.files[0])return;
+const r=new FileReader();
+r.onload=e=>{
+try{
+const payload=JSON.parse(e.target.result);const imported=payload.data||payload;
+if(!imported.chapters&&!imported.members){toast(’// ファイルが無効です’);return;}
+if(!confirm(`バックアップを読み込みます。現在のデータは上書きされます。\nバックアップ日時: ${payload.exportedAt||'不明'}\n\nよろしいですか？`))return;
+S={…S,…imported};save();
+renderStory();renderMembers();renderCollGrid();renderDisc();renderLives();renderAch();updateStats();updateBackupInfo();
+document.getElementById(‘bTitle’).textContent=S.bannerTitle||’’;
+document.getElementById(‘bSub’).textContent=S.bannerSub||’’;
+toast(’// リストア完了’);
+}catch(err){toast(’// 読み込みに失敗しました’);}
+};
+r.readAsText(input.files[0],‘UTF-8’);input.value=’’;
 }
 function updateBackupInfo(){
-  const el=document.getElementById('backupInfo');if(!el)return;
-  const attended=(S.lives||[]).filter(l=>l.attended).length;
-  el.textContent=`現在: チャプター ${S.chapters.length}件 / カード ${S.cards.length}枚 / ライブ参戦 ${attended}件`;
+const el=document.getElementById(‘backupInfo’);if(!el)return;
+const attended=(S.lives||[]).filter(l=>l.attended).length;
+el.textContent=`現在: チャプター ${S.chapters.length}件 / カード ${S.cards.length}枚 / ライブ参戦 ${attended}件`;
 }
 
 // ═══ PWA ═══
 let _dp=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_dp=e;});
-function triggerInstall(){if(_dp){_dp.prompt();_dp.userChoice.then(()=>{_dp=null;});}else{toast('// Safari → 共有 → ホーム画面に追加');}}
+window.addEventListener(‘beforeinstallprompt’,e=>{e.preventDefault();_dp=e;});
+function triggerInstall(){if(_dp){_dp.prompt();_dp.userChoice.then(()=>{_dp=null;});}else{toast(’// Safari → 共有 → ホーム画面に追加’);}}
 
 // ═══ PASSWORD ═══
-const PW_KEY='ifb_pw';
-const DEFAULT_PW='fanbook';
-function hashPW(pw){let h=0;for(let i=0;i<pw.length;i++){h=((h<<5)-h)+pw.charCodeAt(i);h|=0;}return btoa('ifb:'+Math.abs(h)+':'+pw.length);}
+const PW_KEY=‘ifb_pw’;
+const DEFAULT_PW=‘fanbook’;
+function hashPW(pw){let h=0;for(let i=0;i<pw.length;i++){h=((h<<5)-h)+pw.charCodeAt(i);h|=0;}return btoa(‘ifb:’+Math.abs(h)+’:’+pw.length);}
 function getStoredHash(){return localStorage.getItem(PW_KEY)||hashPW(DEFAULT_PW);}
 function checkPW(){
-  const val=document.getElementById('pwInput').value;
-  if(!val){showPWErr();return;}
-  if(hashPW(val)===getStoredHash()){unlockApp();}
-  else{showPWErr();document.getElementById('pwInput').value='';document.getElementById('pwInput').focus();}
+const val=document.getElementById(‘pwInput’).value;
+if(!val){showPWErr();return;}
+if(hashPW(val)===getStoredHash()){unlockApp();}
+else{showPWErr();document.getElementById(‘pwInput’).value=’’;document.getElementById(‘pwInput’).focus();}
 }
-function showPWErr(){const e=document.getElementById('pwError');e.style.opacity='1';setTimeout(()=>e.style.opacity='0',2000);}
+function showPWErr(){const e=document.getElementById(‘pwError’);e.style.opacity=‘1’;setTimeout(()=>e.style.opacity=‘0’,2000);}
 function unlockApp(){
-  const ls=document.getElementById('lockScreen');
-  ls.style.opacity='0';ls.style.transition='opacity 0.3s ease';
-  setTimeout(()=>{ls.style.display='none';showHome();},300);
+const ls=document.getElementById(‘lockScreen’);
+ls.style.opacity=‘0’;ls.style.transition=‘opacity 0.3s ease’;
+setTimeout(()=>{ls.style.display=‘none’;showHome();},300);
 }
 function showHome(){
-  checkOrientation();
-  document.getElementById('homeScreen').style.display='block';
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  updateHomeStats();
-  const sb=document.getElementById('homeSettingsBtn');
-  if(sb)sb.onclick=()=>{
-    document.querySelectorAll('.overlay').forEach(o=>o.style.zIndex='8500');
-    openM('settingsModal');
-    document.getElementById('settingsModal').addEventListener('click',function restore(){
-      if(!document.getElementById('settingsModal').classList.contains('open')){
-        document.querySelectorAll('.overlay').forEach(o=>o.style.zIndex='');
-        document.getElementById('settingsModal').removeEventListener('click',restore);
-      }
-    });
-  };
+checkOrientation();
+document.getElementById(‘homeScreen’).style.display=‘block’;
+document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
+updateHomeStats();
+const sb=document.getElementById(‘homeSettingsBtn’);
+if(sb)sb.onclick=()=>{
+document.querySelectorAll(’.overlay’).forEach(o=>o.style.zIndex=‘8500’);
+openM(‘settingsModal’);
+document.getElementById(‘settingsModal’).addEventListener(‘click’,function restore(){
+if(!document.getElementById(‘settingsModal’).classList.contains(‘open’)){
+document.querySelectorAll(’.overlay’).forEach(o=>o.style.zIndex=’’);
+document.getElementById(‘settingsModal’).removeEventListener(‘click’,restore);
+}
+});
+};
 }
 function goHome(){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('homeScreen').style.display='block';
-  updateHomeStats();
-  S.currentTab=null;
+document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
+document.getElementById(‘homeScreen’).style.display=‘block’;
+updateHomeStats();
+S.currentTab=null;
 }
 function hideHome(){
-  document.getElementById('homeScreen').style.display='none';
+document.getElementById(‘homeScreen’).style.display=‘none’;
 }
 function goToTab(tab){
-  hideHome();
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const page=document.getElementById('page-'+tab);
-  if(page)page.classList.add('active');
-  S.currentTab=tab;
-  const renders={
-    story:renderStory,
-    members:renderMembers,
-    gacha:renderCollGrid,
-    archive:()=>{renderDisc();renderLives();},
-    achievements:renderAch,
-    mail:()=>renderMailList(),
-  };
-  if(renders[tab])renders[tab]();
+hideHome();
+document.querySelectorAll(’.page’).forEach(p=>p.classList.remove(‘active’));
+const page=document.getElementById(‘page-’+tab);
+if(page)page.classList.add(‘active’);
+S.currentTab=tab;
+const renders={
+story:renderStory,
+members:renderMembers,
+gacha:renderCollGrid,
+archive:()=>{renderDisc();renderLives();},
+achievements:renderAch,
+mail:()=>renderMailList(),
+};
+if(renders[tab])renders[tab]();
 }
 function updateHomeStats(){
-  const total=Object.values(S.owned).reduce((a,b)=>a+b,0);
-  const readCount=S.chapters.filter(c=>c.read).length;
-  const totalChap=Math.max(S.chapters.length,1);
-  const achCount=ACHS.filter(a=>a.check()).length;
+const total=Object.values(S.owned).reduce((a,b)=>a+b,0);
+const readCount=S.chapters.filter(c=>c.read).length;
+const totalChap=Math.max(S.chapters.length,1);
+const achCount=ACHS.filter(a=>a.check()).length;
 
-  // card count badge
-  const el=document.getElementById('homeCardCount');
-  if(el)el.textContent=total+' cards';
+// card count badge
+const el=document.getElementById(‘homeCardCount’);
+if(el)el.textContent=total+’ cards’;
 
-  // stats numbers
-  const ss=document.getElementById('homeStatStory');if(ss)ss.textContent=readCount+'/'+S.chapters.length;
-  const sc=document.getElementById('homeStatCards');if(sc)sc.textContent=total;
-  const sa=document.getElementById('homeStatAch');if(sa)sa.textContent=achCount+'/'+ACHS.length;
+// stats numbers
+const ss=document.getElementById(‘homeStatStory’);if(ss)ss.textContent=readCount+’/’+S.chapters.length;
+const sc=document.getElementById(‘homeStatCards’);if(sc)sc.textContent=total;
+const sa=document.getElementById(‘homeStatAch’);if(sa)sa.textContent=achCount+’/’+ACHS.length;
 
-  // progress bars
-  const bs=document.getElementById('homeBarStory');if(bs)bs.style.width=Math.round(readCount/totalChap*100)+'%';
-  const bc=document.getElementById('homeBarCards');if(bc)bc.style.width=Math.min(total,50)/50*100+'%';
-  const ba=document.getElementById('homeBarAch');if(ba)ba.style.width=Math.round(achCount/ACHS.length*100)+'%';
+// progress bars
+const bs=document.getElementById(‘homeBarStory’);if(bs)bs.style.width=Math.round(readCount/totalChap*100)+’%’;
+const bc=document.getElementById(‘homeBarCards’);if(bc)bc.style.width=Math.min(total,50)/50*100+’%’;
+const ba=document.getElementById(‘homeBarAch’);if(ba)ba.style.width=Math.round(achCount/ACHS.length*100)+’%’;
 
-  // oshi name
-  const nameEl=document.getElementById('homeOshiName');
-  if(nameEl&&S.oshiName)nameEl.textContent=S.oshiName;
+// oshi name
+const nameEl=document.getElementById(‘homeOshiName’);
+if(nameEl&&S.oshiName)nameEl.textContent=S.oshiName;
 
-  // HUD bottom date
-  const dateEl=document.getElementById('hudDate');
-  if(dateEl){const d=new Date();dateEl.textContent=d.getFullYear()+'.'+(String(d.getMonth()+1).padStart(2,'0'))+'.'+String(d.getDate()).padStart(2,'0');}
+// HUD bottom date
+const dateEl=document.getElementById(‘hudDate’);
+if(dateEl){const d=new Date();dateEl.textContent=d.getFullYear()+’.’+(String(d.getMonth()+1).padStart(2,‘0’))+’.’+String(d.getDate()).padStart(2,‘0’);}
 
-  // restore photo
-  if(S.oshiPhoto){
-    const bg=document.getElementById('homeBgPhoto');
-    const ph=document.getElementById('homeBgPlaceholder');
-    if(bg){bg.src=S.oshiPhoto;bg.style.display='block';}
-    if(ph)ph.style.display='none';
-  }
+// restore photo
+if(S.oshiPhoto){
+const bg=document.getElementById(‘homeBgPhoto’);
+const ph=document.getElementById(‘homeBgPlaceholder’);
+if(bg){bg.src=S.oshiPhoto;bg.style.display=‘block’;}
+if(ph)ph.style.display=‘none’;
+}
 }
 function openOshiPhotoUpload(){
-  document.getElementById('oshiPhotoInput').click();
+document.getElementById(‘oshiPhotoInput’).click();
 }
 function setOshiPhoto(input){
-  if(!input.files||!input.files[0])return;
-  const r=new FileReader();
-  r.onload=e=>{
-    S.oshiPhoto=e.target.result;save();
-    const bg=document.getElementById('homeBgPhoto');
-    const ph=document.getElementById('homeBgPlaceholder');
-    if(bg){bg.src=e.target.result;bg.style.display='block';}
-    if(ph)ph.style.display='none';
-    toast('// 推し写真を設定しました ✓');
-  };
-  r.readAsDataURL(input.files[0]);
+if(!input.files||!input.files[0])return;
+const r=new FileReader();
+r.onload=e=>{
+S.oshiPhoto=e.target.result;save();
+const bg=document.getElementById(‘homeBgPhoto’);
+const ph=document.getElementById(‘homeBgPlaceholder’);
+if(bg){bg.src=e.target.result;bg.style.display=‘block’;}
+if(ph)ph.style.display=‘none’;
+toast(’// 推し写真を設定しました ✓’);
+};
+r.readAsDataURL(input.files[0]);
 }
 
 function saveOshiName(){
-  const v=document.getElementById('sOshiName').value.trim();
-  if(v){S.oshiName=v;save();updateHomeStats();}
-  toast('// SAVED');
+const v=document.getElementById(‘sOshiName’).value.trim();
+if(v){S.oshiName=v;save();updateHomeStats();}
+toast(’// SAVED’);
 }
 // Orientation detection
 function checkOrientation(){
-  const isPortrait=window.innerHeight>window.innerWidth;
-  const rp=document.getElementById('rotatePrompt');
-  const hs=document.getElementById('homeScreen');
-  if(isPortrait){
-    rp.style.display='flex';
-    if(hs.style.display!=='none')hs.style.visibility='hidden';
-  }else{
-    rp.style.display='none';
-    if(hs.style.display!=='none')hs.style.visibility='visible';
-  }
+const isPortrait=window.innerHeight>window.innerWidth;
+const rp=document.getElementById(‘rotatePrompt’);
+const hs=document.getElementById(‘homeScreen’);
+if(isPortrait){
+rp.style.display=‘flex’;
+if(hs.style.display!==‘none’)hs.style.visibility=‘hidden’;
+}else{
+rp.style.display=‘none’;
+if(hs.style.display!==‘none’)hs.style.visibility=‘visible’;
 }
-window.addEventListener('resize',()=>{
-  if(document.getElementById('homeScreen').style.display!=='none')checkOrientation();
+}
+window.addEventListener(‘resize’,()=>{
+if(document.getElementById(‘homeScreen’).style.display!==‘none’)checkOrientation();
 });
-window.addEventListener('orientationchange',()=>{
-  setTimeout(()=>{if(document.getElementById('homeScreen').style.display!=='none')checkOrientation();},200);
+window.addEventListener(‘orientationchange’,()=>{
+setTimeout(()=>{if(document.getElementById(‘homeScreen’).style.display!==‘none’)checkOrientation();},200);
 });
-function showLock(){const ls=document.getElementById('lockScreen');ls.style.display='flex';ls.style.opacity='1';ls.style.transition='';document.getElementById('pwInput').value='';document.getElementById('pwError').style.opacity='0';setTimeout(()=>document.getElementById('pwInput').focus(),100);}
+function showLock(){const ls=document.getElementById(‘lockScreen’);ls.style.display=‘flex’;ls.style.opacity=‘1’;ls.style.transition=’’;document.getElementById(‘pwInput’).value=’’;document.getElementById(‘pwError’).style.opacity=‘0’;setTimeout(()=>document.getElementById(‘pwInput’).focus(),100);}
 function isDefaultPW(){return getStoredHash()===hashPW(DEFAULT_PW);}
 function changePW(){
-  const cur=document.getElementById('pwCurrent').value,nw=document.getElementById('pwNew').value,nw2=document.getElementById('pwNew2').value;
-  const msg=document.getElementById('pwChangeMsg');
-  if(hashPW(cur)!==getStoredHash()){msg.textContent='// 現在のパスワードが違います';msg.style.color='var(--accent)';return;}
-  if(nw.length<4){msg.textContent='// 4文字以上で設定してください';msg.style.color='var(--accent)';return;}
-  if(nw!==nw2){msg.textContent='// 新しいパスワードが一致しません';msg.style.color='var(--accent)';return;}
-  localStorage.setItem(PW_KEY,hashPW(nw));msg.textContent='// パスワードを変更しました';msg.style.color='var(--mint)';
-  ['pwCurrent','pwNew','pwNew2'].forEach(i=>document.getElementById(i).value='');
-  updatePWStatus();toast('// パスワードを変更しました');
+const cur=document.getElementById(‘pwCurrent’).value,nw=document.getElementById(‘pwNew’).value,nw2=document.getElementById(‘pwNew2’).value;
+const msg=document.getElementById(‘pwChangeMsg’);
+if(hashPW(cur)!==getStoredHash()){msg.textContent=’// 現在のパスワードが違います’;msg.style.color=‘var(–accent)’;return;}
+if(nw.length<4){msg.textContent=’// 4文字以上で設定してください’;msg.style.color=‘var(–accent)’;return;}
+if(nw!==nw2){msg.textContent=’// 新しいパスワードが一致しません’;msg.style.color=‘var(–accent)’;return;}
+localStorage.setItem(PW_KEY,hashPW(nw));msg.textContent=’// パスワードを変更しました’;msg.style.color=‘var(–mint)’;
+[‘pwCurrent’,‘pwNew’,‘pwNew2’].forEach(i=>document.getElementById(i).value=’’);
+updatePWStatus();toast(’// パスワードを変更しました’);
 }
 function updatePWStatus(){
-  const el=document.getElementById('pwStatus');if(!el)return;
-  if(isDefaultPW()){el.textContent='⚠ デフォルトパスワード使用中（変更を推奨）';el.style.color='var(--butter)';}
-  else{el.textContent='✓ カスタムパスワード設定済み';el.style.color='var(--mint)';}
+const el=document.getElementById(‘pwStatus’);if(!el)return;
+if(isDefaultPW()){el.textContent=‘⚠ デフォルトパスワード使用中（変更を推奨）’;el.style.color=‘var(–butter)’;}
+else{el.textContent=‘✓ カスタムパスワード設定済み’;el.style.color=‘var(–mint)’;}
 }
 
 // ═══ TOAST ═══
 let _tt;
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2200);}
+function toast(msg){const t=document.getElementById(‘toast’);t.textContent=msg;t.classList.add(‘show’);clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove(‘show’),2200);}
 
 // ═══ INIT ═══
 async function initApp(){
-  await loadMasterData();
-  document.getElementById('bTitle').textContent=S.bannerTitle;
-  document.getElementById('bSub').textContent=S.bannerSub;
-  renderStory();updateStats();updateBackupInfo();updatePWStatus();
-  showLock();
-  if(isDefaultPW())document.getElementById('pwHint').textContent='初期パスワード: fanbook\nSettings から変更できます';
+await loadMasterData();
+document.getElementById(‘bTitle’).textContent=S.bannerTitle;
+document.getElementById(‘bSub’).textContent=S.bannerSub;
+renderStory();updateStats();updateBackupInfo();updatePWStatus();
+showLock();
+if(isDefaultPW())document.getElementById(‘pwHint’).textContent=‘初期パスワード: fanbook\nSettings から変更できます’;
 }
 initApp();
 
 </script>
-
 </body>
 </html>
